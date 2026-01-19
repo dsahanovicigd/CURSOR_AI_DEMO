@@ -1,0 +1,166 @@
+<testsuites id="" name="" tests="64" failures="1" skipped="0" errors="0" time="92.461771">
+<testsuite name="registration.spec.ts" timestamp="2026-01-19T10:06:18.550Z" hostname="chromium" tests="64" failures="1" skipped="0" time="89.919" errors="0">
+<testcase name="Multi-Step Registration Form Tests › Initial State and Page Load › should display registration form with Step 1" classname="registration.spec.ts" time="0.864">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Initial State and Page Load › should display progress bar" classname="registration.spec.ts" time="0.68">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Initial State and Page Load › should display all step indicators" classname="registration.spec.ts" time="0.697">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Initial State and Page Load › should highlight current step" classname="registration.spec.ts" time="0.697">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should show error for empty first name" classname="registration.spec.ts" time="0.718">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should show error for short first name" classname="registration.spec.ts" time="0.705">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should show error for empty last name" classname="registration.spec.ts" time="0.693">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should show error for missing date of birth" classname="registration.spec.ts" time="1.012">
+<failure message="registration.spec.ts:101:5 should show error for missing date of birth" type="FAILURE">
+<![CDATA[  [chromium] › registration.spec.ts:101:5 › Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should show error for missing date of birth 
+
+    Error: locator.count: Unexpected token "=" while parsing css selector "#dateOfBirth-error, text=/Date of birth/i". Did you mean to CSS.escape it?
+
+      111 |       
+      112 |       // Either error message exists or validation prevented form submission
+    > 113 |       const errorExists = await dateError.count() > 0
+          |                                           ^
+      114 |       const stillOnStep1 = await page.locator('h2:has-text("Personal Information")').isVisible()
+      115 |       
+      116 |       expect(errorExists || stillOnStep1).toBeTruthy()
+        at /Users/dsahanovici/CURSOR_AI_DEMO/tests/registration.spec.ts:113:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../test-results/registration-Multi-Step-Re-65b22-r-for-missing-date-of-birth-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../test-results/registration-Multi-Step-Re-65b22-r-for-missing-date-of-birth-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../test-results/registration-Multi-Step-Re-65b22-r-for-missing-date-of-birth-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|registration-Multi-Step-Re-65b22-r-for-missing-date-of-birth-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|registration-Multi-Step-Re-65b22-r-for-missing-date-of-birth-chromium/video.webm]]
+
+[[ATTACHMENT|registration-Multi-Step-Re-65b22-r-for-missing-date-of-birth-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should show error for underage user" classname="registration.spec.ts" time="0.718">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should clear error when field is corrected" classname="registration.spec.ts" time="0.706">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should not proceed to Step 2 with invalid data" classname="registration.spec.ts" time="0.693">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 1: Personal Information - Field Validation › should proceed to Step 2 with valid data" classname="registration.spec.ts" time="0.986">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should display Step 2 fields" classname="registration.spec.ts" time="0.995">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should show error for invalid email format" classname="registration.spec.ts" time="1.013">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should show error for short username" classname="registration.spec.ts" time="1.004">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should show error for invalid username characters" classname="registration.spec.ts" time="1.003">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should show error for weak password" classname="registration.spec.ts" time="1.022">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should show error for password without requirements" classname="registration.spec.ts" time="1.002">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should show error when passwords do not match" classname="registration.spec.ts" time="1.004">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should display password requirements help text" classname="registration.spec.ts" time="0.981">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should display username requirements help text" classname="registration.spec.ts" time="0.996">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 2: Account Details - Field Validation › should proceed to Step 3 with valid account details" classname="registration.spec.ts" time="1.329">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 3: Preferences - Optional Fields › should display Step 3 fields" classname="registration.spec.ts" time="1.331">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 3: Preferences - Optional Fields › should show optional preferences label" classname="registration.spec.ts" time="1.326">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 3: Preferences - Optional Fields › should toggle newsletter checkbox" classname="registration.spec.ts" time="1.358">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 3: Preferences - Optional Fields › should have notifications enabled by default" classname="registration.spec.ts" time="1.325">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 3: Preferences - Optional Fields › should change theme preference" classname="registration.spec.ts" time="1.323">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 3: Preferences - Optional Fields › should change language preference" classname="registration.spec.ts" time="1.317">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 3: Preferences - Optional Fields › should proceed to Step 4 without filling preferences" classname="registration.spec.ts" time="1.637">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 4: Review &amp; Terms › should display registration summary" classname="registration.spec.ts" time="1.665">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 4: Review &amp; Terms › should display terms and conditions checkbox" classname="registration.spec.ts" time="1.663">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 4: Review &amp; Terms › should display privacy policy checkbox" classname="registration.spec.ts" time="1.668">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 4: Review &amp; Terms › should show error when submitting without accepting terms" classname="registration.spec.ts" time="1.684">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 4: Review &amp; Terms › should show error when submitting without accepting privacy" classname="registration.spec.ts" time="1.682">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 4: Review &amp; Terms › should show both errors when neither is accepted" classname="registration.spec.ts" time="1.681">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Step 4: Review &amp; Terms › should submit form when both checkboxes are checked" classname="registration.spec.ts" time="4.275">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Navigation Between Steps › should navigate forward through all steps" classname="registration.spec.ts" time="1.65">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Navigation Between Steps › should navigate backward using Back button" classname="registration.spec.ts" time="1.313">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Navigation Between Steps › should not show Back button on Step 1" classname="registration.spec.ts" time="0.698">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Navigation Between Steps › should show Back button on Step 2 and beyond" classname="registration.spec.ts" time="0.989">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Navigation Between Steps › should preserve form data when navigating back and forward" classname="registration.spec.ts" time="1.311">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Navigation Between Steps › should update progress bar when navigating" classname="registration.spec.ts" time="0.998">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Navigation Between Steps › should allow clicking on completed steps" classname="registration.spec.ts" time="1.308">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Navigation Between Steps › should not allow clicking on future steps" classname="registration.spec.ts" time="0.663">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Form Submission and Success State › should show loading state during submission" classname="registration.spec.ts" time="1.704">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Form Submission and Success State › should display success message after submission" classname="registration.spec.ts" time="4.261">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Form Submission and Success State › should display user information in success message" classname="registration.spec.ts" time="4.255">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Form Submission and Success State › should display next steps information" classname="registration.spec.ts" time="4.262">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Form Submission and Success State › should display dashboard button" classname="registration.spec.ts" time="4.248">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Form Submission and Success State › should display success icon" classname="registration.spec.ts" time="4.252">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should have proper ARIA labels on required fields" classname="registration.spec.ts" time="0.701">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should have proper form labels" classname="registration.spec.ts" time="0.705">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should mark required fields with asterisk" classname="registration.spec.ts" time="0.695">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should set aria-invalid on fields with errors" classname="registration.spec.ts" time="0.714">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should associate error messages with fields using aria-describedby" classname="registration.spec.ts" time="0.721">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should announce errors with role=&quot;alert&quot;" classname="registration.spec.ts" time="0.701">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should have accessible step navigation" classname="registration.spec.ts" time="0.665">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should have aria-current on active step" classname="registration.spec.ts" time="0.692">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should have meaningful button labels" classname="registration.spec.ts" time="0.712">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Error Messages and Accessibility › should announce success state to screen readers" classname="registration.spec.ts" time="4.257">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Accessibility Compliance › Step 1 should not have accessibility violations" classname="registration.spec.ts" time="0.901">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Accessibility Compliance › Step 2 should not have accessibility violations" classname="registration.spec.ts" time="1.226">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Accessibility Compliance › should be keyboard navigable" classname="registration.spec.ts" time="0.691">
+</testcase>
+<testcase name="Multi-Step Registration Form Tests › Accessibility Compliance › should support keyboard form submission" classname="registration.spec.ts" time="1.173">
+</testcase>
+</testsuite>
+</testsuites>

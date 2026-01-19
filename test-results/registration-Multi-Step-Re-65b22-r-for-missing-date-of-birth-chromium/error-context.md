@@ -1,0 +1,51 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e9]: 🎨
+        - heading "Component Showcase" [level=1] [ref=e10]
+      - generic [ref=e11]:
+        - button "📊 Analytics" [ref=e12] [cursor=pointer]
+        - button "📋 Tasks" [ref=e13] [cursor=pointer]
+        - button "🧭 NavBar" [ref=e14] [cursor=pointer]
+        - button "🛍️ Products" [ref=e15] [cursor=pointer]
+        - button "👤 Profiles" [ref=e16] [cursor=pointer]
+        - button "📝 Register" [ref=e17] [cursor=pointer]
+  - generic [ref=e19]:
+    - generic [ref=e20]:
+      - heading "Create Your Account" [level=1] [ref=e21]
+      - paragraph [ref=e22]: Step 1 of 4
+    - navigation "Registration progress" [ref=e23]:
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - progressbar "Step 1 of 4"
+        - button "Personal Info - Step 1 (current)" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: "1"
+          - generic [ref=e28]: Personal Info
+        - button "Account - Step 2" [disabled] [ref=e29]:
+          - generic [ref=e30]: "2"
+          - generic [ref=e31]: Account
+        - button "Preferences - Step 3" [disabled] [ref=e32]:
+          - generic [ref=e33]: "3"
+          - generic [ref=e34]: Preferences
+        - button "Review - Step 4" [disabled] [ref=e35]:
+          - generic [ref=e36]: "4"
+          - generic [ref=e37]: Review
+    - generic [ref=e39]:
+      - group "Personal Information" [ref=e40]:
+        - heading "Personal Information" [level=2] [ref=e41]
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e44]: First Name *
+            - textbox "First Name required" [ref=e45]: John
+          - generic [ref=e46]:
+            - generic [ref=e47]: Last Name *
+            - textbox "Last Name required" [ref=e48]: Doe
+          - generic [ref=e49]:
+            - generic [ref=e50]: Date of Birth *
+            - textbox "Date of Birth required" [ref=e51]
+      - button "Go to next step" [active] [ref=e53] [cursor=pointer]: Next
+```
