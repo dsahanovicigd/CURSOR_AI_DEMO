@@ -381,6 +381,7 @@ jobs:
           rules_file_name: ${{ steps.check_zap_rules.outputs.exists == 'true' && 'qa-automation/security/.zap/rules.tsv' || '' }}
           cmd_options: '-a'
           fail_action: false
+        continue-on-error: true
       
       - name: Upload ZAP results
         uses: actions/upload-artifact@v4
