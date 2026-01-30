@@ -20,14 +20,14 @@ const BoardColumn = ({ id, title, tasks, onAddTask, onEditTask, onDeleteTask }: 
     todo: 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600',
     'in-progress': 'bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-600',
     review: 'bg-purple-50 dark:bg-purple-900/20 border-purple-300 dark:border-purple-600',
-    done: 'bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-600',
+    completed: 'bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-600',
   }
 
   const statusIcons = {
     todo: '📝',
     'in-progress': '⚡',
     review: '👀',
-    done: '✅',
+    completed: '✅',
   }
 
   const columnColor = statusColors[id as keyof typeof statusColors] || statusColors.todo

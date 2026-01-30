@@ -5,7 +5,6 @@
 
 const ACCESS_TOKEN_KEY = 'auth_token'
 const REFRESH_TOKEN_KEY = 'refresh_token'
-const TOKEN_REFRESH_INTERVAL = 50 * 60 * 1000 // 50 minutes (refresh before 1 hour expiry)
 
 /**
  * Get access token from localStorage
@@ -81,9 +80,9 @@ export const isTokenExpiringSoon = (token: string, bufferMinutes: number = 5): b
 /**
  * Decode token payload
  */
-export const decodeToken = (token: string): any | null => {
+export const decodeToken = (token: string): Record<string, unknown> | null => {
   try {
-    return JSON.parse(atob(token.split('.')[1]))
+    return JSON.parse(atob(token.split('.')[1])) as Record<string, unknown>
   } catch {
     return null
   }
@@ -95,7 +94,10 @@ export const decodeToken = (token: string): any | null => {
 export const getUserIdFromToken = (token: string): number | null => {
   const payload = decodeToken(token)
   if (payload) {
-    return payload.sub || payload.user_id || payload.id || null
+    const sub = payload.sub as number | undefined
+    const userId = payload.user_id as number | undefined
+    const id = payload.id as number | undefined
+    return sub || userId || id || null
   }
   return null
 }

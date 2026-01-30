@@ -70,7 +70,7 @@ const initialTasks: KanbanTask[] = [
     id: '4',
     title: 'Database optimization',
     description: 'Optimize slow queries and add proper indexes',
-    status: 'done',
+    status: 'completed',
     priority: 'high',
     assignee: {
       id: '4',
@@ -89,7 +89,7 @@ const KanbanBoard = () => {
   const [activeTask, setActiveTask] = useState<KanbanTask | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingTask, setEditingTask] = useState<KanbanTask | null>(null)
-  const [defaultStatus, setDefaultStatus] = useState<'todo' | 'in-progress' | 'review' | 'done'>('todo')
+  const [defaultStatus, setDefaultStatus] = useState<'todo' | 'in-progress' | 'review' | 'completed'>('todo')
   const [searchQuery, setSearchQuery] = useState('')
   const [filterPriority, setFilterPriority] = useState<'all' | 'low' | 'medium' | 'high' | 'urgent'>('all')
   const [filterTag, setFilterTag] = useState<string>('all')
@@ -162,7 +162,7 @@ const KanbanBoard = () => {
       todo: filteredTasks.filter(t => t.status === 'todo'),
       'in-progress': filteredTasks.filter(t => t.status === 'in-progress'),
       review: filteredTasks.filter(t => t.status === 'review'),
-      done: filteredTasks.filter(t => t.status === 'done'),
+      completed: filteredTasks.filter(t => t.status === 'completed'),
     }
   }, [filteredTasks])
 
@@ -186,12 +186,12 @@ const KanbanBoard = () => {
     // Determine the target status
     // If over.id is a column ID, use it directly
     // If over.id is a task ID, find that task's status
-    let newStatus: 'todo' | 'in-progress' | 'review' | 'done'
-    
-    const columnIds = ['todo', 'in-progress', 'review', 'done']
+    let newStatus: 'todo' | 'in-progress' | 'review' | 'completed'
+
+    const columnIds = ['todo', 'in-progress', 'review', 'completed']
     if (columnIds.includes(overId)) {
       // Dropped on a column
-      newStatus = overId as 'todo' | 'in-progress' | 'review' | 'done'
+      newStatus = overId as 'todo' | 'in-progress' | 'review' | 'completed'
     } else {
       // Dropped on a task - find that task's status
       const targetTask = tasks.find(t => t.id === overId)
@@ -238,7 +238,7 @@ const KanbanBoard = () => {
     }
   }
 
-  const openAddModal = (status: 'todo' | 'in-progress' | 'review' | 'done') => {
+  const openAddModal = (status: 'todo' | 'in-progress' | 'review' | 'completed') => {
     setDefaultStatus(status)
     setEditingTask(null)
     setIsModalOpen(true)
@@ -385,10 +385,10 @@ const KanbanBoard = () => {
               onDeleteTask={handleDeleteTask}
             />
             <BoardColumn
-              id="done"
+              id="completed"
               title="Done"
-              tasks={tasksByStatus.done}
-              onAddTask={() => openAddModal('done')}
+              tasks={tasksByStatus.completed}
+              onAddTask={() => openAddModal('completed')}
               onEditTask={openEditModal}
               onDeleteTask={handleDeleteTask}
             />

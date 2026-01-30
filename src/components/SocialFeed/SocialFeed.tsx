@@ -15,24 +15,6 @@ const SocialFeed = ({ currentUser, initialPosts = [], onLoadMore }: SocialFeedPr
   const [hasMore, setHasMore] = useState(true)
   const observerTarget = useRef<HTMLDivElement>(null)
 
-  // Infinite scroll observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoading) {
-          loadMorePosts()
-        }
-      },
-      { threshold: 0.5 }
-    )
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current)
-    }
-
-    return () => observer.disconnect()
-  }, [hasMore, isLoading, loadMorePosts])
-
   const loadMorePosts = useCallback(async () => {
     if (onLoadMore && !isLoading) {
       setIsLoading(true)
@@ -50,6 +32,24 @@ const SocialFeed = ({ currentUser, initialPosts = [], onLoadMore }: SocialFeedPr
       }
     }
   }, [onLoadMore, isLoading])
+
+  // Infinite scroll observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoading) {
+          loadMorePosts()
+        }
+      },
+      { threshold: 0.5 }
+    )
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current)
+    }
+
+    return () => observer.disconnect()
+  }, [hasMore, isLoading, loadMorePosts])
 
   const handleCreatePost = (content: string, image?: File) => {
     const newPost: Post = {

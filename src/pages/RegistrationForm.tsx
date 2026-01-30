@@ -158,7 +158,7 @@ const RegistrationForm = () => {
     return Object.keys(stepErrors).length === 0
   }
 
-  const handleInputChange = (field: keyof FormData, value: string | number | Date | null) => {
+  const handleInputChange = (field: keyof FormData, value: string | number | Date | boolean | null) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     
     // Clear error for this field when user starts typing

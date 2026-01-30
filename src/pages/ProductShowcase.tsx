@@ -13,15 +13,27 @@ const ProductShowcase = () => {
   const [sort, setSort] = useState<SortType>('featured')
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [cartCount, setCartCount] = useState(0)
-  interface Cart {
+  type LocalCart = {
     id: number;
-    items: Array<{ id: number; product_id: number; quantity: number; product?: Product }>;
+    items: Array<{ 
+      id: number; 
+      product_id: number; 
+      quantity: number; 
+      product?: {
+        id: number;
+        title: string;
+        price: string | number;
+        image?: string;
+      };
+      subtotal?: number;
+    }>;
     total: number;
     item_count?: number;
+    subtotal?: number;
     discount_code?: string;
     discount_amount?: number;
   }
-  const [cart, setCart] = useState<Cart | null>(null)
+  const [cart, setCart] = useState<LocalCart | null>(null)
   const [showCheckout, setShowCheckout] = useState(false)
   const [, setLoading] = useState(true)
   const [, setError] = useState<string | null>(null)
@@ -71,6 +83,7 @@ const ProductShowcase = () => {
     return () => {
       window.removeEventListener('cartUpdated', handleCartUpdate)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const loadProducts = async () => {
@@ -93,21 +106,26 @@ const ProductShowcase = () => {
         colors?: string[];
         sizes?: string[];
       }
-      const transformedProducts = response.products.map((p: ApiProduct) => ({
+      const transformedProducts: Product[] = (response.products as unknown as ApiProduct[]).map((p) => ({
         id: p.id.toString(),
         title: p.title,
         description: p.description || '',
-        price: parseFloat(p.price),
-        originalPrice: p.originalPrice ? parseFloat(p.originalPrice) : undefined,
+        price: parseFloat(String(p.price)),
+        originalPrice: p.originalPrice ? parseFloat(String(p.originalPrice)) : undefined,
         currency: p.currency || '$',
         image: p.image || 'https://via.placeholder.com/400',
         rating: {
-          average: parseFloat(p.rating.average),
+          average: parseFloat(String(p.rating.average)),
           count: p.rating.count
         },
         category: p.category,
         inStock: p.inStock,
-        badge: p.badge,
+        badge: p.badge ? {
+          text: p.badge.text,
+          type: (p.badge.type === 'sale' || p.badge.type === 'new' || p.badge.type === 'trending' || p.badge.type === 'limited' || p.badge.type === 'bestseller')
+            ? p.badge.type
+            : 'sale'
+        } : undefined,
         colors: p.colors || [],
         sizes: p.sizes || []
       }))
@@ -131,8 +149,9 @@ const ProductShowcase = () => {
       const response = await cartAPI.get()
       console.log('Cart loaded:', response.cart)
       if (response.cart) {
-        setCart(response.cart)
-        const itemCount = response.cart.item_count || response.cart.items?.length || 0
+        const cartData = response.cart as unknown as LocalCart
+        setCart(cartData)
+        const itemCount = cartData.item_count || cartData.items?.length || 0
         setCartCount(itemCount)
         console.log('Cart count updated to:', itemCount)
       }
@@ -146,8 +165,9 @@ const ProductShowcase = () => {
           // Retry loading cart
           const retryResponse = await cartAPI.get()
           if (retryResponse.cart) {
-            setCart(retryResponse.cart)
-            const itemCount = retryResponse.cart.item_count || retryResponse.cart.items?.length || 0
+            const cartData = retryResponse.cart as unknown as LocalCart
+            setCart(cartData)
+            const itemCount = cartData.item_count || cartData.items?.length || 0
             setCartCount(itemCount)
           }
         } catch (loginErr) {
@@ -163,14 +183,15 @@ const ProductShowcase = () => {
   const handleAddToCart = async (product: Product) => {
     try {
       console.log('Adding product to cart:', product.id)
-      const response = await cartAPI.addItem(parseInt(product.id), 1)
+      const response = await cartAPI.addItem(Number(product.id), 1)
       console.log('Add to cart response:', response)
       
       // Update cart immediately from response
       if (response.cart) {
-        setCart(response.cart)
-        setCartCount(response.cart.item_count || response.cart.items?.length || 0)
-        console.log('Cart updated from response, count:', response.cart.item_count || response.cart.items?.length || 0)
+        const cartData = response.cart as unknown as LocalCart
+        setCart(cartData)
+        setCartCount(cartData.item_count || cartData.items?.length || 0)
+        console.log('Cart updated from response, count:', cartData.item_count || cartData.items?.length || 0)
       }
       
       // Also reload cart to ensure sync
@@ -200,10 +221,11 @@ const ProductShowcase = () => {
           await authAPI.login('testcustomer', 'customerpassword123')
           console.log('Auto-login successful, retrying add to cart')
           // Retry adding to cart after login
-          const retryResponse = await cartAPI.addItem(parseInt(product.id), 1)
+          const retryResponse = await cartAPI.addItem(Number(product.id), 1)
           if (retryResponse.cart) {
-            setCart(retryResponse.cart)
-            setCartCount(retryResponse.cart.item_count || retryResponse.cart.items?.length || 0)
+            const cartData = retryResponse.cart as unknown as LocalCart
+            setCart(cartData)
+            setCartCount(cartData.item_count || cartData.items?.length || 0)
           }
           await loadCart()
         } catch (loginErr) {
@@ -219,10 +241,11 @@ const ProductShowcase = () => {
             })
             console.log('Guest registration successful, retrying add to cart')
             // Retry adding to cart after registration
-            const retryResponse = await cartAPI.addItem(parseInt(product.id), 1)
+            const retryResponse = await cartAPI.addItem(Number(product.id), 1)
             if (retryResponse.cart) {
-              setCart(retryResponse.cart)
-              setCartCount(retryResponse.cart.item_count || retryResponse.cart.items?.length || 0)
+              const cartData = retryResponse.cart as unknown as LocalCart
+              setCart(cartData)
+              setCartCount(cartData.item_count || cartData.items?.length || 0)
             }
             await loadCart()
           } catch (registerErr) {

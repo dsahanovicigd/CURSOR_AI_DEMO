@@ -46,16 +46,19 @@ interface Cart {
 
 interface Order {
   id: number;
-  user_id: number;
+  user_id?: number;
+  order_number?: string;
   total: number;
   status: string;
-  created_at: string;
+  created_at?: string;
   items?: CartItem[];
 }
 
 interface PaymentInfo {
   card_number: string;
-  expiry_date: string;
+  expiry_date?: string;
+  expiry_month?: string;
+  expiry_year?: string;
   cvv: string;
   cardholder_name: string;
 }

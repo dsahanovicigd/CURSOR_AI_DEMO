@@ -7,18 +7,26 @@ interface AddTaskModalProps {
   onClose: () => void
   onSave: (task: Omit<KanbanTask, 'id' | 'createdAt' | 'updatedAt'>) => void
   editTask?: KanbanTask | null
-  defaultStatus?: 'todo' | 'in-progress' | 'review' | 'done'
+  defaultStatus?: Task['status']
 }
 
 const AddTaskModal = ({ isOpen, onClose, onSave, editTask, defaultStatus = 'todo' }: AddTaskModalProps) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    title: string;
+    description: string;
+    status: Task['status'];
+    priority: 'low' | 'medium' | 'high' | 'urgent';
+    tags: string[];
+    dueDate: string;
+    assignee: KanbanTask['assignee'];
+  }>({
     title: '',
     description: '',
-    status: defaultStatus,
-    priority: 'medium' as 'low' | 'medium' | 'high' | 'urgent',
-    tags: [] as string[],
+    status: defaultStatus || 'todo',
+    priority: 'medium',
+    tags: [],
     dueDate: '',
-    assignee: undefined as KanbanTask['assignee'],
+    assignee: undefined,
   })
 
   const [tagInput, setTagInput] = useState('')
@@ -155,7 +163,7 @@ const AddTaskModal = ({ isOpen, onClose, onSave, editTask, defaultStatus = 'todo
                 <option value="todo">📝 To Do</option>
                 <option value="in-progress">⚡ In Progress</option>
                 <option value="review">👀 Review</option>
-                <option value="done">✅ Done</option>
+                <option value="completed">✅ Done</option>
               </select>
             </div>
 

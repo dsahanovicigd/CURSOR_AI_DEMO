@@ -26,9 +26,22 @@ interface Cart {
 
 interface Order {
   id: number;
-  order_number: string;
+  order_number?: string;
   total: number;
   status: string;
+  user_id?: number;
+  created_at?: string;
+  items?: Array<{
+    id: number;
+    product_id: number;
+    quantity: number;
+    product?: {
+      id: number;
+      title: string;
+      price: string | number;
+      image?: string;
+    };
+  }>;
 }
 
 interface CheckoutModalProps {
@@ -163,14 +176,24 @@ const CheckoutModal = ({ cart, onClose, onOrderComplete, onCartUpdate }: Checkou
     try {
       const response = await checkoutAPI.processPayment(
         {
-          ...paymentData,
-          expiry_month: parseInt(paymentData.expiry_month),
-          expiry_year: parseInt(paymentData.expiry_year),
+          card_number: paymentData.card_number,
+          cardholder_name: paymentData.cardholder_name,
+          cvv: paymentData.cvv,
+          expiry_date: `${paymentData.expiry_month}/${paymentData.expiry_year}`,
         },
-        shippingAddress
+        {
+          street: shippingAddress.street,
+          city: shippingAddress.city,
+          state: shippingAddress.state,
+          zip_code: shippingAddress.zip,
+          country: shippingAddress.country,
+        }
       )
       
-      setOrder(response.order)
+      setOrder({
+        ...response.order,
+        order_number: response.order.order_number || `ORD-${response.order.id}`,
+      } as Order)
       setStep('success')
     } catch (err) {
       const error = err as Error;
@@ -246,10 +269,11 @@ const CheckoutModal = ({ cart, onClose, onOrderComplete, onCartUpdate }: Checkou
                   cartItems.map((item: CartItem, index: number) => {
                     try {
                       const itemId = item.id || item.product_id || `item-${index}`
-                      const product = item.product || {}
-                      const price = parseFloat(product.price || item.subtotal || 0)
+                      const product = item.product || { id: 0, title: 'Product', price: '0', image: undefined }
+                      const priceValue = typeof product.price === 'string' ? product.price : String(product.price || '0')
+                      const price = parseFloat(priceValue || String(item.subtotal || 0))
                       const quantity = item.quantity || 1
-                      const subtotal = parseFloat(item.subtotal || price * quantity)
+                      const subtotal = parseFloat(String(item.subtotal || price * quantity))
                       
                       return (
                         <div key={itemId} className="flex items-center gap-4 border-b pb-4">
