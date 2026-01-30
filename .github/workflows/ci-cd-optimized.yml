@@ -249,7 +249,7 @@ jobs:
           pip install --cache-dir ~/.cache/pip -r requirements.txt
           pip install --cache-dir ~/.cache/pip pytest pytest-cov pytest-xdist pytest-timeout
       
-      - name: Run tests (group: ${{ matrix.test-group }})
+      - name: 'Run tests (group: ${{ matrix.test-group }})'
         working-directory: ./flask_api
         env:
           DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
