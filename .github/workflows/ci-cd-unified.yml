@@ -328,12 +328,12 @@ jobs:
       - name: Verify Flask app
         working-directory: ./flask_api
         run: |
-          python -c "import sys; sys.path.insert(0, '.'); from app import create_app; app = create_app(); print('Flask app created successfully')"
+          python -c "import sys; import os; sys.path.insert(0, os.getcwd()); from app import create_app; app = create_app(); print('Flask app created successfully')"
         env:
           FLASK_ENV: development
           SECRET_KEY: test-secret-key
           JWT_SECRET_KEY: test-jwt-secret-key
-          PYTHONPATH: ${{ github.workspace }}/flask_api:${{ github.workspace }}
+          PYTHONPATH: ${{ github.workspace }}/flask_api
 
   backend-lint:
     name: Backend Lint
@@ -776,17 +776,34 @@ jobs:
           name: frontend-build-${{ github.sha }}
           path: dist/
       
+      - name: Set Docker tags
+        id: docker_tags
+        run: |
+          if [ -n "${{ secrets.DOCKER_USERNAME }}" ]; then
+            echo "tag1=${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}" >> $GITHUB_OUTPUT
+            echo "tag2=${{ secrets.DOCKER_USERNAME }}/frontend:latest" >> $GITHUB_OUTPUT
+            echo "cache_from=type=registry,ref=${{ secrets.DOCKER_USERNAME }}/frontend:buildcache" >> $GITHUB_OUTPUT
+            echo "cache_to=type=registry,ref=${{ secrets.DOCKER_USERNAME }}/frontend:buildcache,mode=max" >> $GITHUB_OUTPUT
+            echo "push=true" >> $GITHUB_OUTPUT
+          else
+            echo "tag1=frontend:local" >> $GITHUB_OUTPUT
+            echo "tag2=frontend:local" >> $GITHUB_OUTPUT
+            echo "cache_from=" >> $GITHUB_OUTPUT
+            echo "cache_to=" >> $GITHUB_OUTPUT
+            echo "push=false" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile.frontend
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ steps.docker_tags.outputs.push == 'true' && github.event_name != 'pull_request' }}
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }}
-            ${{ secrets.DOCKER_USERNAME }}/frontend:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/frontend:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/frontend:buildcache,mode=max
+            ${{ steps.docker_tags.outputs.tag1 }}
+            ${{ steps.docker_tags.outputs.tag2 }}
+          cache-from: ${{ steps.docker_tags.outputs.cache_from }}
+          cache-to: ${{ steps.docker_tags.outputs.cache_to }}
 
   docker-build-backend:
     name: Build Backend Docker Image
@@ -812,17 +829,34 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
+      - name: Set Docker tags
+        id: docker_tags_backend
+        run: |
+          if [ -n "${{ secrets.DOCKER_USERNAME }}" ]; then
+            echo "tag1=${{ secrets.DOCKER_USERNAME }}/backend:${{ github.sha }}" >> $GITHUB_OUTPUT
+            echo "tag2=${{ secrets.DOCKER_USERNAME }}/backend:latest" >> $GITHUB_OUTPUT
+            echo "cache_from=type=registry,ref=${{ secrets.DOCKER_USERNAME }}/backend:buildcache" >> $GITHUB_OUTPUT
+            echo "cache_to=type=registry,ref=${{ secrets.DOCKER_USERNAME }}/backend:buildcache,mode=max" >> $GITHUB_OUTPUT
+            echo "push=true" >> $GITHUB_OUTPUT
+          else
+            echo "tag1=backend:local" >> $GITHUB_OUTPUT
+            echo "tag2=backend:local" >> $GITHUB_OUTPUT
+            echo "cache_from=" >> $GITHUB_OUTPUT
+            echo "cache_to=" >> $GITHUB_OUTPUT
+            echo "push=false" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Build and push backend image
         uses: docker/build-push-action@v5
         with:
           context: ./flask_api
           file: ./flask_api/Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ steps.docker_tags_backend.outputs.push == 'true' && github.event_name != 'pull_request' }}
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/backend:${{ github.sha }}
-            ${{ secrets.DOCKER_USERNAME }}/backend:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/backend:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/backend:buildcache,mode=max
+            ${{ steps.docker_tags_backend.outputs.tag1 }}
+            ${{ steps.docker_tags_backend.outputs.tag2 }}
+          cache-from: ${{ steps.docker_tags_backend.outputs.cache_from }}
+          cache-to: ${{ steps.docker_tags_backend.outputs.cache_to }}
 
   # ============================================================================
   # DEPLOYMENT: Blue-Green Strategy
