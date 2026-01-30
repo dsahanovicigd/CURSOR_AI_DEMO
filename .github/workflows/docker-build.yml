@@ -47,6 +47,14 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix={{branch}}-
       
+      - name: Check Dockerfile exists
+        run: |
+          if [ ! -f "Dockerfile.frontend" ]; then
+            echo "Error: Dockerfile.frontend not found"
+            ls -la | grep -i dockerfile
+            exit 1
+          fi
+      
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
         with:
@@ -90,6 +98,19 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix={{branch}}-
+      
+      - name: Check flask_api directory exists
+        run: |
+          if [ ! -d "flask_api" ]; then
+            echo "Error: flask_api directory not found"
+            ls -la
+            exit 1
+          fi
+          if [ ! -f "flask_api/Dockerfile" ]; then
+            echo "Error: flask_api/Dockerfile not found"
+            ls -la flask_api/ | grep -i dockerfile
+            exit 1
+          fi
       
       - name: Build and push backend image
         uses: docker/build-push-action@v5

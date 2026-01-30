@@ -685,6 +685,18 @@ jobs:
             type=sha,prefix={{branch}}-
             type=raw,value=latest,enable={{is_default_branch}}
       
+      - name: Check flask_api directory exists
+        run: |
+          if [ ! -d "flask_api" ]; then
+            echo "Error: flask_api directory not found"
+            ls -la
+            exit 1
+          fi
+          if [ ! -f "flask_api/Dockerfile" ]; then
+            echo "Error: flask_api/Dockerfile not found"
+            exit 1
+          fi
+      
       - name: Build and push backend image
         uses: docker/build-push-action@v5
         with:
