@@ -192,13 +192,12 @@ jobs:
       - name: Verify Flask app
         working-directory: ./flask_api
         run: |
-          export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-          python -c "import sys; sys.path.insert(0, '.'); from app import create_app; app = create_app(); print('Flask app created successfully')"
+          python -c "import sys; import os; sys.path.insert(0, os.getcwd()); from app import create_app; app = create_app(); print('Flask app created successfully')"
         env:
           FLASK_ENV: development
           SECRET_KEY: test-secret-key
           JWT_SECRET_KEY: test-jwt-secret-key
-          PYTHONPATH: ${{ github.workspace }}/flask_api:${{ github.workspace }}
+          PYTHONPATH: ${{ github.workspace }}/flask_api
 
   # ============================================================================
   # TEST STAGE (Split into parallel jobs for speed)

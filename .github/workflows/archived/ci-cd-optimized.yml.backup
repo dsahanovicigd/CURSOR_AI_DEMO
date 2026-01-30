@@ -333,17 +333,30 @@ jobs:
       - name: Check if Python code exists
         id: check_python_code
         run: |
-          if [ -d "flask_api" ] && [ -f "flask_api/requirements.txt" ]; then
+          if [ -d "flask_api/app" ] && [ -f "flask_api/requirements.txt" ] && [ -n "$(find flask_api/app -name '*.py' -type f 2>/dev/null | head -1)" ]; then
             echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Python code found in flask_api/app"
+            find flask_api/app -name '*.py' -type f | head -5
           else
             echo "exists=false" >> $GITHUB_OUTPUT
             echo "Python code not found, skipping Python analysis"
           fi
       
+      - name: Set CodeQL languages
+        id: set_languages
+        run: |
+          if [ "${{ steps.check_python_code.outputs.exists }}" == "true" ]; then
+            echo "languages=javascript,typescript,python" >> $GITHUB_OUTPUT
+          else
+            echo "languages=javascript,typescript" >> $GITHUB_OUTPUT
+          fi
+          echo "CodeQL will analyze: ${{ steps.set_languages.outputs.languages }}"
+      
       - name: Run CodeQL Analysis
         uses: github/codeql-action/init@v4
+        id: codeql-init
         with:
-          languages: ${{ steps.check_python_code.outputs.exists == 'true' && 'javascript,typescript,python' || 'javascript,typescript' }}
+          languages: ${{ steps.set_languages.outputs.languages }}
           queries: security-extended,security-and-quality
       
       - name: Autobuild
