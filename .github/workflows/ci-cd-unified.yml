@@ -335,7 +335,7 @@ jobs:
         env:
           FLASK_ENV: testing
           SECRET_KEY: test-secret-key
-          DATABASE_URL: sqlite:///:memory:
+          DATABASE_URL: 'sqlite:///:memory:'
         run: |
           pytest tests/ -v --cov=app --cov-report=xml --cov-report=html -n auto --maxfail=5 || true
         continue-on-error: true
@@ -427,7 +427,7 @@ jobs:
         env:
           FLASK_ENV: testing
           SECRET_KEY: test-secret-key
-          DATABASE_URL: sqlite:///:memory:
+          DATABASE_URL: 'sqlite:///:memory:'
         run: |
           pytest ../qa-automation/tests/integration/backend/test_comprehensive_api_suite.py -v || true
         continue-on-error: true
@@ -607,7 +607,7 @@ jobs:
         working-directory: ./flask_api
         run: |
           export FLASK_ENV=testing
-          export DATABASE_URL=sqlite:///:memory:
+          export DATABASE_URL='sqlite:///:memory:'
           python -m flask run --port=5001 &
           sleep 10
         continue-on-error: true
