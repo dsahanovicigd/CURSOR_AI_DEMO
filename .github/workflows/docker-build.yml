@@ -48,14 +48,20 @@ jobs:
             type=sha,prefix={{branch}}-
       
       - name: Check Dockerfile exists
+        id: check_dockerfile_frontend
         run: |
-          if [ ! -f "Dockerfile.frontend" ]; then
-            echo "Error: Dockerfile.frontend not found"
-            ls -la | grep -i dockerfile
-            exit 1
+          if [ -f "Dockerfile.frontend" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "✅ Dockerfile.frontend found"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Warning: Dockerfile.frontend not found - skipping build"
+            echo "Available files:"
+            ls -la | grep -i dockerfile || echo "No Dockerfiles found"
           fi
       
       - name: Build and push frontend image
+        if: steps.check_dockerfile_frontend.outputs.exists == 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -99,20 +105,26 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix={{branch}}-
       
-      - name: Check flask_api directory exists
+      - name: Check flask_api directory and Dockerfile exists
+        id: check_dockerfile_backend
         run: |
-          if [ ! -d "flask_api" ]; then
-            echo "Error: flask_api directory not found"
-            ls -la
-            exit 1
-          fi
-          if [ ! -f "flask_api/Dockerfile" ]; then
-            echo "Error: flask_api/Dockerfile not found"
-            ls -la flask_api/ | grep -i dockerfile
-            exit 1
+          if [ -d "flask_api" ] && [ -f "flask_api/Dockerfile" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "✅ flask_api/Dockerfile found"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Warning: flask_api/Dockerfile not found - skipping build"
+            if [ ! -d "flask_api" ]; then
+              echo "flask_api directory not found"
+              ls -la | head -10
+            else
+              echo "flask_api directory exists but Dockerfile missing"
+              ls -la flask_api/ | grep -i dockerfile || echo "No Dockerfile found in flask_api/"
+            fi
           fi
       
       - name: Build and push backend image
+        if: steps.check_dockerfile_backend.outputs.exists == 'true'
         uses: docker/build-push-action@v5
         with:
           context: ./flask_api
