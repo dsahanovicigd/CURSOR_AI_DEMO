@@ -35,11 +35,70 @@ env:
 
 jobs:
   # ============================================================================
+  # CHANGE DETECTION: Detect what changed in the commit
+  # ============================================================================
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+      workflows: ${{ steps.filter.outputs.workflows }}
+      docker: ${{ steps.filter.outputs.docker }}
+      docs: ${{ steps.filter.outputs.docs }}
+      all: ${{ steps.filter.outputs.all }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      
+      - name: Detect changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'src/**'
+              - 'public/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'vite.config.*'
+              - 'tsconfig.json'
+              - 'tailwind.config.*'
+              - 'postcss.config.*'
+              - '.eslintrc*'
+              - 'playwright.config.ts'
+              - 'tests/**/*.spec.ts'
+              - 'qa-automation/tests/e2e/frontend/**'
+            backend:
+              - 'flask_api/**'
+              - 'qa-automation/tests/integration/backend/**'
+              - 'qa-automation/tests/unit/backend/**'
+            workflows:
+              - '.github/workflows/**'
+            docker:
+              - 'Dockerfile*'
+              - 'docker-compose*.yml'
+              - '.dockerignore'
+            docs:
+              - '*.md'
+              - 'docs/**'
+            all:
+              - '**'
+
+  # ============================================================================
   # FRONTEND: Build with Advanced Caching
   # ============================================================================
   frontend-build:
     name: Frontend Build
     runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.frontend == 'true' ||
+      needs.detect-changes.outputs.workflows == 'true' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
     timeout-minutes: 10
     
     steps:
@@ -109,9 +168,11 @@ jobs:
   frontend-test-unit:
     name: Frontend Tests - Unit
     runs-on: ubuntu-latest
-    needs: frontend-build
+    needs: [detect-changes, frontend-build]
     timeout-minutes: 15
-    if: github.event.inputs.skip_tests != 'true'
+    if: |
+      (needs.detect-changes.outputs.frontend == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      github.event.inputs.skip_tests != 'true'
     
     steps:
       - name: Checkout code
@@ -148,9 +209,11 @@ jobs:
   frontend-test-integration:
     name: Frontend Tests - Integration
     runs-on: ubuntu-latest
-    needs: frontend-build
+    needs: [detect-changes, frontend-build]
     timeout-minutes: 15
-    if: github.event.inputs.skip_tests != 'true'
+    if: |
+      (needs.detect-changes.outputs.frontend == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      github.event.inputs.skip_tests != 'true'
     
     steps:
       - name: Checkout code
@@ -185,9 +248,11 @@ jobs:
   frontend-test-e2e:
     name: Frontend Tests - E2E
     runs-on: ubuntu-latest
-    needs: frontend-build
+    needs: [detect-changes, frontend-build]
     timeout-minutes: 15
-    if: github.event.inputs.skip_tests != 'true'
+    if: |
+      (needs.detect-changes.outputs.frontend == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      github.event.inputs.skip_tests != 'true'
     
     steps:
       - name: Checkout code
@@ -225,6 +290,12 @@ jobs:
   backend-build:
     name: Backend Build
     runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.backend == 'true' ||
+      needs.detect-changes.outputs.workflows == 'true' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
     timeout-minutes: 10
     
     steps:
@@ -267,6 +338,11 @@ jobs:
   backend-lint:
     name: Backend Lint
     runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.backend == 'true' ||
+      needs.detect-changes.outputs.workflows == 'true' ||
+      github.event_name == 'workflow_dispatch'
     timeout-minutes: 10
     
     steps:
@@ -308,9 +384,11 @@ jobs:
   backend-test-unit:
     name: Backend Tests - Unit
     runs-on: ubuntu-latest
-    needs: backend-build
+    needs: [detect-changes, backend-build]
     timeout-minutes: 20
-    if: github.event.inputs.skip_tests != 'true'
+    if: |
+      (needs.detect-changes.outputs.backend == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      github.event.inputs.skip_tests != 'true'
     
     steps:
       - name: Checkout code
@@ -351,9 +429,11 @@ jobs:
   backend-test-integration:
     name: Backend Tests - Integration
     runs-on: ubuntu-latest
-    needs: backend-build
+    needs: [detect-changes, backend-build]
     timeout-minutes: 25
-    if: github.event.inputs.skip_tests != 'true'
+    if: |
+      (needs.detect-changes.outputs.backend == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      github.event.inputs.skip_tests != 'true'
     
     services:
       postgres:
@@ -400,9 +480,11 @@ jobs:
   backend-test-api:
     name: Backend Tests - API
     runs-on: ubuntu-latest
-    needs: backend-build
+    needs: [detect-changes, backend-build]
     timeout-minutes: 20
-    if: github.event.inputs.skip_tests != 'true'
+    if: |
+      (needs.detect-changes.outputs.backend == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      github.event.inputs.skip_tests != 'true'
     
     steps:
       - name: Checkout code
@@ -438,6 +520,12 @@ jobs:
   security-frontend:
     name: Frontend Security Scan
     runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.frontend == 'true' ||
+      needs.detect-changes.outputs.workflows == 'true' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
     timeout-minutes: 10
     
     steps:
@@ -468,6 +556,12 @@ jobs:
   security-backend:
     name: Backend Security Scan
     runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.backend == 'true' ||
+      needs.detect-changes.outputs.workflows == 'true' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
     timeout-minutes: 15
     
     steps:
@@ -509,6 +603,13 @@ jobs:
   security-sast:
     name: SAST Security Scan (CodeQL)
     runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.frontend == 'true' ||
+      needs.detect-changes.outputs.backend == 'true' ||
+      needs.detect-changes.outputs.workflows == 'true' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
     timeout-minutes: 15
     permissions:
       contents: read
@@ -557,6 +658,14 @@ jobs:
   security-container:
     name: Container Security Scan
     runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.docker == 'true' ||
+      needs.detect-changes.outputs.frontend == 'true' ||
+      needs.detect-changes.outputs.backend == 'true' ||
+      needs.detect-changes.outputs.workflows == 'true' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
     timeout-minutes: 10
     
     steps:
@@ -585,9 +694,11 @@ jobs:
   performance-test:
     name: Performance Testing
     runs-on: ubuntu-latest
-    needs: [frontend-build, backend-build]
+    needs: [detect-changes, frontend-build, backend-build]
     timeout-minutes: 30
-    if: github.event.inputs.skip_tests != 'true'
+    if: |
+      (needs.detect-changes.outputs.frontend == 'true' || needs.detect-changes.outputs.backend == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      github.event.inputs.skip_tests != 'true'
     
     steps:
       - name: Checkout code
@@ -632,7 +743,10 @@ jobs:
   docker-build-frontend:
     name: Build Frontend Docker Image
     runs-on: ubuntu-latest
-    needs: [frontend-build, frontend-test-unit, frontend-test-integration]
+    needs: [detect-changes, frontend-build, frontend-test-unit, frontend-test-integration]
+    if: |
+      (needs.detect-changes.outputs.frontend == 'true' || needs.detect-changes.outputs.docker == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      (needs.frontend-build.result == 'success' || needs.frontend-build.result == 'skipped')
     timeout-minutes: 15
     
     steps:
@@ -670,7 +784,10 @@ jobs:
   docker-build-backend:
     name: Build Backend Docker Image
     runs-on: ubuntu-latest
-    needs: [backend-build, backend-test-unit]
+    needs: [detect-changes, backend-build, backend-test-unit]
+    if: |
+      (needs.detect-changes.outputs.backend == 'true' || needs.detect-changes.outputs.docker == 'true' || needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch') &&
+      (needs.backend-build.result == 'success' || needs.backend-build.result == 'skipped')
     timeout-minutes: 15
     
     steps:
@@ -706,6 +823,7 @@ jobs:
     name: Deploy Staging (Blue-Green)
     runs-on: ubuntu-latest
     needs: [
+      detect-changes,
       frontend-build,
       frontend-test-unit,
       frontend-test-integration,
@@ -716,8 +834,10 @@ jobs:
       docker-build-backend
     ]
     if: |
-      (github.ref == 'refs/heads/develop' && github.event_name == 'push') ||
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')
+      ((github.ref == 'refs/heads/develop' && github.event_name == 'push') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')) &&
+      (needs.frontend-build.result == 'success' || needs.frontend-build.result == 'skipped') &&
+      (needs.backend-build.result == 'success' || needs.backend-build.result == 'skipped')
     environment:
       name: staging
       url: ${{ secrets.STAGING_URL || 'https://staging.example.com' }}
@@ -775,6 +895,7 @@ jobs:
     name: Deploy Production (Blue-Green)
     runs-on: ubuntu-latest
     needs: [
+      detect-changes,
       frontend-build,
       frontend-test-unit,
       frontend-test-integration,
@@ -792,8 +913,10 @@ jobs:
       docker-build-backend
     ]
     if: |
-      (github.ref == 'refs/heads/main' && github.event_name == 'push') ||
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
+      ((github.ref == 'refs/heads/main' && github.event_name == 'push') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')) &&
+      (needs.frontend-build.result == 'success' || needs.frontend-build.result == 'skipped') &&
+      (needs.backend-build.result == 'success' || needs.backend-build.result == 'skipped')
     environment:
       name: production
       url: ${{ secrets.PRODUCTION_URL || 'https://example.com' }}
