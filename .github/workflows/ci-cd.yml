@@ -119,6 +119,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Install linting dependencies
         working-directory: ./flask_api
@@ -166,6 +167,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Install dependencies
         working-directory: ./flask_api
@@ -215,6 +217,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Install dependencies
         working-directory: ./flask_api
@@ -238,6 +241,9 @@ jobs:
   security-scan:
     name: Security Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     
     steps:
       - name: Checkout code
@@ -253,7 +259,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
       
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
@@ -284,6 +290,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Install backend dependencies
         working-directory: ./flask_api
@@ -338,6 +346,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Install backend dependencies
         working-directory: ./flask_api

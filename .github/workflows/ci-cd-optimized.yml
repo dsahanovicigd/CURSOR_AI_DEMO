@@ -166,6 +166,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Cache pip packages
         uses: actions/cache@v4
@@ -233,6 +234,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Cache pip packages
         uses: actions/cache@v4
@@ -296,22 +298,26 @@ jobs:
     name: SAST Security Scan
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
       - name: Run CodeQL Analysis
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: javascript,typescript,python
           queries: security-extended,security-and-quality
       
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+        uses: github/codeql-action/autobuild@v4
       
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
       
       - name: Run Bandit (Python SAST)
         working-directory: ./flask_api
@@ -331,6 +337,9 @@ jobs:
     name: Dependency Security Scan
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
     
     steps:
       - name: Checkout code
@@ -369,7 +378,7 @@ jobs:
           exit-code: '0'
       
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'

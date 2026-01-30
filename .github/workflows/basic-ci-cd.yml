@@ -62,6 +62,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Install dependencies
         working-directory: ./flask_api
@@ -670,7 +671,7 @@ jobs:
     
     steps:
       - name: Send Slack notification
-        uses: slackapi/slack-github-action@v1
+        uses: slackapi/slack-github-action@v2
         with:
           webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
           payload: |

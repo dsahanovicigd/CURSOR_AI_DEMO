@@ -265,6 +265,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Restore pip cache
         uses: actions/cache@v4
@@ -326,6 +327,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Restore pip cache
         uses: actions/cache@v4
@@ -388,6 +390,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Restore pip cache
         uses: actions/cache@v4
@@ -435,6 +438,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Restore pip cache
         uses: actions/cache@v4
@@ -519,6 +523,7 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
       
       - name: Install security tools
         working-directory: ./flask_api
@@ -547,7 +552,7 @@ jobs:
           command: test
       
       - name: Run Semgrep SAST
-        uses: returntocorp/semgrep-action@v1
+        uses: semgrep/semgrep-action@v1
         continue-on-error: true
         with:
           config: >-
@@ -569,6 +574,9 @@ jobs:
     name: Security Scan (Container)
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      security-events: write
     
     steps:
       - name: Checkout code
@@ -585,7 +593,7 @@ jobs:
           exit-code: '0'
       
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
@@ -1059,7 +1067,7 @@ jobs:
       
       - name: Send Slack notification on failure
         if: steps.status.outputs.status == 'failure'
-        uses: slackapi/slack-github-action@v1
+        uses: slackapi/slack-github-action@v2
         with:
           payload: |
             {
@@ -1121,7 +1129,7 @@ jobs:
       
       - name: Send Slack notification on success
         if: steps.status.outputs.status == 'success' && github.ref == 'refs/heads/main'
-        uses: slackapi/slack-github-action@v1
+        uses: slackapi/slack-github-action@v2
         with:
           payload: |
             {
