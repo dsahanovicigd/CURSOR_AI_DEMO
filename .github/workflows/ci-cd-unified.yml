@@ -840,7 +840,7 @@ jobs:
       (needs.backend-build.result == 'success' || needs.backend-build.result == 'skipped')
     environment:
       name: staging
-      url: ${{ secrets.STAGING_URL || 'https://staging.example.com' }}
+      url: https://staging.example.com
     
     steps:
       - name: Checkout code
@@ -849,7 +849,8 @@ jobs:
       - name: Determine active environment
         id: env-check
         run: |
-          CURRENT_ENV=$(curl -s ${{ secrets.STAGING_URL }}/env 2>/dev/null || echo "blue")
+          STAGING_URL="${{ secrets.STAGING_URL || 'https://staging.example.com' }}"
+          CURRENT_ENV=$(curl -s ${STAGING_URL}/env 2>/dev/null || echo "blue")
           if [ "$CURRENT_ENV" = "blue" ]; then
             echo "new_env=green" >> $GITHUB_OUTPUT
             echo "old_env=blue" >> $GITHUB_OUTPUT
@@ -919,7 +920,7 @@ jobs:
       (needs.backend-build.result == 'success' || needs.backend-build.result == 'skipped')
     environment:
       name: production
-      url: ${{ secrets.PRODUCTION_URL || 'https://example.com' }}
+      url: https://example.com
     
     steps:
       - name: Checkout code
@@ -928,7 +929,8 @@ jobs:
       - name: Determine active environment
         id: env-check
         run: |
-          CURRENT_ENV=$(curl -s ${{ secrets.PRODUCTION_URL }}/env 2>/dev/null || echo "blue")
+          PRODUCTION_URL="${{ secrets.PRODUCTION_URL || 'https://example.com' }}"
+          CURRENT_ENV=$(curl -s ${PRODUCTION_URL}/env 2>/dev/null || echo "blue")
           if [ "$CURRENT_ENV" = "blue" ]; then
             echo "new_env=green" >> $GITHUB_OUTPUT
             echo "old_env=blue" >> $GITHUB_OUTPUT
