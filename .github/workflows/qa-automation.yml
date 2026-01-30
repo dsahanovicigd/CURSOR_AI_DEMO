@@ -364,11 +364,21 @@ jobs:
           sleep 10
         continue-on-error: true
       
+      - name: Check ZAP rules file exists
+        id: check_zap_rules
+        run: |
+          if [ -f "qa-automation/security/.zap/rules.tsv" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Warning: ZAP rules file not found, using default rules"
+          fi
+      
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
           target: 'http://localhost:4173'
-          rules_file_name: 'qa-automation/security/.zap/rules.tsv'
+          rules_file_name: ${{ steps.check_zap_rules.outputs.exists == 'true' && 'qa-automation/security/.zap/rules.tsv' || '' }}
           cmd_options: '-a'
           fail_action: false
       

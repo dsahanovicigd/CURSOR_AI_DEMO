@@ -330,10 +330,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Check if Python code exists
+        id: check_python_code
+        run: |
+          if [ -d "flask_api" ] && [ -f "flask_api/requirements.txt" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Python code not found, skipping Python analysis"
+          fi
+      
       - name: Run CodeQL Analysis
         uses: github/codeql-action/init@v4
         with:
-          languages: javascript,typescript,python
+          languages: ${{ steps.check_python_code.outputs.exists == 'true' && 'javascript,typescript,python' || 'javascript,typescript' }}
           queries: security-extended,security-and-quality
       
       - name: Autobuild
@@ -436,7 +446,8 @@ jobs:
       
       - name: Install performance testing tools
         run: |
-          pip install locust k6-runner pytest-benchmark
+          pip install locust pytest-benchmark || echo "Performance tools installation failed"
+        continue-on-error: true
       
       - name: Start backend server
         working-directory: ./flask_api
@@ -684,14 +695,19 @@ jobs:
             // Switch traffic back to old environment
             // Add rollback commands here
             
-            // Create deployment status
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: deploymentId,
-              state: 'failure',
-              description: `Rolled back to ${oldEnv} environment due to health check failures`
-            });
+            // Create deployment status (if deployment exists)
+            try {
+              await github.rest.repos.createDeploymentStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deploymentId,
+                state: 'failure',
+                description: `Rolled back to ${oldEnv} environment due to health check failures`
+              });
+            } catch (error) {
+              console.log(`Could not update deployment status: ${error.message}`);
+              // Continue even if deployment status update fails
+            }
             
             // Send notification
             console.log('Rollback completed. Notification sent.');

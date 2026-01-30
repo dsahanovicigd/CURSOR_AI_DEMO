@@ -1071,13 +1071,18 @@ jobs:
             // Add rollback commands here
             // kubectl rollout undo deployment/production-frontend
             // kubectl rollout undo deployment/production-backend
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: deploymentId,
-              state: 'failure',
-              description: 'Health checks failed, rollback initiated'
-            });
+            try {
+              await github.rest.repos.createDeploymentStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deploymentId,
+                state: 'failure',
+                description: 'Health checks failed, rollback initiated'
+              });
+            } catch (error) {
+              console.log(`Could not update deployment status: ${error.message}`);
+              // Continue even if deployment status update fails
+            }
             core.setFailed('Production deployment health checks failed');
       
       - name: Deployment summary
