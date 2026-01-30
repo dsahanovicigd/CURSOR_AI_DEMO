@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { authAPI } from '../services/api'
+import { useAuth } from '../context/AuthContext'
 
 interface FormData {
   // Step 1: Personal Information
@@ -28,6 +30,7 @@ interface FormErrors {
 }
 
 const RegistrationForm = () => {
+  const { checkAuth } = useAuth()
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
@@ -47,6 +50,7 @@ const RegistrationForm = () => {
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [touched, setTouched] = useState<{[key: string]: boolean}>({})
 
   const totalSteps = 4
@@ -154,7 +158,7 @@ const RegistrationForm = () => {
     return Object.keys(stepErrors).length === 0
   }
 
-  const handleInputChange = (field: keyof FormData, value: any) => {
+  const handleInputChange = (field: keyof FormData, value: string | number | Date | null) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     
     // Clear error for this field when user starts typing
@@ -198,14 +202,55 @@ const RegistrationForm = () => {
     }
     
     setIsSubmitting(true)
+    setSubmitError(null)
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    
-    console.log('Form submitted:', formData)
+    try {
+      // Prepare registration data for backend
+      const registrationData = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        first_name: formData.firstName || undefined,
+        last_name: formData.lastName || undefined,
+      }
+      
+      // Call backend registration API (this also auto-logs in)
+      const response = await authAPI.register(registrationData)
+      
+      // Update auth context with user info
+      if (response.user) {
+        await checkAuth()
+      }
+      
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+      
+      console.log('Registration successful:', response)
+    } catch (error) {
+      setIsSubmitting(false)
+      const apiError = error as { message?: string; status?: number }
+      
+      // Handle different error types
+      if (apiError.status === 400) {
+        // Validation error from backend
+        setSubmitError(apiError.message || 'Registration failed. Please check your information and try again.')
+      } else if (apiError.status === 409 || apiError.message?.includes('already exists')) {
+        // Duplicate username or email
+        if (apiError.message?.includes('username')) {
+          setErrors({ ...errors, username: 'This username is already taken. Please choose another.' })
+        } else if (apiError.message?.includes('email')) {
+          setErrors({ ...errors, email: 'This email is already registered. Please use another email or login.' })
+        } else {
+          setSubmitError('Username or email already exists. Please use different credentials.')
+        }
+      } else if (apiError.message?.includes('Failed to fetch') || apiError.message?.includes('Unable to connect')) {
+        setSubmitError('Unable to connect to server. Please make sure the backend API is running.')
+      } else {
+        setSubmitError(apiError.message || 'Registration failed. Please try again later.')
+      }
+      
+      console.error('Registration error:', error)
+    }
   }
 
   // Success Screen
@@ -246,7 +291,10 @@ const RegistrationForm = () => {
           </div>
           
           <button
-            onClick={() => window.location.href = '/'}
+            onClick={() => {
+              // Redirect to dashboard - user is already logged in after registration
+              window.location.href = '/'
+            }}
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             aria-label="Go to dashboard"
           >
@@ -328,6 +376,21 @@ const RegistrationForm = () => {
 
         {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+          {/* Error Message */}
+          {submitError && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg" role="alert">
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <h3 className="text-sm font-semibold text-red-900 mb-1">Registration Failed</h3>
+                  <p className="text-sm text-red-800">{submitError}</p>
+                </div>
+              </div>
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit} noValidate>
             {/* Step 1: Personal Information */}
             {currentStep === 1 && (

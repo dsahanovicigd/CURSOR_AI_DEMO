@@ -6,7 +6,7 @@ interface TaskCardProps {
   onDelete?: (taskId: string) => void
 }
 
-const TaskCard = ({ task, onStatusChange, onDelete }: TaskCardProps) => {
+const TaskCard = ({ task }: TaskCardProps) => {
   const priorityColors = {
     low: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
     medium: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',

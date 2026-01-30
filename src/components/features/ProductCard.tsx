@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Product, ProductCardProps } from '../../types/product.types'
+import { ProductCardProps } from '../../types/product.types'
 import StarRating from '../common/StarRating'
 import Button from '../common/Button'
 

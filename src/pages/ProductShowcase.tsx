@@ -1,23 +1,246 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ProductCard } from '../components'
 import { Product } from '../types/product.types'
-import { sampleProducts } from '../data/sampleProducts'
+import { productsAPI, cartAPI, authAPI } from '../services/api'
+import CheckoutModal from '../components/checkout/CheckoutModal'
 
 type FilterType = 'all' | 'sale' | 'bestseller' | 'new' | 'instock'
 type SortType = 'featured' | 'price-low' | 'price-high' | 'rating'
 
 const ProductShowcase = () => {
-  const [products, setProducts] = useState<Product[]>(sampleProducts)
+  const [products, setProducts] = useState<Product[]>([])
   const [filter, setFilter] = useState<FilterType>('all')
   const [sort, setSort] = useState<SortType>('featured')
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [cartCount, setCartCount] = useState(0)
+  interface Cart {
+    id: number;
+    items: Array<{ id: number; product_id: number; quantity: number; product?: Product }>;
+    total: number;
+    item_count?: number;
+    discount_code?: string;
+    discount_amount?: number;
+  }
+  const [cart, setCart] = useState<Cart | null>(null)
+  const [showCheckout, setShowCheckout] = useState(false)
+  const [, setLoading] = useState(true)
+  const [, setError] = useState<string | null>(null)
+
+  // Load products and cart on mount
+  useEffect(() => {
+    loadProducts()
+    // Auto-login with test account if not authenticated
+    const autoLogin = async () => {
+      if (!authAPI.isAuthenticated()) {
+        try {
+          console.log('Auto-login attempt on page load...')
+          await authAPI.login('testcustomer', 'customerpassword123')
+          console.log('Auto-login successful on page load')
+        } catch (err) {
+          const error = err as Error;
+          console.log('Auto-login failed on page load:', error.message)
+          // If login fails, try to register a guest user
+          try {
+            const guestUsername = `guest_${Math.random().toString(36).substring(7)}`
+            console.log('Attempting guest registration on page load...', guestUsername)
+            await authAPI.register({
+              username: guestUsername,
+              email: `${guestUsername}@example.com`,
+              password: 'guest123'
+            })
+            console.log('Guest registration successful on page load')
+          } catch (registerErr) {
+            const error = registerErr as Error;
+            console.log('Auto-login/register failed on page load:', error.message)
+            // Continue without auth - user can still browse products
+          }
+        }
+      }
+      // Load cart after authentication attempt
+      loadCart()
+    }
+    autoLogin()
+
+    // Listen for cart update events from CheckoutModal
+    const handleCartUpdate = () => {
+      console.log('Cart update event received, reloading cart...')
+      loadCart()
+    }
+    window.addEventListener('cartUpdated', handleCartUpdate)
+
+    return () => {
+      window.removeEventListener('cartUpdated', handleCartUpdate)
+    }
+  }, [])
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true)
+      const response = await productsAPI.getAll({ per_page: 100 })
+      // Transform API products to match frontend Product type
+      interface ApiProduct {
+        id: number;
+        title: string;
+        description?: string;
+        price: string | number;
+        originalPrice?: string | number;
+        currency?: string;
+        image?: string;
+        rating: { average: string | number; count: number };
+        category?: string;
+        inStock?: boolean;
+        badge?: { type: string; text: string };
+        colors?: string[];
+        sizes?: string[];
+      }
+      const transformedProducts = response.products.map((p: ApiProduct) => ({
+        id: p.id.toString(),
+        title: p.title,
+        description: p.description || '',
+        price: parseFloat(p.price),
+        originalPrice: p.originalPrice ? parseFloat(p.originalPrice) : undefined,
+        currency: p.currency || '$',
+        image: p.image || 'https://via.placeholder.com/400',
+        rating: {
+          average: parseFloat(p.rating.average),
+          count: p.rating.count
+        },
+        category: p.category,
+        inStock: p.inStock,
+        badge: p.badge,
+        colors: p.colors || [],
+        sizes: p.sizes || []
+      }))
+      setProducts(transformedProducts)
+      setError(null)
+    } catch (err) {
+      const error = err as Error;
+      console.error('Failed to load products:', err)
+      const errorMsg = error.message || 'Failed to load products'
+      setError(errorMsg)
+      // Fallback to sample products if API fails
+      const { sampleProducts } = await import('../data/sampleProducts')
+      setProducts(sampleProducts)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const loadCart = async () => {
+    try {
+      const response = await cartAPI.get()
+      console.log('Cart loaded:', response.cart)
+      if (response.cart) {
+        setCart(response.cart)
+        const itemCount = response.cart.item_count || response.cart.items?.length || 0
+        setCartCount(itemCount)
+        console.log('Cart count updated to:', itemCount)
+      }
+    } catch (err) {
+      const error = err as Error & { status?: number };
+      console.error('Failed to load cart:', err)
+      // If not authenticated (401), try to auto-login
+      if (error.status === 401 || (error.message && error.message.includes('401'))) {
+        try {
+          await authAPI.login('testcustomer', 'customerpassword123')
+          // Retry loading cart
+          const retryResponse = await cartAPI.get()
+          if (retryResponse.cart) {
+            setCart(retryResponse.cart)
+            const itemCount = retryResponse.cart.item_count || retryResponse.cart.items?.length || 0
+            setCartCount(itemCount)
+          }
+        } catch (loginErr) {
+          // Silently fail - cart will be empty
+          console.log('Cart not available without authentication')
+        }
+      } else {
+        setError(error.message)
+      }
+    }
+  }
 
   const handleAddToCart = async (product: Product) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500))
-    setCartCount(prev => prev + 1)
-    console.log('Added to cart:', product.title)
+    try {
+      console.log('Adding product to cart:', product.id)
+      const response = await cartAPI.addItem(parseInt(product.id), 1)
+      console.log('Add to cart response:', response)
+      
+      // Update cart immediately from response
+      if (response.cart) {
+        setCart(response.cart)
+        setCartCount(response.cart.item_count || response.cart.items?.length || 0)
+        console.log('Cart updated from response, count:', response.cart.item_count || response.cart.items?.length || 0)
+      }
+      
+      // Also reload cart to ensure sync
+      await loadCart()
+      console.log('Product added to cart successfully, final count:', cartCount)
+    } catch (err) {
+      const error = err as Error & { status?: number; isNetworkError?: boolean; originalError?: string };
+      console.error('Add to cart error:', err)
+      console.error('Error details:', {
+        message: error.message,
+        status: error.status,
+        isNetworkError: error.isNetworkError,
+        originalError: error.originalError
+      })
+      
+      // Handle network errors
+      if (error.isNetworkError || error.status === 0 || error.message?.includes('Failed to fetch')) {
+        alert(`Unable to connect to the Flask API server.\n\nPlease ensure:\n1. Flask server is running on http://localhost:5001\n2. Check browser console for CORS errors\n3. Verify API_BASE_URL in src/services/api.ts\n\nError: ${error.message || error.originalError || 'Network error'}`)
+        return
+      }
+      
+      // If not authenticated (401), try to auto-login/register
+      if (error.status === 401 || (error.message && (error.message.includes('401') || error.message.includes('Authorization') || error.message.includes('Unauthorized')))) {
+        try {
+          // First try to login with a default test account
+          console.log('Attempting auto-login...')
+          await authAPI.login('testcustomer', 'customerpassword123')
+          console.log('Auto-login successful, retrying add to cart')
+          // Retry adding to cart after login
+          const retryResponse = await cartAPI.addItem(parseInt(product.id), 1)
+          if (retryResponse.cart) {
+            setCart(retryResponse.cart)
+            setCartCount(retryResponse.cart.item_count || retryResponse.cart.items?.length || 0)
+          }
+          await loadCart()
+        } catch (loginErr) {
+          console.error('Auto-login failed:', loginErr)
+          // If login fails, try to register a new guest user
+          try {
+            const guestUsername = `guest_${Math.random().toString(36).substring(7)}`
+            console.log('Attempting guest registration...', guestUsername)
+            await authAPI.register({
+              username: guestUsername,
+              email: `${guestUsername}@example.com`,
+              password: 'guest123'
+            })
+            console.log('Guest registration successful, retrying add to cart')
+            // Retry adding to cart after registration
+            const retryResponse = await cartAPI.addItem(parseInt(product.id), 1)
+            if (retryResponse.cart) {
+              setCart(retryResponse.cart)
+              setCartCount(retryResponse.cart.item_count || retryResponse.cart.items?.length || 0)
+            }
+            await loadCart()
+          } catch (registerErr) {
+            const registerError = registerErr as Error & { status?: number; isNetworkError?: boolean; originalError?: string };
+            console.error('Auto-registration failed:', registerErr)
+            // Show detailed error for debugging
+            const errorMsg = registerError.message || 'Unknown error'
+            if (registerError.isNetworkError || registerError.status === 0) {
+              alert(`Unable to connect to the Flask API server.\n\nPlease ensure:\n1. Flask server is running on http://localhost:5001\n2. Check browser console for CORS errors\n\nError: ${registerError.message || registerError.originalError || 'Network error'}`)
+            } else {
+              alert(`Unable to add item to cart: ${errorMsg}\n\nPlease check the browser console for more details.`)
+            }
+          }
+        }
+      } else {
+        alert(`Failed to add item to cart: ${error.message || 'Unknown error'}\n\nStatus: ${error.status || 'N/A'}`)
+      }
+    }
   }
 
   const handleQuickView = (product: Product) => {
@@ -96,13 +319,35 @@ const ProductShowcase = () => {
             
             {/* Cart Counter */}
             <div className="relative">
-              <button className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <button 
+                onClick={() => {
+                  console.log('Cart button clicked, cartCount:', cartCount, 'cart:', cart)
+                  if (cartCount > 0 || (cart && cart.items && cart.items.length > 0)) {
+                    setShowCheckout(true)
+                  } else {
+                    // Try to load cart first
+                    loadCart().then(() => {
+                      if (cartCount > 0 || (cart && cart.items && cart.items.length > 0)) {
+                        setShowCheckout(true)
+                      } else {
+                        alert('Your cart is empty. Add some products first!')
+                      }
+                    })
+                  }
+                }}
+                className={`p-2 rounded-lg transition-colors ${
+                  cartCount > 0 || (cart && cart.items && cart.items.length > 0)
+                    ? 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-gray-400 text-white cursor-not-allowed'
+                }`}
+                title={cartCount > 0 ? `View cart (${cartCount} items)` : 'Cart is empty'}
+              >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                {cartCount > 0 && (
+                {(cartCount > 0 || (cart && cart.items && cart.items.length > 0)) && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                    {cartCount}
+                    {cartCount || (cart?.items?.length || 0)}
                   </span>
                 )}
               </button>
@@ -324,6 +569,41 @@ const ProductShowcase = () => {
           </div>
         </div>
       </footer>
+
+      {/* Checkout Modal */}
+      {showCheckout && (
+        <CheckoutModal
+          cart={cart || null}
+          onClose={async () => {
+            console.log('Closing checkout modal')
+            setShowCheckout(false)
+            try {
+              await loadCart() // Refresh cart when closing
+            } catch (err) {
+              console.error('Error loading cart on close:', err)
+            }
+          }}
+          onOrderComplete={async () => {
+            console.log('Order completed')
+            setShowCheckout(false)
+            setCartCount(0)
+            setCart(null)
+            try {
+              await loadCart() // Refresh cart after order
+            } catch (err) {
+              console.error('Error loading cart after order:', err)
+            }
+          }}
+          onCartUpdate={async () => {
+            console.log('Cart updated from modal')
+            try {
+              await loadCart() // Refresh cart when item is removed
+            } catch (err) {
+              console.error('Error loading cart after update:', err)
+            }
+          }}
+        />
+      )}
     </div>
   )
 }

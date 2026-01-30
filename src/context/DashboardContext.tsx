@@ -13,6 +13,7 @@ interface DashboardContextType {
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined)
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useDashboardContext = () => {
   const context = useContext(DashboardContext)
   if (!context) {

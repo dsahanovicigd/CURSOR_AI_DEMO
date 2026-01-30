@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { NavBarProps, NavItem } from '../../types/navigation.types'
+import { NavBarProps } from '../../types/navigation.types'
 import SearchBar from './SearchBar'
 import UserProfileDropdown from './UserProfileDropdown'
 import Button from '../common/Button'

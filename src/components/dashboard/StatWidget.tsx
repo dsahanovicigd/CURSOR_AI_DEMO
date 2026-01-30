@@ -11,13 +11,6 @@ interface StatWidgetProps {
 }
 
 const StatWidget = ({ title, value, icon, trend, subtitle, color = 'blue' }: StatWidgetProps) => {
-  const colorClasses = {
-    blue: 'from-blue-500 to-blue-600',
-    green: 'from-green-500 to-green-600',
-    purple: 'from-purple-500 to-purple-600',
-    orange: 'from-orange-500 to-orange-600'
-  }
-
   const iconBgColors = {
     blue: 'bg-blue-100 dark:bg-blue-900/30',
     green: 'bg-green-100 dark:bg-green-900/30',

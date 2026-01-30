@@ -57,8 +57,11 @@ const DataTable = ({ columns, data, title }: DataTableProps) => {
             <button className="px-3 py-2 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
               Export
             </button>
-            <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-              <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <button 
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              aria-label="Table options menu"
+            >
+              <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
               </svg>
             </button>
@@ -82,6 +85,7 @@ const DataTable = ({ columns, data, title }: DataTableProps) => {
                     <button
                       onClick={() => handleSort(column.key)}
                       className="flex items-center gap-1 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+                      aria-label={`Sort by ${column.label}`}
                     >
                       <span>{column.label}</span>
                       <svg
@@ -106,7 +110,7 @@ const DataTable = ({ columns, data, title }: DataTableProps) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-            {paginatedData.map((row, rowIndex) => (
+            {paginatedData.map((row) => (
               <tr
                 key={row.id}
                 className="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors"

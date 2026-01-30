@@ -42,8 +42,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           flex flex-col
         `}
-        role="navigation"
-        aria-label="Sidebar navigation"
+        aria-label="Sidebar"
       >
         {/* Sidebar Header */}
         <div className="p-6 border-b border-gray-200 dark:border-gray-700">
@@ -74,7 +73,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         </div>
 
         {/* Navigation Items */}
-        <nav className="flex-1 p-4 overflow-y-auto">
+        <nav className="flex-1 p-4 overflow-y-auto" role="navigation" aria-label="Sidebar navigation">
           <div className="space-y-1">
             {navItems.map((item, index) => (
               <a

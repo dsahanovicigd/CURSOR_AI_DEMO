@@ -1,21 +1,38 @@
 import { useState } from 'react'
 import { useDarkMode } from '../hooks/useDarkMode'
+import { useAuth } from '../context/AuthContext'
 import Sidebar from '../components/dashboard/Sidebar'
 import DashboardHeader from '../components/dashboard/DashboardHeader'
 import StatWidget from '../components/dashboard/StatWidget'
 import TaskCard from '../components/dashboard/TaskCard'
+import KanbanBoard from '../components/kanban/KanbanBoard'
 import { sampleTasks, dashboardStats } from '../data/sampleTasks'
-import { sampleUserProfile } from '../data/sampleNavigation'
+
+type ViewMode = 'list' | 'kanban'
 
 const Dashboard = () => {
   const { isDarkMode, toggleDarkMode } = useDarkMode()
+  const { user, logout } = useAuth()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [tasks] = useState(sampleTasks)
+  const [viewMode, setViewMode] = useState<ViewMode>('list')
 
   const stats = dashboardStats
 
   const handleLogout = () => {
-    console.log('Logging out...')
+    logout() // Instant logout - clears tokens and user state immediately
+    // ProtectedRoute will detect logout and redirect to login
+  }
+
+  // Create user profile from auth context
+  const userProfile = user ? {
+    name: user.name || user.username,
+    email: user.email,
+    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.username)}&background=667eea&color=fff`
+  } : {
+    name: 'Guest',
+    email: '',
+    avatar: 'https://ui-avatars.com/api/?name=Guest&background=gray&color=fff'
   }
 
   return (
@@ -30,7 +47,7 @@ const Dashboard = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <DashboardHeader
-          user={sampleUserProfile}
+          user={userProfile}
           onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
           isDarkMode={isDarkMode}
           onToggleDarkMode={toggleDarkMode}
@@ -45,7 +62,7 @@ const Dashboard = () => {
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                    Good morning, {sampleUserProfile.name.split(' ')[0]}! 👋
+                    Good morning, {userProfile.name.split(' ')[0]}! 👋
                   </h2>
                   <p className="text-blue-100">
                     You have {stats.tasks.inProgress} tasks in progress and {stats.tasks.todo} tasks to start
@@ -93,10 +110,38 @@ const Dashboard = () => {
               />
             </div>
 
+            {/* View Mode Toggle */}
+            <div className="flex items-center justify-between bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Task Management</h2>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                    viewMode === 'list'
+                      ? 'bg-blue-600 text-white shadow-lg'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }`}
+                >
+                  📋 List View
+                </button>
+                <button
+                  onClick={() => setViewMode('kanban')}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                    viewMode === 'kanban'
+                      ? 'bg-blue-600 text-white shadow-lg'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }`}
+                >
+                  📊 Kanban View
+                </button>
+              </div>
+            </div>
+
             {/* Tasks Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Tasks by Status */}
-              <div className="lg:col-span-2 space-y-6">
+            {viewMode === 'list' ? (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Tasks by Status */}
+                <div className="lg:col-span-2 space-y-6">
                 {/* In Progress Tasks */}
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -244,6 +289,11 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+            ) : (
+              <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <KanbanBoard />
+              </div>
+            )}
           </div>
         </main>
       </div>

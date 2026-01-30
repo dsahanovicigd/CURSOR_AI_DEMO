@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { KanbanTask } from './KanbanTaskCard'
+import { Task } from '../../types/task.types'
 
 interface AddTaskModalProps {
   isOpen: boolean
@@ -148,7 +149,7 @@ const AddTaskModal = ({ isOpen, onClose, onSave, editTask, defaultStatus = 'todo
               <select
                 id="status"
                 value={formData.status}
-                onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as any }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as Task['status'] }))}
                 className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="todo">📝 To Do</option>
@@ -166,7 +167,7 @@ const AddTaskModal = ({ isOpen, onClose, onSave, editTask, defaultStatus = 'todo
               <select
                 id="priority"
                 value={formData.priority}
-                onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as any }))}
+                onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as Task['priority'] }))}
                 className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="low">🔵 Low</option>

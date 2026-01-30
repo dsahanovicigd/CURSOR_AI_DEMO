@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 import ProfileDemo from './pages/ProfileDemo'
 import ProductShowcase from './pages/ProductShowcase'
 import NavBarDemo from './pages/NavBarDemo'
@@ -15,9 +17,10 @@ function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('analytics')
 
   return (
-    <div className="min-h-screen">
-      {/* Navigation Bar */}
-      <nav className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg sticky top-0 z-50">
+    <AuthProvider>
+      <div className="min-h-screen">
+        {/* Navigation Bar */}
+        <nav className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg sticky top-0 z-50">
         <div className="container mx-auto px-2 md:px-4">
           <div className="flex items-center justify-between py-3 md:py-4">
             <div className="flex items-center gap-2 md:gap-3">
@@ -123,17 +126,22 @@ function App() {
         </div>
       </nav>
 
-      {/* Page Content */}
-      {currentPage === 'analytics' && <AnalyticsDashboard />}
-      {currentPage === 'dashboard' && <Dashboard />}
-      {currentPage === 'navbar' && <NavBarDemo />}
-      {currentPage === 'products' && <ProductShowcase />}
-      {currentPage === 'profile' && <ProfileDemo />}
-      {currentPage === 'register' && <RegistrationForm />}
-      {currentPage === 'team' && <TeamDashboardPage />}
-      {currentPage === 'kanban' && <KanbanPage />}
-      {currentPage === 'social' && <SocialFeedPage />}
-    </div>
+        {/* Page Content */}
+        {currentPage === 'analytics' && <AnalyticsDashboard />}
+        {currentPage === 'dashboard' && (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        )}
+        {currentPage === 'navbar' && <NavBarDemo />}
+        {currentPage === 'products' && <ProductShowcase />}
+        {currentPage === 'profile' && <ProfileDemo />}
+        {currentPage === 'register' && <RegistrationForm />}
+        {currentPage === 'team' && <TeamDashboardPage />}
+        {currentPage === 'kanban' && <KanbanPage />}
+        {currentPage === 'social' && <SocialFeedPage />}
+      </div>
+    </AuthProvider>
   )
 }
 

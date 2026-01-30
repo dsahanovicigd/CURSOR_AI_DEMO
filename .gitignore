@@ -25,3 +25,17 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# Python virtual environments
+qa/.venv/
+venv/
+env/
+ENV/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python

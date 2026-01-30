@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Post, User } from '../../types/social'
 import PostCard from './PostCard'
 import CreatePost from './CreatePost'
@@ -31,9 +31,9 @@ const SocialFeed = ({ currentUser, initialPosts = [], onLoadMore }: SocialFeedPr
     }
 
     return () => observer.disconnect()
-  }, [hasMore, isLoading])
+  }, [hasMore, isLoading, loadMorePosts])
 
-  const loadMorePosts = async () => {
+  const loadMorePosts = useCallback(async () => {
     if (onLoadMore && !isLoading) {
       setIsLoading(true)
       try {
@@ -49,7 +49,7 @@ const SocialFeed = ({ currentUser, initialPosts = [], onLoadMore }: SocialFeedPr
         setIsLoading(false)
       }
     }
-  }
+  }, [onLoadMore, isLoading])
 
   const handleCreatePost = (content: string, image?: File) => {
     const newPost: Post = {
