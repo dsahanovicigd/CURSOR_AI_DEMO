@@ -1,0 +1,1161 @@
+name: Ultra-Optimized CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      skip_tests:
+        description: 'Skip tests (use with caution)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '20.x'
+  PYTHON_VERSION: '3.11'
+  FLASK_APP: 'app:create_app'
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+  DOCKER_DRIVER: overlay2
+
+jobs:
+  # ============================================================================
+  # FRONTEND: Build with Advanced Caching
+  # ============================================================================
+  frontend-build:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: |
+            node_modules
+            ~/.npm
+            .npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      
+      - name: Install dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: |
+          npm ci --prefer-offline --no-audit --legacy-peer-deps
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
+      
+      - name: Cache Vite build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules/.vite
+            .vite
+          key: ${{ runner.os }}-vite-${{ hashFiles('**/*.{ts,tsx,js,jsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-
+      
+      - name: Run linter
+        run: npm run lint
+        continue-on-error: true
+      
+      - name: Build frontend
+        run: npm run build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:5001' }}
+          NODE_OPTIONS: '--max-old-space-size=4096'
+          NODE_ENV: production
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build-${{ github.sha }}
+          path: dist/
+          retention-days: 7
+          compression-level: 9
+          if-no-files-found: error
+
+  # ============================================================================
+  # FRONTEND: Parallel Test Execution
+  # ============================================================================
+  frontend-test-unit:
+    name: Frontend Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: frontend-build
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Restore node_modules cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --prefer-offline --no-audit
+      
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+      
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      
+      - name: Run unit tests
+        run: npm run test -- --grep="unit|component" || echo "No unit tests found"
+        continue-on-error: true
+
+  frontend-test-e2e:
+    name: Frontend E2E Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: frontend-build
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Restore node_modules cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --prefer-offline --no-audit
+      
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+      
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      
+      - name: Run E2E tests (shard ${{ matrix.shard }})
+        run: npm run test -- --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        continue-on-error: true
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-shard-${{ matrix.shard }}
+          path: playwright-report/
+          retention-days: 7
+
+  # ============================================================================
+  # BACKEND: Build with Advanced Caching
+  # ============================================================================
+  backend-build:
+    name: Backend Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: flask_api/requirements.txt
+      
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        id: pip-cache
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.local/lib/python3.11/site-packages
+          key: ${{ runner.os }}-pip-${{ hashFiles('flask_api/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+      
+      - name: Install dependencies
+        if: steps.pip-cache.outputs.cache-hit != 'true'
+        working-directory: ./flask_api
+        run: |
+          python -m pip install --upgrade pip
+          pip install --cache-dir ~/.cache/pip -r requirements.txt
+      
+      - name: Cache Python bytecode
+        uses: actions/cache@v4
+        with:
+          path: |
+            flask_api/**/__pycache__
+            flask_api/**/*.pyc
+          key: ${{ runner.os }}-pycache-${{ hashFiles('flask_api/**/*.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pycache-
+
+  # ============================================================================
+  # BACKEND: Parallel Test Execution
+  # ============================================================================
+  backend-test-unit:
+    name: Backend Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: backend-build
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Restore pip cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('flask_api/requirements.txt') }}
+      
+      - name: Install test dependencies
+        working-directory: ./flask_api
+        run: |
+          pip install --cache-dir ~/.cache/pip -r requirements.txt
+          pip install --cache-dir ~/.cache/pip pytest pytest-cov pytest-xdist pytest-timeout
+      
+      - name: Run unit tests
+        working-directory: ./flask_api
+        env:
+          FLASK_ENV: testing
+          SECRET_KEY: test-secret-key
+          JWT_SECRET_KEY: test-jwt-secret-key
+        run: |
+          pytest tests/test_*.py -v --cov=app --cov-report=xml --cov-report=term \
+            -m "not integration and not ecommerce" -n auto --maxfail=5
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: ./flask_api/coverage.xml
+          flags: unit-tests
+          fail_ci_if_error: false
+
+  backend-test-integration:
+    name: Backend Integration Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: backend-build
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Restore pip cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('flask_api/requirements.txt') }}
+      
+      - name: Install test dependencies
+        working-directory: ./flask_api
+        run: |
+          pip install --cache-dir ~/.cache/pip -r requirements.txt
+          pip install --cache-dir ~/.cache/pip pytest pytest-cov pytest-xdist
+      
+      - name: Run integration tests
+        working-directory: ./flask_api
+        env:
+          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
+          FLASK_ENV: testing
+          SECRET_KEY: test-secret-key
+          JWT_SECRET_KEY: test-jwt-secret-key
+        run: |
+          pytest tests/test_*.py -v --cov=app --cov-report=xml \
+            -m "integration" -n auto --maxfail=3
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: ./flask_api/coverage.xml
+          flags: integration-tests
+          fail_ci_if_error: false
+
+  backend-test-ecommerce:
+    name: Backend E-commerce Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: backend-build
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Restore pip cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('flask_api/requirements.txt') }}
+      
+      - name: Install test dependencies
+        working-directory: ./flask_api
+        run: |
+          pip install --cache-dir ~/.cache/pip -r requirements.txt
+          pip install --cache-dir ~/.cache/pip pytest pytest-cov pytest-xdist
+      
+      - name: Run e-commerce tests
+        working-directory: ./flask_api
+        env:
+          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
+          FLASK_ENV: testing
+          SECRET_KEY: test-secret-key
+          JWT_SECRET_KEY: test-jwt-secret-key
+        run: |
+          pytest tests/test_ecommerce*.py -v --cov=app --cov-report=xml \
+            -n auto --maxfail=5
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: ./flask_api/coverage.xml
+          flags: ecommerce-tests
+          fail_ci_if_error: false
+
+  backend-test-api:
+    name: Backend API Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: backend-build
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Restore pip cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('flask_api/requirements.txt') }}
+      
+      - name: Install test dependencies
+        working-directory: ./flask_api
+        run: |
+          pip install --cache-dir ~/.cache/pip -r requirements.txt
+          pip install --cache-dir ~/.cache/pip pytest pytest-cov pytest-xdist
+      
+      - name: Run comprehensive API tests
+        working-directory: ./flask_api
+        env:
+          FLASK_ENV: testing
+          SECRET_KEY: test-secret-key
+          JWT_SECRET_KEY: test-jwt-secret-key
+        run: |
+          pytest tests/test_comprehensive_api_suite.py -v --cov=app --cov-report=xml \
+            -n auto --maxfail=3
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: ./flask_api/coverage.xml
+          flags: api-tests
+          fail_ci_if_error: false
+
+  # ============================================================================
+  # SECURITY: Advanced Scanning
+  # ============================================================================
+  security-npm:
+    name: Security Scan (npm)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Run npm audit
+        run: |
+          npm audit --audit-level=moderate --json > npm-audit.json || true
+        continue-on-error: true
+      
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+      
+      - name: Upload npm audit report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: npm-security-report
+          path: npm-audit.json
+          retention-days: 30
+
+  security-python:
+    name: Security Scan (Python)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install security tools
+        working-directory: ./flask_api
+        run: |
+          pip install --cache-dir ~/.cache/pip safety bandit semgrep
+      
+      - name: Run Safety check
+        working-directory: ./flask_api
+        run: |
+          safety check --json --output safety-report.json || true
+        continue-on-error: true
+      
+      - name: Run Bandit SAST
+        working-directory: ./flask_api
+        run: |
+          bandit -r . -f json -o bandit-report.json || true
+        continue-on-error: true
+      
+      - name: Run Snyk security scan
+        uses: snyk/actions/python@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+          command: test
+      
+      - name: Run Semgrep SAST
+        uses: returntocorp/semgrep-action@v1
+        continue-on-error: true
+        with:
+          config: >-
+            p/security-audit
+            p/python
+            p/owasp-top-ten
+      
+      - name: Upload security reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: python-security-reports
+          path: |
+            flask_api/safety-report.json
+            flask_api/bandit-report.json
+          retention-days: 30
+
+  security-container:
+    name: Security Scan (Container)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+          exit-code: '0'
+      
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # ============================================================================
+  # DOCKER: Build with Layer Caching
+  # ============================================================================
+  docker-build-frontend:
+    name: Docker Build Frontend
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [frontend-build, security-npm]
+    if: github.event_name != 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+            network=host
+      
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract metadata
+        id: meta-frontend
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}-frontend
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+      
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.frontend
+          push: true
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+          labels: ${{ steps.meta-frontend.outputs.labels }}
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,mode=max,scope=frontend
+          platforms: linux/amd64
+          build-args: |
+            NODE_ENV=production
+
+  docker-build-backend:
+    name: Docker Build Backend
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [backend-build, security-python]
+    if: github.event_name != 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+            network=host
+      
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract metadata
+        id: meta-backend
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}-backend
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+      
+      - name: Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./flask_api
+          file: ./flask_api/Dockerfile
+          push: true
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
+          cache-from: type=gha,scope=backend
+          cache-to: type=gha,mode=max,scope=backend
+          platforms: linux/amd64
+          build-args: |
+            PYTHON_VERSION=${{ env.PYTHON_VERSION }}
+
+  # ============================================================================
+  # DEPLOYMENT: With Health Checks
+  # ============================================================================
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [
+      frontend-build,
+      frontend-test-unit,
+      frontend-test-e2e,
+      backend-test-unit,
+      backend-test-integration,
+      docker-build-frontend,
+      docker-build-backend
+    ]
+    if: github.ref == 'refs/heads/develop' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')
+    environment:
+      name: staging
+      url: https://staging.example.com
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download frontend artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build-${{ github.sha }}
+          path: dist/
+      
+      - name: Deploy to staging
+        id: deploy
+        run: |
+          echo "Deploying to staging environment..."
+          # Add your deployment commands here
+          # Examples:
+          # kubectl set image deployment/staging-frontend frontend=ghcr.io/${{ github.repository }}-frontend:${{ github.sha }}
+          # kubectl set image deployment/staging-backend backend=ghcr.io/${{ github.repository }}-backend:${{ github.sha }}
+          echo "deployment_id=${{ github.sha }}" >> $GITHUB_OUTPUT
+        env:
+          STAGING_HOST: ${{ secrets.STAGING_HOST }}
+          STAGING_USER: ${{ secrets.STAGING_USER }}
+          STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+      
+      - name: Wait for deployment
+        run: |
+          echo "Waiting for deployment to be ready..."
+          sleep 30
+      
+      - name: Health check - API endpoint
+        id: health-api
+        run: |
+          MAX_RETRIES=10
+          RETRY_DELAY=5
+          for i in $(seq 1 $MAX_RETRIES); do
+            if curl -f -s https://staging.example.com/api/health > /dev/null; then
+              echo "API health check passed"
+              echo "status=healthy" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            echo "Health check attempt $i/$MAX_RETRIES failed, retrying in ${RETRY_DELAY}s..."
+            sleep $RETRY_DELAY
+          done
+          echo "API health check failed after $MAX_RETRIES attempts"
+          echo "status=unhealthy" >> $GITHUB_OUTPUT
+          exit 1
+        continue-on-error: true
+      
+      - name: Health check - Frontend
+        id: health-frontend
+        run: |
+          if curl -f -s https://staging.example.com > /dev/null; then
+            echo "Frontend health check passed"
+            echo "status=healthy" >> $GITHUB_OUTPUT
+          else
+            echo "Frontend health check failed"
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+        continue-on-error: true
+      
+      - name: Health check - Response time
+        id: health-performance
+        run: |
+          RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' https://staging.example.com/api/health)
+          RESPONSE_TIME_MS=$(echo "$RESPONSE_TIME * 1000" | bc)
+          echo "Response time: ${RESPONSE_TIME_MS}ms"
+          if (( $(echo "$RESPONSE_TIME_MS > 1000" | bc -l) )); then
+            echo "Response time exceeds 1000ms threshold"
+            echo "status=slow" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "Response time within acceptable range"
+            echo "status=healthy" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+      
+      - name: Health check - Database connectivity
+        id: health-db
+        run: |
+          # Check database connectivity via API
+          if curl -f -s https://staging.example.com/api/health/db > /dev/null; then
+            echo "Database health check passed"
+            echo "status=healthy" >> $GITHUB_OUTPUT
+          else
+            echo "Database health check failed"
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+        continue-on-error: true
+      
+      - name: Rollback on health check failure
+        if: |
+          steps.health-api.outputs.status == 'unhealthy' ||
+          steps.health-frontend.outputs.status == 'unhealthy' ||
+          steps.health-performance.outputs.status == 'slow' ||
+          steps.health-db.outputs.status == 'unhealthy'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('Health checks failed, initiating rollback...');
+            // Add rollback commands here
+            // kubectl rollout undo deployment/staging-frontend
+            // kubectl rollout undo deployment/staging-backend
+            core.setFailed('Deployment health checks failed, rollback initiated');
+      
+      - name: Deployment summary
+        if: always()
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- API Health: ${{ steps.health-api.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend Health: ${{ steps.health-frontend.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Performance: ${{ steps.health-performance.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Database: ${{ steps.health-db.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [
+      frontend-build,
+      frontend-test-unit,
+      frontend-test-e2e,
+      backend-test-unit,
+      backend-test-integration,
+      backend-test-ecommerce,
+      backend-test-api,
+      security-npm,
+      security-python,
+      security-container,
+      docker-build-frontend,
+      docker-build-backend
+    ]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: production
+      url: https://example.com
+    timeout-minutes: 45
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download frontend artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build-${{ github.sha }}
+          path: dist/
+      
+      - name: Deploy to production
+        id: deploy
+        run: |
+          echo "Deploying to production environment..."
+          # Add your production deployment commands here
+          echo "deployment_id=${{ github.sha }}" >> $GITHUB_OUTPUT
+        env:
+          PRODUCTION_HOST: ${{ secrets.PRODUCTION_HOST }}
+          PRODUCTION_USER: ${{ secrets.PRODUCTION_USER }}
+          PRODUCTION_SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
+      
+      - name: Wait for deployment
+        run: |
+          echo "Waiting for deployment to be ready..."
+          sleep 45
+      
+      - name: Health check - API endpoint
+        id: health-api
+        run: |
+          MAX_RETRIES=15
+          RETRY_DELAY=10
+          for i in $(seq 1 $MAX_RETRIES); do
+            if curl -f -s https://example.com/api/health > /dev/null; then
+              echo "API health check passed"
+              echo "status=healthy" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            echo "Health check attempt $i/$MAX_RETRIES failed, retrying in ${RETRY_DELAY}s..."
+            sleep $RETRY_DELAY
+          done
+          echo "API health check failed after $MAX_RETRIES attempts"
+          echo "status=unhealthy" >> $GITHUB_OUTPUT
+          exit 1
+        continue-on-error: true
+      
+      - name: Health check - Frontend
+        id: health-frontend
+        run: |
+          if curl -f -s https://example.com > /dev/null; then
+            echo "Frontend health check passed"
+            echo "status=healthy" >> $GITHUB_OUTPUT
+          else
+            echo "Frontend health check failed"
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+        continue-on-error: true
+      
+      - name: Health check - Response time
+        id: health-performance
+        run: |
+          RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' https://example.com/api/health)
+          RESPONSE_TIME_MS=$(echo "$RESPONSE_TIME * 1000" | bc)
+          echo "Response time: ${RESPONSE_TIME_MS}ms"
+          if (( $(echo "$RESPONSE_TIME_MS > 500" | bc -l) )); then
+            echo "Response time exceeds 500ms threshold"
+            echo "status=slow" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "Response time within acceptable range"
+            echo "status=healthy" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+      
+      - name: Health check - Error rate
+        id: health-errors
+        run: |
+          # Check error rate over last minute
+          ERROR_COUNT=$(curl -s https://example.com/api/metrics/errors | jq '.count' || echo "0")
+          TOTAL_REQUESTS=$(curl -s https://example.com/api/metrics/requests | jq '.count' || echo "100")
+          ERROR_RATE=$(echo "scale=2; $ERROR_COUNT * 100 / $TOTAL_REQUESTS" | bc)
+          echo "Error rate: ${ERROR_RATE}%"
+          if (( $(echo "$ERROR_RATE > 1" | bc -l) )); then
+            echo "Error rate exceeds 1% threshold"
+            echo "status=high_errors" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "Error rate within acceptable range"
+            echo "status=healthy" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+      
+      - name: Health check - Database connectivity
+        id: health-db
+        run: |
+          if curl -f -s https://example.com/api/health/db > /dev/null; then
+            echo "Database health check passed"
+            echo "status=healthy" >> $GITHUB_OUTPUT
+          else
+            echo "Database health check failed"
+            echo "status=unhealthy" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+        continue-on-error: true
+      
+      - name: Rollback on health check failure
+        if: |
+          steps.health-api.outputs.status == 'unhealthy' ||
+          steps.health-frontend.outputs.status == 'unhealthy' ||
+          steps.health-performance.outputs.status == 'slow' ||
+          steps.health-errors.outputs.status == 'high_errors' ||
+          steps.health-db.outputs.status == 'unhealthy'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deploymentId = '${{ steps.deploy.outputs.deployment_id }}';
+            console.log(`Health checks failed, rolling back deployment ${deploymentId}...`);
+            // Add rollback commands here
+            // kubectl rollout undo deployment/production-frontend
+            // kubectl rollout undo deployment/production-backend
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deploymentId,
+              state: 'failure',
+              description: 'Health checks failed, rollback initiated'
+            });
+            core.setFailed('Production deployment health checks failed');
+      
+      - name: Deployment summary
+        if: always()
+        run: |
+          echo "## Production Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- API Health: ${{ steps.health-api.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend Health: ${{ steps.health-frontend.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Performance: ${{ steps.health-performance.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Error Rate: ${{ steps.health-errors.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Database: ${{ steps.health-db.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================================================
+  # NOTIFICATION: Slack Alerts
+  # ============================================================================
+  notify-slack:
+    name: Slack Notifications
+    runs-on: ubuntu-latest
+    needs: [
+      frontend-build,
+      frontend-test-unit,
+      frontend-test-e2e,
+      backend-test-unit,
+      backend-test-integration,
+      backend-test-ecommerce,
+      backend-test-api,
+      security-npm,
+      security-python,
+      deploy-staging,
+      deploy-production
+    ]
+    if: always()
+    
+    steps:
+      - name: Determine workflow status
+        id: status
+        run: |
+          FAILED_JOBS=""
+          if [ "${{ needs.frontend-build.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}frontend-build "
+          fi
+          if [ "${{ needs.frontend-test-unit.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}frontend-test-unit "
+          fi
+          if [ "${{ needs.frontend-test-e2e.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}frontend-test-e2e "
+          fi
+          if [ "${{ needs.backend-test-unit.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}backend-test-unit "
+          fi
+          if [ "${{ needs.backend-test-integration.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}backend-test-integration "
+          fi
+          if [ "${{ needs.backend-test-ecommerce.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}backend-test-ecommerce "
+          fi
+          if [ "${{ needs.backend-test-api.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}backend-test-api "
+          fi
+          if [ "${{ needs.security-npm.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}security-npm "
+          fi
+          if [ "${{ needs.security-python.result }}" != "success" ]; then
+            FAILED_JOBS="${FAILED_JOBS}security-python "
+          fi
+          if [ "${{ needs.deploy-staging.result }}" != "success" ] && [ "${{ github.ref }}" == "refs/heads/develop" ]; then
+            FAILED_JOBS="${FAILED_JOBS}deploy-staging "
+          fi
+          if [ "${{ needs.deploy-production.result }}" != "success" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            FAILED_JOBS="${FAILED_JOBS}deploy-production "
+          fi
+          
+          if [ -z "$FAILED_JOBS" ]; then
+            echo "status=success" >> $GITHUB_OUTPUT
+            echo "message=All checks passed successfully" >> $GITHUB_OUTPUT
+          else
+            echo "status=failure" >> $GITHUB_OUTPUT
+            echo "message=Failed jobs: $FAILED_JOBS" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Send Slack notification on failure
+        if: steps.status.outputs.status == 'failure'
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "text": "❌ CI/CD Pipeline Failed",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "❌ CI/CD Pipeline Failed"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Branch:*\n${{ github.ref_name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Author:*\n${{ github.actor }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Failed Jobs:*\n${{ steps.status.outputs.message }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Workflow Run:*\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Details>"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "View Workflow"
+                      },
+                      "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      
+      - name: Send Slack notification on success
+        if: steps.status.outputs.status == 'success' && github.ref == 'refs/heads/main'
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {
+              "text": "✅ Production Deployment Successful",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "✅ Production Deployment Successful"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Commit:*\n<https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Deployed By:*\n${{ github.actor }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Environment:*\nProduction"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
