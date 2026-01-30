@@ -161,14 +161,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Check flask_api directory exists
+        id: check_flask_api
+        run: |
+          if [ -f "flask_api/requirements.txt" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+          fi
+      
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
-          cache-dependency-path: flask_api/requirements.txt
+          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
       
       - name: Cache pip packages
+        if: steps.check_flask_api.outputs.exists == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
@@ -229,14 +240,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
+      - name: Check flask_api directory exists
+        id: check_flask_api
+        run: |
+          if [ -f "flask_api/requirements.txt" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+          fi
+      
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pip'
-          cache-dependency-path: flask_api/requirements.txt
+          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
       
       - name: Cache pip packages
+        if: steps.check_flask_api.outputs.exists == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
