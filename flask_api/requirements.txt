@@ -53,3 +53,6 @@ faker==20.1.0
 # Security
 flask-limiter==3.5.0
 bleach==6.1.0
+
+# Production Server
+gunicorn==21.2.0

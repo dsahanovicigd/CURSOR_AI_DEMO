@@ -1,0 +1,74 @@
+services:
+  # Flask API Backend Service
+  - type: web
+    name: flask-api
+    env: python
+    region: oregon  # Options: oregon, frankfurt, singapore, mumbai, tokyo
+    plan: starter  # Options: free, starter, standard, pro
+    rootDir: flask_api
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      python -m flask db upgrade || true
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 4 --threads 2 --timeout 120 --access-logfile - --error-logfile - run:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: app:create_app
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: postgres-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: redis-cache
+          type: redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          name: redis-cache
+          type: redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          name: redis-cache
+          type: redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false  # Set manually after frontend deployment
+
+  # React Frontend Static Site
+  - type: web
+    name: react-frontend
+    env: static
+    region: oregon
+    buildCommand: |
+      npm install &&
+      npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false  # Set manually after backend deployment
+
+  # PostgreSQL Database
+  - type: pspg
+    name: postgres-db
+    region: oregon
+    plan: starter  # Options: starter, standard, pro
+    databaseName: flask_api_prod
+    databaseUser: flask_user
+    postgresMajorVersion: 15
+
+  # Redis Cache
+  - type: redis
+    name: redis-cache
+    region: oregon
+    plan: starter  # Options: starter, standard, pro
+    maxmemoryPolicy: allkeys-lru
