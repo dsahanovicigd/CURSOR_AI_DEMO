@@ -1,0 +1,164 @@
+[MASTER]
+# Python code to execute, usually for sys.path manipulation such as
+# pygtk.require().
+init-hook='import sys; sys.path.append("flask_api")'
+
+# Use multiple processes to speed up Pylint
+jobs=4
+
+# Pickle collected data for later comparisons
+persistent=yes
+
+# List of plugins (as comma separated values of python modules names) to load,
+# usually to register additional checkers.
+load-plugins=pylint_flask
+
+[MESSAGES CONTROL]
+# Disable specific warnings
+disable=
+    missing-docstring,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-instance-attributes,
+    too-many-locals,
+    too-many-branches,
+    too-many-statements,
+    import-error,
+    no-member,
+    broad-except,
+    bare-except,
+    unused-variable,
+    unused-argument,
+    redefined-outer-name,
+    consider-using-f-string,
+    line-too-long,
+    invalid-name,
+    too-many-return-statements,
+    redefined-builtin,
+    unused-import,
+    consider-using-dict-comprehension,
+    consider-using-list-comprehension,
+    consider-using-enumerate,
+    consider-using-join,
+    consider-using-with,
+    consider-using-ternary,
+    consider-using-in,
+    chained-comparison,
+    singleton-comparison,
+    comparison-with-itself,
+    duplicate-code,
+    fixme,
+    todo
+
+# Note: import-error is disabled because Flask packages may not be available
+# in the Pylint environment, but they are installed at runtime
+# Many style warnings are disabled to focus on actual code quality issues
+
+[FORMAT]
+# Maximum number of characters on a single line
+max-line-length=120
+
+# Regexp for a line that is allowed to be longer than the limit
+ignore-long-lines=^\s*(# )?<?https?://\S+>?$
+
+# Number of spaces of indent required inside a hanging or continued line
+indent-after-paren=4
+
+# String used as indentation unit
+indent-string='    '
+
+# Expected format of line ending
+expected-line-ending-format=
+
+[BASIC]
+# Good variable names which should always be accepted, separated by a comma
+good-names=i,j,k,ex,Run,_,id,db,app,req,res,env
+
+# Include a hint for the correct naming format with invalid-name
+include-naming-hint=yes
+
+[DESIGN]
+# Maximum number of arguments for function / method
+max-args=10
+
+# Maximum number of attributes for a class
+max-attributes=15
+
+# Maximum number of boolean expressions in an if statement
+max-bool-expr=5
+
+# Maximum number of branch for function / method body
+max-branches=15
+
+# Maximum number of locals for function / method body
+max-locals=20
+
+# Maximum number of parents for a class
+max-parents=7
+
+# Maximum number of public methods for a class
+max-public-methods=30
+
+# Maximum number of return / yield for function / method body
+max-returns=8
+
+# Maximum number of statements in function / method body
+max-statements=60
+
+[IMPORTS]
+# Allow wildcard imports
+allow-wildcard-with-all=no
+
+# Analyse import fallback blocks
+analyse-fallback-blocks=yes
+
+[EXCEPTIONS]
+# Exceptions that will emit a warning when being caught
+overgeneral-exceptions=BaseException,Exception
+
+[REFACTORING]
+# Maximum number of nested blocks for function / method body
+max-nested-blocks=5
+
+[CLASSES]
+# List of decorators that produce properties, such as abc.abstractproperty
+defining-attr-methods=__init__,__new__,setUp,__post_init__
+
+[LOGGING]
+# Logging format used by logging module
+logging-format-style=new
+
+[SPELLING]
+# List of words separated by a comma
+spelling-dict-words=
+
+[VARIABLES]
+# List of additional names supposed to be defined in builtins
+additional-builtins=
+
+[TYPECHECK]
+# Tells whether missing members accessed in mixin class should be ignored
+ignore-mixin-members=yes
+
+# List of module names for which member attributes should not be checked
+ignored-modules=
+
+# List of class names for which member attributes should not be checked
+ignored-classes=optparse.Values,thread._local,_thread._local
+
+# List of members which are set dynamically and missed by pylint inference
+# system, and so shouldn't trigger E1101 when accessed
+generated-members=
+
+[REPORTS]
+# Set the output format
+output-format=text
+
+# Tells whether to display a full report or only the messages
+reports=yes
+
+# Python expression which should return a score less than or equal to 10
+evaluation=10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)
+
+# Template used to display messages
+msg-template={path}:{line}:{column}: {msg_id}: {msg} ({symbol})

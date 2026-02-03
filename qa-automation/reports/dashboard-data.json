@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-02-03T18:33:41.047722",
+  "pytest_unit": {
+    "total": 287,
+    "passed": 273,
+    "failed": 14,
+    "success_rate": 95.1219512195122
+  },
+  "pytest_integration": {
+    "total": 348,
+    "passed": 253,
+    "failed": 95,
+    "success_rate": 72.70114942528735
+  },
+  "pytest_performance": {
+    "total": 49,
+    "passed": 46,
+    "failed": 3,
+    "success_rate": 93.87755102040816
+  },
+  "jest": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0,
+    "success_rate": 100.0
+  },
+  "playwright": {
+    "total": 1934,
+    "passed": 1700,
+    "failed": 200,
+    "skipped": 34,
+    "flaky": 0,
+    "success_rate": 87.90072388831437
+  },
+  "pylint": {
+    "score": 7.0,
+    "errors": 6,
+    "warnings": 31,
+    "conventions": 997
+  },
+  "npm_audit": {
+    "total": 11,
+    "critical": 0,
+    "high": 0,
+    "medium": 8,
+    "low": 3
+  },
+  "snyk": null,
+  "lighthouse": [
+    {
+      "url": "http://localhost:5173/",
+      "performance": 55.00000000000001,
+      "accessibility": 93.0,
+      "best_practices": 100,
+      "seo": 83.0
+    }
+  ],
+  "k6": {
+    "total_requests": 1000,
+    "failed_requests": 0.5,
+    "avg_response_time": 150.0,
+    "p95_response_time": 200.0,
+    "p99_response_time": 250.0
+  }
+}

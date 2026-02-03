@@ -1,0 +1,78 @@
+{
+  "lighthouse": {
+    "performance": {
+      "min": 80,
+      "target": 90
+    },
+    "accessibility": {
+      "min": 90,
+      "target": 95
+    },
+    "best-practices": {
+      "min": 90,
+      "target": 95
+    },
+    "seo": {
+      "min": 80,
+      "target": 90
+    },
+    "core-web-vitals": {
+      "first-contentful-paint": {
+        "max": 2000,
+        "target": 1500
+      },
+      "largest-contentful-paint": {
+        "max": 2500,
+        "target": 2000
+      },
+      "cumulative-layout-shift": {
+        "max": 0.1,
+        "target": 0.05
+      },
+      "total-blocking-time": {
+        "max": 300,
+        "target": 200
+      },
+      "speed-index": {
+        "max": 3000,
+        "target": 2500
+      }
+    }
+  },
+  "k6": {
+    "response-time": {
+      "p95": {
+        "max": 2000,
+        "target": 1500
+      },
+      "p99": {
+        "max": 3000,
+        "target": 2500
+      }
+    },
+    "error-rate": {
+      "max": 0.01,
+      "target": 0.005
+    },
+    "throughput": {
+      "min": 100,
+      "target": 200
+    }
+  },
+  "backend": {
+    "api-response-time": {
+      "p95": {
+        "max": 500,
+        "target": 300
+      }
+    },
+    "database-query-time": {
+      "max": 100,
+      "target": 50
+    },
+    "cache-hit-rate": {
+      "min": 0.7,
+      "target": 0.85
+    }
+  }
+}

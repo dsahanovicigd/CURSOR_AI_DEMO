@@ -1,0 +1,2375 @@
+************* Module ../qa-automation/quality/pylint.rc
+../qa-automation/quality/pylint.rc:1:0: F0011: error while parsing the configuration: While reading from '../qa-automation/quality/pylint.rc' [line 118]: section 'FORMAT' already exists (config-parse-error)
+************* Module app
+app/__init__.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:28:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:32:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:47:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:55:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:59:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:84:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:89:0: C0301: Line too long (624/100) (line-too-long)
+app/__init__.py:97:0: C0301: Line too long (505/100) (line-too-long)
+app/__init__.py:106:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:110:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:115:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:119:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:128:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:132:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:136:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:156:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:175:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:180:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:185:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:190:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:231:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:235:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:241:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:243:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:253:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:259:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:263:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:269:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:277:0: C0303: Trailing whitespace (trailing-whitespace)
+app/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/__init__.py:3:0: E0401: Unable to import 'flask_sqlalchemy' (import-error)
+app/__init__.py:4:0: E0401: Unable to import 'flask_migrate' (import-error)
+app/__init__.py:5:0: E0401: Unable to import 'flask_cors' (import-error)
+app/__init__.py:6:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/__init__.py:7:0: E0401: Unable to import 'flask_limiter' (import-error)
+app/__init__.py:8:0: E0401: Unable to import 'flask_limiter.util' (import-error)
+app/__init__.py:9:0: E0401: Unable to import 'flasgger' (import-error)
+app/__init__.py:21:0: R0914: Too many local variables (34/15) (too-many-locals)
+app/__init__.py:26:4: C0415: Import outside toplevel (config.config) (import-outside-toplevel)
+app/__init__.py:51:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/__init__.py:108:4: W0603: Using the global statement (global-statement)
+app/__init__.py:113:31: W0613: Unused argument 'jwt_header' (unused-argument)
+app/__init__.py:113:43: W0613: Unused argument 'jwt_payload' (unused-argument)
+app/__init__.py:121:31: W0613: Unused argument 'error' (unused-argument)
+app/__init__.py:130:33: W0613: Unused argument 'jwt_header' (unused-argument)
+app/__init__.py:130:45: W0613: Unused argument 'jwt_payload' (unused-argument)
+app/__init__.py:134:31: W0613: Unused argument 'jwt_header' (unused-argument)
+app/__init__.py:134:43: W0613: Unused argument 'jwt_payload' (unused-argument)
+app/__init__.py:138:4: C0415: Import outside toplevel (app.auth.auth_bp) (import-outside-toplevel)
+app/__init__.py:139:4: C0415: Import outside toplevel (app.users.users_bp) (import-outside-toplevel)
+app/__init__.py:140:4: C0415: Import outside toplevel (app.posts.posts_bp) (import-outside-toplevel)
+app/__init__.py:141:4: C0415: Import outside toplevel (app.categories.categories_bp) (import-outside-toplevel)
+app/__init__.py:142:4: C0415: Import outside toplevel (app.comments.comments_bp) (import-outside-toplevel)
+app/__init__.py:143:4: C0415: Import outside toplevel (app.tasks.tasks_bp) (import-outside-toplevel)
+app/__init__.py:144:4: C0415: Import outside toplevel (app.projects.projects_bp) (import-outside-toplevel)
+app/__init__.py:145:4: C0415: Import outside toplevel (app.teams.teams_bp) (import-outside-toplevel)
+app/__init__.py:146:4: C0415: Import outside toplevel (app.notifications.notifications_bp) (import-outside-toplevel)
+app/__init__.py:147:4: C0415: Import outside toplevel (app.task_comments.task_comments_bp) (import-outside-toplevel)
+app/__init__.py:148:4: C0415: Import outside toplevel (app.tickets.tickets_bp) (import-outside-toplevel)
+app/__init__.py:149:4: C0415: Import outside toplevel (app.ticket_comments.ticket_comments_bp) (import-outside-toplevel)
+app/__init__.py:150:4: C0415: Import outside toplevel (app.admin.admin_bp) (import-outside-toplevel)
+app/__init__.py:151:4: C0415: Import outside toplevel (app.agents.agents_bp) (import-outside-toplevel)
+app/__init__.py:152:4: C0415: Import outside toplevel (app.cart.cart_bp) (import-outside-toplevel)
+app/__init__.py:153:4: C0415: Import outside toplevel (app.checkout.checkout_bp) (import-outside-toplevel)
+app/__init__.py:154:4: C0415: Import outside toplevel (app.orders.orders_bp) (import-outside-toplevel)
+app/__init__.py:155:4: C0415: Import outside toplevel (app.products.products_bp) (import-outside-toplevel)
+app/__init__.py:178:18: W0613: Unused argument 'error' (unused-argument)
+app/__init__.py:182:23: W0613: Unused argument 'error' (unused-argument)
+app/__init__.py:228:8: C0415: Import outside toplevel (app.models.post.Post) (import-outside-toplevel)
+app/__init__.py:229:8: C0415: Import outside toplevel (app.models.category.Category) (import-outside-toplevel)
+app/__init__.py:230:8: E0401: Unable to import 'sqlalchemy' (import-error)
+app/__init__.py:230:8: C0415: Import outside toplevel (sqlalchemy.or_) (import-outside-toplevel)
+app/__init__.py:21:0: R0915: Too many statements (78/50) (too-many-statements)
+app/__init__.py:3:0: C0411: third party import "flask_sqlalchemy.SQLAlchemy" should be placed before first party import "app.cache_utils.cached_search"  (wrong-import-order)
+app/__init__.py:4:0: C0411: third party import "flask_migrate.Migrate" should be placed before first party import "app.cache_utils.cached_search"  (wrong-import-order)
+app/__init__.py:5:0: C0411: third party import "flask_cors.CORS" should be placed before first party import "app.cache_utils.cached_search"  (wrong-import-order)
+app/__init__.py:6:0: C0411: third party import "flask_jwt_extended.JWTManager" should be placed before first party import "app.cache_utils.cached_search"  (wrong-import-order)
+app/__init__.py:7:0: C0411: third party import "flask_limiter.Limiter" should be placed before first party import "app.cache_utils.cached_search"  (wrong-import-order)
+app/__init__.py:8:0: C0411: third party import "flask_limiter.util.get_remote_address" should be placed before first party import "app.cache_utils.cached_search"  (wrong-import-order)
+app/__init__.py:9:0: C0411: third party import "flasgger.Swagger" should be placed before first party import "app.cache_utils.cached_search"  (wrong-import-order)
+app/__init__.py:10:0: C0412: Imports from package app are not grouped (ungrouped-imports)
+************* Module app.celery_app
+app/celery_app.py:18:0: C0303: Trailing whitespace (trailing-whitespace)
+app/celery_app.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/celery_app.py:2:0: E0401: Unable to import 'celery' (import-error)
+app/celery_app.py:19:4: R0903: Too few public methods (1/2) (too-few-public-methods)
+************* Module app.cache
+app/cache.py:22:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:25:0: C0301: Line too long (114/100) (line-too-long)
+app/cache.py:27:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:33:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:47:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:61:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:63:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:68:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:77:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:81:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:91:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:120:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:131:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:135:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache.py:2:0: E0401: Unable to import 'flask_caching' (import-error)
+app/cache.py:21:12: E0401: Unable to import 'flask' (import-error)
+app/cache.py:21:12: C0415: Import outside toplevel (flask.request) (import-outside-toplevel)
+app/cache.py:25:56: E0602: Undefined variable 'get_jwt_identity' (undefined-variable)
+app/cache.py:31:16: E0401: Unable to import 'flask' (import-error)
+app/cache.py:31:16: C0415: Import outside toplevel (flask.jsonify) (import-outside-toplevel)
+app/cache.py:66:16: E0401: Unable to import 'flask' (import-error)
+app/cache.py:66:16: C0415: Import outside toplevel (flask.jsonify) (import-outside-toplevel)
+app/cache.py:114:4: W0702: No exception type(s) specified (bare-except)
+app/cache.py:106:20: W0702: No exception type(s) specified (bare-except)
+app/cache.py:118:8: W0702: No exception type(s) specified (bare-except)
+app/cache.py:123:8: C0415: Import outside toplevel (app.models.task.Task) (import-outside-toplevel)
+app/cache.py:136:4: C0415: Import outside toplevel (app.models.task.Task) (import-outside-toplevel)
+app/cache.py:3:0: C0411: standard import "functools.wraps" should be placed before third party import "flask_caching.Cache" (wrong-import-order)
+app/cache.py:4:0: C0411: standard import "hashlib" should be placed before third party import "flask_caching.Cache" (wrong-import-order)
+app/cache.py:5:0: C0411: standard import "json" should be placed before third party import "flask_caching.Cache" (wrong-import-order)
+app/cache.py:5:0: W0611: Unused import json (unused-import)
+************* Module app.cache_utils
+app/cache_utils.py:14:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:21:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:34:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:42:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:45:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:57:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:66:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:79:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:82:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:91:0: C0301: Line too long (102/100) (line-too-long)
+app/cache_utils.py:94:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:102:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:105:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:110:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:116:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:118:0: C0301: Line too long (106/100) (line-too-long)
+app/cache_utils.py:121:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:131:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:138:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:153:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:161:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:164:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:170:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:180:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:187:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:205:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:215:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:223:0: C0301: Line too long (114/100) (line-too-long)
+app/cache_utils.py:224:0: C0301: Line too long (153/100) (line-too-long)
+app/cache_utils.py:238:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:257:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:285:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cache_utils.py:3:0: E0401: Unable to import 'flask' (import-error)
+app/cache_utils.py:10:0: W0613: Unused argument 'kwargs' (unused-argument)
+app/cache_utils.py:39:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:63:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:99:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:135:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:75:8: R0912: Too many branches (18/12) (too-many-branches)
+app/cache_utils.py:158:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:184:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:245:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:199:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:203:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:209:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:213:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:232:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:230:35: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:236:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:194:4: R1702: Too many nested blocks (7/5) (too-many-nested-blocks)
+app/cache_utils.py:243:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:192:0: R0912: Too many branches (15/12) (too-many-branches)
+app/cache_utils.py:263:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:255:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:261:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:291:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:274:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:278:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:277:29: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+app/cache_utils.py:283:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:289:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/cache_utils.py:4:0: C0411: standard import "hashlib" should be placed before third party import "flask.request" (wrong-import-order)
+app/cache_utils.py:5:0: C0411: standard import "json" should be placed before third party import "flask.request" (wrong-import-order)
+app/cache_utils.py:5:0: W0611: Unused import json (unused-import)
+************* Module app.ticket_comments
+app/ticket_comments/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/ticket_comments/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/ticket_comments/__init__.py:5:0: C0413: Import "from app.ticket_comments import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.ticket_comments.routes
+app/ticket_comments/routes.py:67:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:75:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:77:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:85:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:87:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:122:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:125:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:135:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:139:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:148:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:150:0: C0301: Line too long (105/100) (line-too-long)
+app/ticket_comments/routes.py:165:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:173:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:175:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:178:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:182:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:184:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:192:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:203:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:205:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:211:0: C0303: Trailing whitespace (trailing-whitespace)
+app/ticket_comments/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/ticket_comments/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/ticket_comments/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/ticket_comments/routes.py:29:33: W0622: Redefining built-in 'type' (redefined-builtin)
+app/ticket_comments/routes.py:141:8: W0621: Redefining name 'get_jwt_identity' from outer scope (line 2) (redefined-outer-name)
+app/ticket_comments/routes.py:128:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/ticket_comments/routes.py:156:4: W0702: No exception type(s) specified (bare-except)
+app/ticket_comments/routes.py:141:8: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/ticket_comments/routes.py:141:8: W0404: Reimport 'get_jwt_identity' (imported line 2) (reimported)
+app/ticket_comments/routes.py:141:8: C0415: Import outside toplevel (flask_jwt_extended.verify_jwt_in_request, flask_jwt_extended.get_jwt_identity) (import-outside-toplevel)
+app/ticket_comments/routes.py:209:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/ticket_comments/routes.py:210:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/ticket_comments/routes.py:12:0: C0411: standard import "datetime.datetime" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required" and first party imports "app.db", "app.ticket_comments.ticket_comments_bp", "app.models.ticket.Ticket" (...) "app.schemas.ticket_comment.TicketCommentSchema", "app.services.email_service.EmailService", "app.utils.sanitize.sanitize_user_input"  (wrong-import-order)
+app/ticket_comments/routes.py:13:0: C0411: standard import "logging" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required" and first party imports "app.db", "app.ticket_comments.ticket_comments_bp", "app.models.ticket.Ticket" (...) "app.schemas.ticket_comment.TicketCommentSchema", "app.services.email_service.EmailService", "app.utils.sanitize.sanitize_user_input"  (wrong-import-order)
+************* Module app.comments
+app/comments/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/comments/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/comments/__init__.py:5:0: C0413: Import "from app.comments import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.comments.routes
+app/comments/routes.py:55:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:57:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:63:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:66:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:72:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:102:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:110:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:143:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:148:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:151:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:153:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:201:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:206:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:214:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:221:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:224:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:270:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:272:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:275:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:278:0: C0301: Line too long (108/100) (line-too-long)
+app/comments/routes.py:279:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:283:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:287:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:290:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:292:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:328:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:330:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:335:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:338:0: C0303: Trailing whitespace (trailing-whitespace)
+app/comments/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/comments/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/comments/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/comments/routes.py:79:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/comments/routes.py:112:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/comments/routes.py:155:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/comments/routes.py:141:8: W0612: Unused variable 'post' (unused-variable)
+app/comments/routes.py:226:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/comments/routes.py:294:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/comments/routes.py:340:11: W0718: Catching too general exception Exception (broad-exception-caught)
+************* Module app.tickets
+app/tickets/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/tickets/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/tickets/__init__.py:5:0: C0413: Import "from app.tickets import routes" should be placed at the top of the module (wrong-import-position)
+app/tickets/__init__.py:6:0: C0413: Import "from app.tickets import attachments" should be placed at the top of the module (wrong-import-position)
+************* Module app.tickets.attachments
+app/tickets/attachments.py:59:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:67:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:75:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:78:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:85:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:92:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:97:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:104:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:113:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:116:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:121:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:124:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:130:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:142:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:145:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:170:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:178:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:180:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:208:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:216:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:223:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:254:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:256:43: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:264:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:268:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:271:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/attachments.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/tickets/attachments.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/tickets/attachments.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/tickets/attachments.py:3:0: E0401: Unable to import 'werkzeug.utils' (import-error)
+app/tickets/attachments.py:126:4: C0415: Import outside toplevel (mimetypes) (import-outside-toplevel)
+app/tickets/attachments.py:32:0: R0911: Too many return statements (7/6) (too-many-return-statements)
+app/tickets/attachments.py:10:0: C0411: standard import "os" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required", "werkzeug.utils.secure_filename" and first party imports "app.db", "app.tickets.tickets_bp", "app.models.ticket.Ticket", "app.models.ticket_comment.TicketComment", "app.models.ticket_attachment.TicketAttachment", "app.models.user.User"  (wrong-import-order)
+app/tickets/attachments.py:11:0: C0411: standard import "uuid" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required", "werkzeug.utils.secure_filename" and first party imports "app.db", "app.tickets.tickets_bp", "app.models.ticket.Ticket", "app.models.ticket_comment.TicketComment", "app.models.ticket_attachment.TicketAttachment", "app.models.user.User"  (wrong-import-order)
+app/tickets/attachments.py:7:0: W0611: Unused TicketComment imported from app.models.ticket_comment (unused-import)
+************* Module app.tickets.routes
+app/tickets/routes.py:65:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:69:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:72:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:76:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:82:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:87:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:141:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:153:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:168:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:180:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:192:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:206:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:212:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:218:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:275:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:278:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:287:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:294:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:297:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:309:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:320:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:323:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:326:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:332:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:341:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:350:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:360:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:362:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:369:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:376:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:405:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:413:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:453:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:461:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:471:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:483:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:485:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:511:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:519:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:523:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:561:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:569:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:577:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:587:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:589:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:597:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:607:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:609:0: C0301: Line too long (106/100) (line-too-long)
+app/tickets/routes.py:611:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:615:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:619:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:622:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:632:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:634:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:640:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:677:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:685:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:695:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:699:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:705:0: C0301: Line too long (103/100) (line-too-long)
+app/tickets/routes.py:709:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:711:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:748:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:753:0: C0301: Line too long (116/100) (line-too-long)
+app/tickets/routes.py:756:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:758:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:768:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:770:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:778:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:780:0: C0301: Line too long (138/100) (line-too-long)
+app/tickets/routes.py:781:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:787:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:796:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:806:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:815:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:817:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:823:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:848:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:856:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:858:0: C0301: Line too long (131/100) (line-too-long)
+app/tickets/routes.py:859:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:861:0: C0301: Line too long (130/100) (line-too-long)
+app/tickets/routes.py:862:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tickets/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/tickets/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/tickets/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/tickets/routes.py:16:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/tickets/routes.py:17:0: E0401: Unable to import 'sqlalchemy.orm' (import-error)
+app/tickets/routes.py:32:33: W0622: Redefining built-in 'type' (redefined-builtin)
+app/tickets/routes.py:57:23: W0613: Unused argument 'ticket' (unused-argument)
+app/tickets/routes.py:92:0: R0914: Too many local variables (17/15) (too-many-locals)
+app/tickets/routes.py:92:0: R0912: Too many branches (13/12) (too-many-branches)
+app/tickets/routes.py:302:8: W0621: Redefining name 'get_jwt_identity' from outer scope (line 2) (redefined-outer-name)
+app/tickets/routes.py:281:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:307:4: W0702: No exception type(s) specified (bare-except)
+app/tickets/routes.py:302:8: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/tickets/routes.py:302:8: W0404: Reimport 'get_jwt_identity' (imported line 2) (reimported)
+app/tickets/routes.py:302:8: C0415: Import outside toplevel (flask_jwt_extended.verify_jwt_in_request, flask_jwt_extended.get_jwt_identity) (import-outside-toplevel)
+app/tickets/routes.py:366:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:367:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/tickets/routes.py:374:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:375:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/tickets/routes.py:464:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:480:8: W0612: Unused variable 'old_priority' (unused-variable)
+app/tickets/routes.py:580:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:638:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:639:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/tickets/routes.py:688:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:701:4: C0415: Import outside toplevel (app.models.ticket_comment.TicketComment) (import-outside-toplevel)
+app/tickets/routes.py:761:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:821:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tickets/routes.py:822:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/tickets/routes.py:783:4: W0612: Unused variable 'old_assigned_to' (unused-variable)
+app/tickets/routes.py:16:0: C0411: third party import "sqlalchemy.or_" should be placed before first party imports "app.db", "app.tickets.tickets_bp", "app.models.ticket.Ticket" (...) "app.schemas.ticket.TicketSchema", "app.services.email_service.EmailService", "app.utils.sanitize.sanitize_user_input"  (wrong-import-order)
+app/tickets/routes.py:17:0: C0411: third party import "sqlalchemy.orm.joinedload" should be placed before first party imports "app.db", "app.tickets.tickets_bp", "app.models.ticket.Ticket" (...) "app.schemas.ticket.TicketSchema", "app.services.email_service.EmailService", "app.utils.sanitize.sanitize_user_input"  (wrong-import-order)
+app/tickets/routes.py:18:0: C0411: standard import "datetime.datetime" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required", "sqlalchemy.or_", "sqlalchemy.orm.joinedload" and first party imports "app.db", "app.tickets.tickets_bp", "app.models.ticket.Ticket" (...) "app.schemas.ticket.TicketSchema", "app.services.email_service.EmailService", "app.utils.sanitize.sanitize_user_input"  (wrong-import-order)
+app/tickets/routes.py:19:0: C0411: standard import "re" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required", "sqlalchemy.or_", "sqlalchemy.orm.joinedload" and first party imports "app.db", "app.tickets.tickets_bp", "app.models.ticket.Ticket" (...) "app.schemas.ticket.TicketSchema", "app.services.email_service.EmailService", "app.utils.sanitize.sanitize_user_input"  (wrong-import-order)
+app/tickets/routes.py:20:0: C0411: standard import "logging" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required", "sqlalchemy.or_", "sqlalchemy.orm.joinedload" and first party imports "app.db", "app.tickets.tickets_bp", "app.models.ticket.Ticket" (...) "app.schemas.ticket.TicketSchema", "app.services.email_service.EmailService", "app.utils.sanitize.sanitize_user_input"  (wrong-import-order)
+app/tickets/routes.py:16:0: W0611: Unused and_ imported from sqlalchemy (unused-import)
+app/tickets/routes.py:16:0: W0611: Unused func imported from sqlalchemy (unused-import)
+app/tickets/routes.py:19:0: W0611: Unused import re (unused-import)
+************* Module app.tasks.background_tasks
+app/tasks/background_tasks.py:83:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/background_tasks.py:94:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/background_tasks.py:24:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tasks/background_tasks.py:17:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+app/tasks/background_tasks.py:50:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tasks/background_tasks.py:63:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tasks/background_tasks.py:96:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tasks/background_tasks.py:8:0: C0411: standard import "datetime.datetime" should be placed before first party imports "app.celery_app.celery", "app.db", "app.models.task.Task", "app.models.notification.Notification", "app.models.user.User", "app.cache.invalidate_task_cache"  (wrong-import-order)
+app/tasks/background_tasks.py:6:0: W0611: Unused User imported from app.models.user (unused-import)
+************* Module app.tasks
+app/tasks/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/tasks/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/tasks/__init__.py:5:0: C0413: Import "from app.tasks import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.tasks.routes
+app/tasks/routes.py:79:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:81:0: C0301: Line too long (119/100) (line-too-long)
+app/tasks/routes.py:85:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:87:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:96:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:100:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:104:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:108:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:129:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:135:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:145:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:148:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:193:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:198:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:205:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:211:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:222:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:225:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:228:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:238:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:243:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:268:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:274:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:276:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:283:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:285:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:288:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:333:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:339:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:344:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:347:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:352:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:356:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:383:0: C0301: Line too long (117/100) (line-too-long)
+app/tasks/routes.py:396:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:398:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:401:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:410:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:438:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:443:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:448:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:451:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:455:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:458:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:484:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:488:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:491:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:494:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:505:0: C0303: Trailing whitespace (trailing-whitespace)
+app/tasks/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/tasks/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/tasks/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/tasks/routes.py:4:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/tasks/routes.py:19:33: W0622: Redefining built-in 'type' (redefined-builtin)
+app/tasks/routes.py:196:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tasks/routes.py:241:12: C0415: Import outside toplevel (app.tasks.background_tasks.send_task_assignment_email) (import-outside-toplevel)
+app/tasks/routes.py:350:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/tasks/routes.py:293:0: R0912: Too many branches (16/12) (too-many-branches)
+app/tasks/routes.py:486:7: R1714: Consider merging these comparisons with 'in' by using 'current_user_id not in (task.assigned_to_id, task.created_by_id)'. Use a set instead if elements are hashable. (consider-using-in)
+app/tasks/routes.py:4:0: C0411: third party import "sqlalchemy.or_" should be placed before first party import "app.db"  (wrong-import-order)
+app/tasks/routes.py:5:0: C0412: Imports from package app are not grouped (ungrouped-imports)
+app/tasks/routes.py:1:0: W0611: Unused current_app imported from flask (unused-import)
+app/tasks/routes.py:11:0: W0611: Unused cached_task_list imported from app.cache (unused-import)
+app/tasks/routes.py:11:0: W0611: Unused cached_task_detail imported from app.cache (unused-import)
+************* Module app.posts
+app/posts/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/posts/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/posts/__init__.py:5:0: C0413: Import "from app.posts import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.posts.routes
+app/posts/routes.py:12:0: C0301: Line too long (128/100) (line-too-long)
+app/posts/routes.py:70:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:72:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:76:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:80:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:86:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:97:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:101:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:107:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:157:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:163:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:165:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:175:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:181:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:185:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:191:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:229:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:236:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:241:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:245:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:281:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:288:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:293:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:297:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:358:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:361:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:368:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:373:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:383:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:394:0: C0301: Line too long (111/100) (line-too-long)
+app/posts/routes.py:397:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:400:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:403:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:461:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:462:0: C0301: Line too long (102/100) (line-too-long)
+app/posts/routes.py:464:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:466:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:477:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:484:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:496:0: C0301: Line too long (115/100) (line-too-long)
+app/posts/routes.py:503:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:508:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:511:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:513:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:516:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:553:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:554:0: C0301: Line too long (102/100) (line-too-long)
+app/posts/routes.py:556:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:560:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:563:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:567:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:601:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:606:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:609:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:612:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:659:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:662:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:665:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:673:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:680:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:683:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:688:0: C0303: Trailing whitespace (trailing-whitespace)
+app/posts/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/posts/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/posts/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/posts/routes.py:3:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/posts/routes.py:114:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:199:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:248:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:234:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:300:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:286:19: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:405:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:413:0: R0914: Too many local variables (16/15) (too-many-locals)
+app/posts/routes.py:518:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:413:0: R0912: Too many branches (15/12) (too-many-branches)
+app/posts/routes.py:569:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:614:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:599:8: W0612: Unused variable 'post' (unused-variable)
+app/posts/routes.py:691:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/posts/routes.py:661:8: W0612: Unused variable 'post' (unused-variable)
+app/posts/routes.py:3:0: W0611: Unused and_ imported from sqlalchemy (unused-import)
+************* Module app.products
+app/products/__init__.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/products/__init__.py:6:0: C0413: Import "from app.products import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.products.routes
+app/products/routes.py:20:0: C0303: Trailing whitespace (trailing-whitespace)
+app/products/routes.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/products/routes.py:26:0: C0303: Trailing whitespace (trailing-whitespace)
+app/products/routes.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+app/products/routes.py:40:0: C0303: Trailing whitespace (trailing-whitespace)
+app/products/routes.py:44:0: C0303: Trailing whitespace (trailing-whitespace)
+app/products/routes.py:50:0: C0303: Trailing whitespace (trailing-whitespace)
+app/products/routes.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/products/routes.py:7:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/products/routes.py:43:29: C0121: Comparison 'Product.in_stock == True' should be 'Product.in_stock is True' if checking for the singleton value True, or 'bool(Product.in_stock)' if testing for truthiness (singleton-comparison)
+app/products/routes.py:7:0: C0411: third party import "sqlalchemy.or_" should be placed before first party imports "app.products.products_bp", "app.db", "app.models.Product", "app.schemas.product.ProductSchema"  (wrong-import-order)
+app/products/routes.py:4:0: W0611: Unused db imported from app (unused-import)
+************* Module app.task_comments
+app/task_comments/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/task_comments/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/task_comments/__init__.py:5:0: C0413: Import "from app.task_comments import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.task_comments.routes
+app/task_comments/routes.py:9:0: C0301: Line too long (104/100) (line-too-long)
+app/task_comments/routes.py:62:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:69:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:73:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:81:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:124:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:131:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:136:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:142:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:145:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:152:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:158:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:168:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:170:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:205:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:209:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:214:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:217:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:243:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:248:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:251:0: C0303: Trailing whitespace (trailing-whitespace)
+app/task_comments/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/task_comments/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/task_comments/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/task_comments/routes.py:16:33: W0622: Redefining built-in 'type' (redefined-builtin)
+app/task_comments/routes.py:134:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/task_comments/routes.py:212:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/task_comments/routes.py:246:7: R1714: Consider merging these comparisons with 'in' by using 'current_user_id not in (comment.user_id, task.created_by_id)'. Use a set instead if elements are hashable. (consider-using-in)
+************* Module app.auth
+app/auth/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/auth/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/auth/__init__.py:5:0: C0413: Import "from app.auth import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.auth.routes
+app/auth/routes.py:2:0: C0301: Line too long (104/100) (line-too-long)
+app/auth/routes.py:54:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:66:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:69:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:104:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:106:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:110:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:116:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:135:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:154:0: C0303: Trailing whitespace (trailing-whitespace)
+app/auth/routes.py:181:0: C0301: Line too long (127/100) (line-too-long)
+app/auth/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/auth/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/auth/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/auth/routes.py:52:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/auth/routes.py:102:11: W0718: Catching too general exception Exception (broad-exception-caught)
+************* Module app.projects
+app/projects/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/projects/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/projects/__init__.py:5:0: C0413: Import "from app.projects import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.projects.routes
+app/projects/routes.py:9:0: C0301: Line too long (108/100) (line-too-long)
+app/projects/routes.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:66:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:78:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:81:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:87:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:135:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:140:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:148:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:158:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:161:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:189:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:194:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:235:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:241:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:246:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:259:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:261:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:287:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:291:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:294:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:318:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:323:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:335:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:346:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:384:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:390:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:395:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:398:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:402:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:404:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:414:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:444:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:450:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:454:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:457:0: C0303: Trailing whitespace (trailing-whitespace)
+app/projects/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/projects/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/projects/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/projects/routes.py:4:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/projects/routes.py:17:33: W0622: Redefining built-in 'type' (redefined-builtin)
+app/projects/routes.py:138:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/projects/routes.py:143:8: C0415: Import outside toplevel (app.models.team.Team) (import-outside-toplevel)
+app/projects/routes.py:244:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/projects/routes.py:393:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/projects/routes.py:4:0: C0411: third party import "sqlalchemy.or_" should be placed before first party import "app.db"  (wrong-import-order)
+app/projects/routes.py:5:0: C0412: Imports from package app are not grouped (ungrouped-imports)
+************* Module app.admin
+app/admin/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/admin/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/admin/__init__.py:5:0: C0413: Import "from app.admin import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.admin.routes
+app/admin/routes.py:45:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:52:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:59:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:65:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:71:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:77:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:81:58: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:89:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:96:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:101:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:112:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:119:0: C0301: Line too long (121/100) (line-too-long)
+app/admin/routes.py:121:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:180:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:187:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:191:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:207:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:212:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:238:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:243:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:244:89: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:247:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:248:0: C0301: Line too long (112/100) (line-too-long)
+app/admin/routes.py:250:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:251:72: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:254:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:294:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:301:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:305:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:320:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:324:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:327:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:335:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:344:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:357:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:365:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:375:0: C0301: Line too long (120/100) (line-too-long)
+app/admin/routes.py:377:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:402:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:409:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:414:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:421:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:424:0: C0301: Line too long (112/100) (line-too-long)
+app/admin/routes.py:428:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:434:0: C0303: Trailing whitespace (trailing-whitespace)
+app/admin/routes.py:445:0: C0301: Line too long (105/100) (line-too-long)
+app/admin/routes.py:446:0: C0301: Line too long (148/100) (line-too-long)
+app/admin/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/admin/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/admin/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/admin/routes.py:8:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/admin/routes.py:31:0: R0914: Too many local variables (28/15) (too-many-locals)
+app/admin/routes.py:152:0: R0914: Too many local variables (16/15) (too-many-locals)
+app/admin/routes.py:268:0: R0914: Too many local variables (17/15) (too-many-locals)
+app/admin/routes.py:8:0: C0411: third party import "sqlalchemy.func" should be placed before first party imports "app.db", "app.admin.admin_bp", "app.models.ticket.Ticket", "app.models.user.User", "app.models.ticket_status_history.TicketStatusHistory"  (wrong-import-order)
+app/admin/routes.py:9:0: C0411: standard import "datetime.datetime" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required", "sqlalchemy.func" and first party imports "app.db", "app.admin.admin_bp", "app.models.ticket.Ticket", "app.models.user.User", "app.models.ticket_status_history.TicketStatusHistory"  (wrong-import-order)
+app/admin/routes.py:7:0: W0611: Unused TicketStatusHistory imported from app.models.ticket_status_history (unused-import)
+app/admin/routes.py:8:0: W0611: Unused extract imported from sqlalchemy (unused-import)
+************* Module app.agents
+app/agents/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/agents/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/agents/__init__.py:5:0: C0413: Import "from app.agents import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.agents.routes
+app/agents/routes.py:28:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:36:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:38:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:72:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:80:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:88:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:93:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:95:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:98:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:104:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:107:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:150:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:158:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:165:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:167:0: C0301: Line too long (115/100) (line-too-long)
+app/agents/routes.py:173:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:176:0: C0303: Trailing whitespace (trailing-whitespace)
+app/agents/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/agents/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/agents/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/agents/routes.py:105:4: C0415: Import outside toplevel (app.schemas.ticket.TicketSchema) (import-outside-toplevel)
+************* Module app.utils.sanitize
+app/utils/sanitize.py:34:0: C0303: Trailing whitespace (trailing-whitespace)
+app/utils/sanitize.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+app/utils/sanitize.py:59:0: C0303: Trailing whitespace (trailing-whitespace)
+app/utils/sanitize.py:76:0: C0303: Trailing whitespace (trailing-whitespace)
+app/utils/sanitize.py:90:0: C0303: Trailing whitespace (trailing-whitespace)
+app/utils/sanitize.py:2:0: E0401: Unable to import 'bleach' (import-error)
+app/utils/sanitize.py:3:0: W0611: Unused Markup imported from markupsafe (unused-import)
+************* Module app.models.ticket_comment
+app/models/ticket_comment.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_comment.py:10:0: C0301: Line too long (111/100) (line-too-long)
+app/models/ticket_comment.py:12:0: C0301: Line too long (105/100) (line-too-long)
+app/models/ticket_comment.py:13:0: C0301: Line too long (107/100) (line-too-long)
+app/models/ticket_comment.py:15:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_comment.py:18:0: C0301: Line too long (118/100) (line-too-long)
+app/models/ticket_comment.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_comment.py:25:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_comment.py:40:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_comment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.post
+app/models/post.py:8:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/post.py:14:0: C0301: Line too long (110/100) (line-too-long)
+app/models/post.py:19:0: C0301: Line too long (106/100) (line-too-long)
+app/models/post.py:20:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/post.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/post.py:37:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/post.py:52:0: C0301: Line too long (123/100) (line-too-long)
+app/models/post.py:53:0: C0301: Line too long (127/100) (line-too-long)
+app/models/post.py:54:0: C0301: Line too long (132/100) (line-too-long)
+app/models/post.py:58:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/post.py:61:0: C0301: Line too long (154/100) (line-too-long)
+app/models/post.py:63:33: C0303: Trailing whitespace (trailing-whitespace)
+app/models/post.py:66:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/post.py:68:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/post.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/models/post.py:60:12: C0415: Import outside toplevel (app.models.comment.Comment) (import-outside-toplevel)
+app/models/post.py:60:12: W0611: Unused Comment imported from app.models.comment (unused-import)
+app/models/post.py:3:0: C0411: standard import "re" should be placed before first party import "app.db"  (wrong-import-order)
+************* Module app.models.user
+app/models/user.py:9:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:14:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:29:0: C0301: Line too long (101/100) (line-too-long)
+app/models/user.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:34:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:36:0: C0301: Line too long (106/100) (line-too-long)
+app/models/user.py:37:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:40:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:49:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:53:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:57:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:61:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:75:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:79:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:83:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:102:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/user.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/models/user.py:3:0: E0401: Unable to import 'werkzeug.security' (import-error)
+app/models/user.py:66:8: C0415: Import outside toplevel (app.models.ticket.Ticket) (import-outside-toplevel)
+app/models/user.py:67:8: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/user.py:67:8: C0415: Import outside toplevel (sqlalchemy.or_) (import-outside-toplevel)
+app/models/user.py:3:0: C0411: third party import "werkzeug.security.generate_password_hash" should be placed before first party import "app.db"  (wrong-import-order)
+app/models/user.py:4:0: C0411: standard import "json" should be placed before third party import "werkzeug.security.generate_password_hash" and first party import "app.db"  (wrong-import-order)
+app/models/user.py:4:0: W0611: Unused import json (unused-import)
+************* Module app.models.task
+app/models/task.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:13:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:25:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:35:0: C0301: Line too long (106/100) (line-too-long)
+app/models/task.py:36:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:39:0: C0301: Line too long (109/100) (line-too-long)
+app/models/task.py:40:0: C0301: Line too long (106/100) (line-too-long)
+app/models/task.py:41:0: C0301: Line too long (107/100) (line-too-long)
+app/models/task.py:42:0: C0301: Line too long (113/100) (line-too-long)
+app/models/task.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:55:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:82:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.cart
+app/models/cart.py:11:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:13:0: C0301: Line too long (103/100) (line-too-long)
+app/models/cart.py:14:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:17:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:20:0: C0301: Line too long (106/100) (line-too-long)
+app/models/cart.py:21:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:24:0: C0301: Line too long (125/100) (line-too-long)
+app/models/cart.py:26:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:35:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:38:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:40:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:47:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:50:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:63:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:71:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:76:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:79:0: C0301: Line too long (106/100) (line-too-long)
+app/models/cart.py:80:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:83:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:90:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:103:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/cart.py:4:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/cart.py:4:0: C0411: third party import "sqlalchemy.UniqueConstraint" should be placed before first party import "app.db"  (wrong-import-order)
+app/models/cart.py:5:0: C0411: standard import "decimal.Decimal" should be placed before third party import "sqlalchemy.UniqueConstraint" and first party import "app.db"  (wrong-import-order)
+************* Module app.models.ticket
+app/models/ticket.py:9:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:18:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:39:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:46:0: C0301: Line too long (106/100) (line-too-long)
+app/models/ticket.py:50:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:55:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:57:0: C0301: Line too long (111/100) (line-too-long)
+app/models/ticket.py:58:0: C0301: Line too long (108/100) (line-too-long)
+app/models/ticket.py:59:0: C0301: Line too long (111/100) (line-too-long)
+app/models/ticket.py:60:0: C0301: Line too long (117/100) (line-too-long)
+app/models/ticket.py:61:0: C0301: Line too long (124/100) (line-too-long)
+app/models/ticket.py:62:0: C0301: Line too long (123/100) (line-too-long)
+app/models/ticket.py:63:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:72:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:81:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:91:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:93:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:97:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:99:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:112:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:118:0: C0301: Line too long (106/100) (line-too-long)
+app/models/ticket.py:121:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:127:0: C0301: Line too long (101/100) (line-too-long)
+app/models/ticket.py:134:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:141:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:162:0: C0301: Line too long (104/100) (line-too-long)
+app/models/ticket.py:163:0: C0301: Line too long (116/100) (line-too-long)
+app/models/ticket.py:164:0: C0301: Line too long (122/100) (line-too-long)
+app/models/ticket.py:169:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/models/ticket.py:4:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/ticket.py:96:8: C0415: Import outside toplevel (datetime.timedelta) (import-outside-toplevel)
+app/models/ticket.py:175:41: W0613: Unused argument 'mapper' (unused-argument)
+app/models/ticket.py:175:49: W0613: Unused argument 'connection' (unused-argument)
+app/models/ticket.py:3:0: C0411: standard import "re" should be placed before first party import "app.db"  (wrong-import-order)
+app/models/ticket.py:4:0: C0411: third party import "sqlalchemy.event" should be placed before first party import "app.db"  (wrong-import-order)
+************* Module app.models.comment
+app/models/comment.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/comment.py:10:0: C0301: Line too long (110/100) (line-too-long)
+app/models/comment.py:11:0: C0301: Line too long (110/100) (line-too-long)
+app/models/comment.py:12:0: C0301: Line too long (133/100) (line-too-long)
+app/models/comment.py:15:0: C0301: Line too long (106/100) (line-too-long)
+app/models/comment.py:16:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/comment.py:21:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/comment.py:26:0: C0301: Line too long (107/100) (line-too-long)
+app/models/comment.py:29:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/comment.py:45:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/comment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.notification
+app/models/notification.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:16:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:22:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:28:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:31:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:35:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:41:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:47:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:52:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:69:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/notification.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.order
+app/models/order.py:10:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:22:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:31:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:35:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:37:0: C0301: Line too long (115/100) (line-too-long)
+app/models/order.py:40:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:46:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:49:0: C0301: Line too long (106/100) (line-too-long)
+app/models/order.py:53:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:56:0: C0301: Line too long (128/100) (line-too-long)
+app/models/order.py:57:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:66:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:91:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:99:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:103:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:108:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:111:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:114:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:127:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/order.py:4:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/order.py:61:8: W0621: Redefining name 'datetime' from outer scope (line 2) (redefined-outer-name)
+app/models/order.py:61:8: W0404: Reimport 'datetime' (imported line 2) (reimported)
+app/models/order.py:61:8: C0415: Import outside toplevel (datetime.datetime) (import-outside-toplevel)
+app/models/order.py:62:8: C0415: Import outside toplevel (random) (import-outside-toplevel)
+app/models/order.py:4:0: C0411: third party import "sqlalchemy.Index" should be placed before first party import "app.db"  (wrong-import-order)
+app/models/order.py:4:0: W0611: Unused Index imported from sqlalchemy (unused-import)
+************* Module app.models.task_comment
+app/models/task_comment.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_comment.py:10:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_comment.py:14:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_comment.py:17:0: C0301: Line too long (106/100) (line-too-long)
+app/models/task_comment.py:18:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_comment.py:21:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_comment.py:33:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_comment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models
+app/models/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.team
+app/models/team.py:15:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:22:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:25:0: C0301: Line too long (106/100) (line-too-long)
+app/models/team.py:26:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:31:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:47:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:53:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:66:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:80:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/team.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/models/team.py:38:12: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/team.py:38:12: C0415: Import outside toplevel (sqlalchemy.update) (import-outside-toplevel)
+app/models/team.py:56:8: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/team.py:56:8: C0415: Import outside toplevel (sqlalchemy.select) (import-outside-toplevel)
+************* Module app.models.ticket_status_history
+app/models/ticket_status_history.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_status_history.py:15:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_status_history.py:18:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_status_history.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_status_history.py:37:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_status_history.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.task_attachment
+app/models/task_attachment.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_attachment.py:13:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_attachment.py:17:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_attachment.py:20:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_attachment.py:23:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_attachment.py:37:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/task_attachment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.product
+app/models/product.py:10:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:18:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:22:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:28:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:32:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:36:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:39:0: C0301: Line too long (106/100) (line-too-long)
+app/models/product.py:40:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:42:0: C0301: Line too long (109/100) (line-too-long)
+app/models/product.py:44:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:69:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/product.py:4:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/product.py:4:0: C0411: third party import "sqlalchemy.JSON" should be placed before first party import "app.db"  (wrong-import-order)
+************* Module app.models.ticket_assignment
+app/models/ticket_assignment.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_assignment.py:16:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_assignment.py:18:0: C0301: Line too long (113/100) (line-too-long)
+app/models/ticket_assignment.py:20:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_assignment.py:27:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_assignment.py:42:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_assignment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.discount_code
+app/models/discount_code.py:10:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:13:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:16:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:18:0: C0301: Line too long (105/100) (line-too-long)
+app/models/discount_code.py:20:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:23:0: C0301: Line too long (103/100) (line-too-long)
+app/models/discount_code.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:28:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:32:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:35:0: C0301: Line too long (106/100) (line-too-long)
+app/models/discount_code.py:36:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:41:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:44:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:47:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:49:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:54:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:57:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:66:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:69:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:86:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/discount_code.py:4:0: C0411: standard import "decimal.Decimal" should be placed before first party import "app.db"  (wrong-import-order)
+************* Module app.models.ticket_attachment
+app/models/ticket_attachment.py:7:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_attachment.py:11:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_attachment.py:22:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_attachment.py:25:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_attachment.py:31:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_attachment.py:37:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_attachment.py:53:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/ticket_attachment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.models.project
+app/models/project.py:15:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:19:0: C0301: Line too long (102/100) (line-too-long)
+app/models/project.py:20:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:29:0: C0301: Line too long (106/100) (line-too-long)
+app/models/project.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:36:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:42:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:58:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:77:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:96:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/project.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/models/project.py:49:12: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/project.py:49:12: C0415: Import outside toplevel (sqlalchemy.update) (import-outside-toplevel)
+app/models/project.py:67:8: E0401: Unable to import 'sqlalchemy' (import-error)
+app/models/project.py:67:8: C0415: Import outside toplevel (sqlalchemy.select) (import-outside-toplevel)
+************* Module app.models.category
+app/models/category.py:7:0: C0301: Line too long (102/100) (line-too-long)
+app/models/category.py:8:0: C0301: Line too long (110/100) (line-too-long)
+app/models/category.py:14:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/category.py:20:0: C0301: Line too long (106/100) (line-too-long)
+app/models/category.py:21:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/category.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/category.py:36:0: C0303: Trailing whitespace (trailing-whitespace)
+app/models/category.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.checkout
+app/checkout/__init__.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/checkout/__init__.py:6:0: C0413: Import "from app.checkout import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.checkout.routes
+app/checkout/routes.py:21:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:33:0: C0325: Unnecessary parens after 'not' keyword (superfluous-parens)
+app/checkout/routes.py:46:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:52:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:68:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:76:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:83:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:91:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:94:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:97:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:102:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:123:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:125:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:130:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:133:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:137:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:140:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:144:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:147:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:149:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:158:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:164:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:184:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:193:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:205:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:210:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:214:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:218:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:220:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:232:0: C0303: Trailing whitespace (trailing-whitespace)
+app/checkout/routes.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/checkout/routes.py:3:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/checkout/routes.py:8:0: E0401: Unable to import 'marshmallow' (import-error)
+app/checkout/routes.py:45:4: C0415: Import outside toplevel (random) (import-outside-toplevel)
+app/checkout/routes.py:114:0: R0914: Too many local variables (16/15) (too-many-locals)
+app/checkout/routes.py:153:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/checkout/routes.py:229:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/checkout/routes.py:224:8: C0415: Import outside toplevel (app.services.email_service.send_order_confirmation_email) (import-outside-toplevel)
+app/checkout/routes.py:114:0: R0911: Too many return statements (7/6) (too-many-return-statements)
+app/checkout/routes.py:8:0: C0411: third party import "marshmallow.ValidationError" should be placed before first party imports "app.checkout.checkout_bp", "app.db", "app.models.Cart", "app.schemas.order.CheckoutSchema"  (wrong-import-order)
+app/checkout/routes.py:9:0: C0411: standard import "decimal.Decimal" should be placed before third party imports "flask.jsonify", "flask_jwt_extended.jwt_required", "marshmallow.ValidationError" and first party imports "app.checkout.checkout_bp", "app.db", "app.models.Cart", "app.schemas.order.CheckoutSchema"  (wrong-import-order)
+app/checkout/routes.py:10:0: C0411: standard import "datetime.datetime" should be placed before third party imports "flask.jsonify", "flask_jwt_extended.jwt_required", "marshmallow.ValidationError" and first party imports "app.checkout.checkout_bp", "app.db", "app.models.Cart", "app.schemas.order.CheckoutSchema"  (wrong-import-order)
+app/checkout/routes.py:6:0: W0611: Unused Product imported from app.models (unused-import)
+************* Module app.schemas.ticket_comment
+app/schemas/ticket_comment.py:15:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket_comment.py:24:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket_comment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/ticket_comment.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/ticket_comment.py:16:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/ticket_comment.py:16:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket_comment.py:3:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket_comment.py:25:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/ticket_comment.py:25:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket_comment.py:19:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.schemas.post
+app/schemas/post.py:21:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:33:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:41:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:47:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:57:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:69:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:77:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:83:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:93:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/post.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/post.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/post.py:22:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/post.py:22:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/post.py:3:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/post.py:58:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/post.py:58:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/post.py:94:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/post.py:94:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.schemas.user
+app/schemas/user.py:28:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/user.py:51:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/user.py:56:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/user.py:61:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/user.py:83:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/user.py:106:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/user.py:114:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/user.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/user.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/user.py:29:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/user.py:29:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/user.py:4:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/user.py:53:4: C0116: Missing function or method docstring (missing-function-docstring)
+app/schemas/user.py:58:4: C0116: Missing function or method docstring (missing-function-docstring)
+app/schemas/user.py:62:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/user.py:62:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/user.py:84:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/user.py:84:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/user.py:65:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/user.py:107:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/user.py:107:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/user.py:87:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/user.py:115:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/user.py:115:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/user.py:110:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.schemas.task
+app/schemas/task.py:34:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/task.py:57:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/task.py:80:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/task.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/task.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/task.py:35:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/task.py:35:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task.py:5:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task.py:58:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/task.py:58:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task.py:38:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task.py:81:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/task.py:81:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task.py:61:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task.py:2:0: C0411: standard import "datetime.datetime" should be placed before third party import "marshmallow.Schema" (wrong-import-order)
+app/schemas/task.py:1:0: W0611: Unused validates imported from marshmallow (unused-import)
+app/schemas/task.py:1:0: W0611: Unused ValidationError imported from marshmallow (unused-import)
+app/schemas/task.py:2:0: W0611: Unused datetime imported from datetime (unused-import)
+************* Module app.schemas.cart
+app/schemas/cart.py:2:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/cart.py:5:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/cart.py:14:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/cart.py:26:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/cart.py:40:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/cart.py:46:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/cart.py:51:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.schemas.ticket
+app/schemas/ticket.py:48:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket.py:69:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket.py:75:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket.py:81:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket.py:101:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket.py:117:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket.py:130:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket.py:138:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/ticket.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/ticket.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/ticket.py:49:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/ticket.py:49:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:5:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:82:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/ticket.py:82:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:102:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/ticket.py:102:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:85:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:118:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/ticket.py:118:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:105:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:131:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/ticket.py:131:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:121:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:139:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/ticket.py:139:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:134:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/ticket.py:3:0: C0411: standard import "re" should be placed before third party import "marshmallow.Schema" and first party import "app.models.ticket.Ticket"  (wrong-import-order)
+************* Module app.schemas.comment
+app/schemas/comment.py:16:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/comment.py:25:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/comment.py:33:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/comment.py:41:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/comment.py:49:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/comment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/comment.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/comment.py:17:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/comment.py:17:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/comment.py:3:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/comment.py:34:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/comment.py:34:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/comment.py:20:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+app/schemas/comment.py:50:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/comment.py:50:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/comment.py:37:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+************* Module app.schemas.notification
+app/schemas/notification.py:26:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/notification.py:48:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/notification.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/notification.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/notification.py:27:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/notification.py:27:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/notification.py:4:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/notification.py:49:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/notification.py:49:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/notification.py:30:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.schemas.order
+app/schemas/order.py:2:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/order.py:5:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/order.py:16:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/order.py:26:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/order.py:38:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/order.py:62:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/order.py:2:0: W0611: Unused validates imported from marshmallow (unused-import)
+app/schemas/order.py:2:0: W0611: Unused ValidationError imported from marshmallow (unused-import)
+************* Module app.schemas.task_comment
+app/schemas/task_comment.py:12:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/task_comment.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/task_comment.py:26:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/task_comment.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/task_comment.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/task_comment.py:13:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/task_comment.py:13:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task_comment.py:3:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task_comment.py:20:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/task_comment.py:20:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task_comment.py:16:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task_comment.py:27:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/task_comment.py:27:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/task_comment.py:23:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.schemas.__init__
+app/schemas/__init__.py:6:0: C0301: Line too long (108/100) (line-too-long)
+app/schemas/__init__.py:9:0: C0301: Line too long (104/100) (line-too-long)
+************* Module app.schemas
+app/schemas/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module app.schemas.team
+app/schemas/team.py:14:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/team.py:22:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/team.py:30:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/team.py:38:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/team.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/team.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/team.py:15:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/team.py:15:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/team.py:3:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/team.py:23:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/team.py:23:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/team.py:18:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/team.py:31:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/team.py:31:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/team.py:26:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/team.py:39:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/team.py:39:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/team.py:34:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.schemas.product
+app/schemas/product.py:22:0: C0301: Line too long (126/100) (line-too-long)
+app/schemas/product.py:41:0: C0301: Line too long (126/100) (line-too-long)
+app/schemas/product.py:2:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/product.py:5:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/product.py:28:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/product.py:2:0: W0611: Unused validates imported from marshmallow (unused-import)
+app/schemas/product.py:2:0: W0611: Unused ValidationError imported from marshmallow (unused-import)
+************* Module app.schemas.project
+app/schemas/project.py:19:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/project.py:27:0: C0301: Line too long (106/100) (line-too-long)
+app/schemas/project.py:31:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/project.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/project.py:51:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/project.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/project.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/project.py:20:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/project.py:20:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/project.py:3:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/project.py:32:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/project.py:32:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/project.py:23:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/project.py:44:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/project.py:44:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/project.py:35:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/project.py:52:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/project.py:52:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/project.py:47:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.schemas.category
+app/schemas/category.py:13:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/category.py:21:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/category.py:29:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/category.py:37:0: C0303: Trailing whitespace (trailing-whitespace)
+app/schemas/category.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/schemas/category.py:1:0: E0401: Unable to import 'marshmallow' (import-error)
+app/schemas/category.py:14:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/category.py:14:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/category.py:4:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/category.py:30:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/category.py:30:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/category.py:17:0: R0903: Too few public methods (1/2) (too-few-public-methods)
+app/schemas/category.py:38:4: C0115: Missing class docstring (missing-class-docstring)
+app/schemas/category.py:38:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/category.py:33:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app/schemas/category.py:2:0: C0411: standard import "re" should be placed before third party import "marshmallow.Schema" (wrong-import-order)
+app/schemas/category.py:2:0: W0611: Unused import re (unused-import)
+************* Module app.users
+app/users/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/users/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/users/__init__.py:5:0: C0413: Import "from app.users import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.users.routes
+app/users/routes.py:39:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:45:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:116:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:120:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:127:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:132:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:140:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:147:72: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:157:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:184:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:202:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:212:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:222:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:251:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:254:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:257:0: C0303: Trailing whitespace (trailing-whitespace)
+app/users/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/users/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/users/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/users/routes.py:150:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/users/routes.py:215:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/users/routes.py:79:0: R0911: Too many return statements (8/6) (too-many-return-statements)
+app/users/routes.py:79:0: R0912: Too many branches (21/12) (too-many-branches)
+************* Module app.teams
+app/teams/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/teams/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/teams/__init__.py:5:0: C0413: Import "from app.teams import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.teams.routes
+app/teams/routes.py:59:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:61:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:73:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:79:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:117:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:122:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:128:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:131:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:159:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:164:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:199:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:205:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:210:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:215:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:217:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:243:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:247:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:250:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:274:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:279:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:291:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:302:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:340:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:346:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:351:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:354:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:358:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:360:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:370:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:400:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:406:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:410:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:413:0: C0303: Trailing whitespace (trailing-whitespace)
+app/teams/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/teams/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/teams/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/teams/routes.py:4:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/teams/routes.py:17:33: W0622: Redefining built-in 'type' (redefined-builtin)
+app/teams/routes.py:120:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/teams/routes.py:208:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/teams/routes.py:349:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/teams/routes.py:4:0: C0411: third party import "sqlalchemy.or_" should be placed before first party import "app.db"  (wrong-import-order)
+app/teams/routes.py:5:0: C0412: Imports from package app are not grouped (ungrouped-imports)
+************* Module app.cart
+app/cart/__init__.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/cart/__init__.py:6:0: C0413: Import "from app.cart import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.cart.routes
+app/cart/routes.py:46:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:49:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:54:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:58:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:61:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:64:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:79:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:81:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:95:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:98:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:102:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:109:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:113:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:116:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:127:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:131:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:134:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:145:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:149:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:162:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:165:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:169:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:174:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:183:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:190:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:194:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:205:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:208:0: C0303: Trailing whitespace (trailing-whitespace)
+app/cart/routes.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/cart/routes.py:3:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/cart/routes.py:8:0: E0401: Unable to import 'marshmallow' (import-error)
+app/cart/routes.py:156:0: R0911: Too many return statements (8/6) (too-many-return-statements)
+app/cart/routes.py:8:0: C0411: third party import "marshmallow.ValidationError" should be placed before first party imports "app.cart.cart_bp", "app.db", "app.models.Cart", "app.schemas.cart.CartSchema"  (wrong-import-order)
+app/cart/routes.py:9:0: C0411: standard import "datetime.datetime" should be placed before third party imports "flask.jsonify", "flask_jwt_extended.jwt_required", "marshmallow.ValidationError" and first party imports "app.cart.cart_bp", "app.db", "app.models.Cart", "app.schemas.cart.CartSchema"  (wrong-import-order)
+************* Module app.orders
+app/orders/__init__.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/orders/__init__.py:6:0: C0413: Import "from app.orders import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.orders.routes
+app/orders/routes.py:22:0: C0303: Trailing whitespace (trailing-whitespace)
+app/orders/routes.py:26:0: C0303: Trailing whitespace (trailing-whitespace)
+app/orders/routes.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+app/orders/routes.py:45:0: C0303: Trailing whitespace (trailing-whitespace)
+app/orders/routes.py:49:0: C0303: Trailing whitespace (trailing-whitespace)
+app/orders/routes.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/orders/routes.py:3:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/orders/routes.py:8:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/orders/routes.py:8:0: C0411: third party import "sqlalchemy.desc" should be placed before first party imports "app.orders.orders_bp", "app.db", "app.models.Order", "app.schemas.order.OrderSchema"  (wrong-import-order)
+app/orders/routes.py:5:0: W0611: Unused db imported from app (unused-import)
+************* Module app.categories
+app/categories/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/categories/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/categories/__init__.py:5:0: C0413: Import "from app.categories import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.categories.routes
+app/categories/routes.py:51:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:53:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:56:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:62:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:161:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:164:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:166:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:171:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:173:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:180:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:186:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:189:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:234:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:237:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:240:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:249:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:258:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:261:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:263:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:299:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:302:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:304:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:307:0: C0303: Trailing whitespace (trailing-whitespace)
+app/categories/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/categories/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/categories/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+app/categories/routes.py:3:0: E0401: Unable to import 'sqlalchemy' (import-error)
+app/categories/routes.py:69:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/categories/routes.py:93:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/categories/routes.py:119:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/categories/routes.py:191:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/categories/routes.py:265:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/categories/routes.py:309:11: W0718: Catching too general exception Exception (broad-exception-caught)
+app/categories/routes.py:9:0: C0411: standard import "re" should be placed before third party imports "flask.request", "flask_jwt_extended.jwt_required", "sqlalchemy.func" and first party imports "app.db", "app.categories.categories_bp", "app.models.category.Category", "app.models.user.User", "app.schemas.category.CategorySchema"  (wrong-import-order)
+app/categories/routes.py:3:0: W0611: Unused func imported from sqlalchemy (unused-import)
+************* Module app.notifications
+app/notifications/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/notifications/__init__.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/notifications/__init__.py:5:0: C0413: Import "from app.notifications import routes" should be placed at the top of the module (wrong-import-position)
+************* Module app.notifications.routes
+app/notifications/routes.py:46:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:48:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:51:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:54:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:60:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:97:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:101:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:127:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:131:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:134:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:152:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:156:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:158:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:176:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:178:0: C0303: Trailing whitespace (trailing-whitespace)
+app/notifications/routes.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app/notifications/routes.py:1:0: E0401: Unable to import 'flask' (import-error)
+app/notifications/routes.py:2:0: E0401: Unable to import 'flask_jwt_extended' (import-error)
+************* Module app.services.email_service
+app/services/email_service.py:10:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:33:0: C0301: Line too long (115/100) (line-too-long)
+app/services/email_service.py:36:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:59:0: C0301: Line too long (107/100) (line-too-long)
+app/services/email_service.py:62:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:85:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:101:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:105:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:130:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:150:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:154:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:159:0: C0301: Line too long (118/100) (line-too-long)
+app/services/email_service.py:161:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:182:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:188:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:192:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:214:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:220:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:224:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:231:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:236:0: C0303: Trailing whitespace (trailing-whitespace)
+app/services/email_service.py:2:0: E0401: Unable to import 'flask' (import-error)
+app/services/email_service.py:34:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/services/email_service.py:33:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:35:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:60:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/services/email_service.py:59:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:61:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:103:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/services/email_service.py:102:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:104:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:152:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/services/email_service.py:132:38: C0121: Comparison 'comment.is_internal == False' should be 'comment.is_internal is False' if checking for the singleton value False, or 'not comment.is_internal' if testing for falsiness (singleton-comparison)
+app/services/email_service.py:151:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:153:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:190:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/services/email_service.py:184:12: C0415: Import outside toplevel (app.models.user.User) (import-outside-toplevel)
+app/services/email_service.py:189:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:191:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:222:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/services/email_service.py:216:12: C0415: Import outside toplevel (app.models.user.User) (import-outside-toplevel)
+app/services/email_service.py:221:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:223:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:230:8: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:248:15: W0718: Catching too general exception Exception (broad-exception-caught)
+app/services/email_service.py:234:12: C0415: Import outside toplevel (flask_mail.Message) (import-outside-toplevel)
+app/services/email_service.py:235:12: C0415: Import outside toplevel (app.mail) (import-outside-toplevel)
+app/services/email_service.py:244:16: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:247:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:247:25: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+app/services/email_service.py:249:12: W1203: Use lazy % formatting in logging functions (logging-fstring-interpolation)
+app/services/email_service.py:3:0: C0411: standard import "datetime.datetime" should be placed before third party import "flask.current_app" (wrong-import-order)
+app/services/email_service.py:4:0: C0411: standard import "logging" should be placed before third party import "flask.current_app" (wrong-import-order)
+app/services/email_service.py:2:0: W0611: Unused current_app imported from flask (unused-import)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.posts.routes:[153:198]
+==app:[231:277]
+        search_query = request.args.get('q', '', type=str).strip()
+        if not search_query:
+            return jsonify({'error': 'Search query is required'}), 400
+
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 20, type=int)
+        category_id = request.args.get('category_id', type=int)
+        tag = request.args.get('tag', '', type=str).strip()
+        per_page = min(per_page, 100)
+
+        query = Post.query.filter_by(is_published=True)
+
+        # Search in title, content, and excerpt
+        search_pattern = f'%{search_query}%'
+        query = query.filter(
+            or_(
+                Post.title.ilike(search_pattern),
+                Post.content.ilike(search_pattern),
+                Post.excerpt.ilike(search_pattern)
+            )
+        )
+
+        # Filter by category
+        if category_id:
+            category = Category.query.get(category_id)
+            if category:
+                query = query.filter(Post.categories.contains(category))
+
+        # Filter by tag
+        if tag:
+            query = query.filter(Post.tags.ilike(f'%{tag}%'))
+
+        posts = query.order_by(Post.created_at.desc()).paginate(
+            page=page,
+            per_page=per_page,
+            error_out=False
+        )
+
+        return jsonify({
+            'query': search_query,
+            'posts': [post.to_dict() for post in posts.items],
+            'total': posts.total,
+            'pages': posts.pages,
+            'current_page': page
+        }), 200 (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.projects.routes:[18:61]
+==app.tasks.routes:[20:73]
+    notification = Notification(
+        user_id=user_id,
+        type=type,
+        title=title,
+        message=message,
+        related_task_id=kwargs.get('task_id'),
+        related_project_id=kwargs.get('project_id'),
+        related_team_id=kwargs.get('team_id'),
+        meta_data=kwargs.get('metadata')
+    )
+    db.session.add(notification)
+    return notification
+
+@tasks_bp.route('', methods=['GET'])
+@jwt_required()
+def get_tasks():
+    """
+    Get all tasks
+    ---
+    tags:
+      - Tasks
+    security:
+      - Bearer: []
+    parameters:
+      - in: query
+        name: page
+        type: integer
+        default: 1
+      - in: query
+        name: per_page
+        type: integer
+        default: 20
+      - in: query
+        name: project_id
+        type: integer
+      - in: query
+        name: assigned_to_id
+        type: integer
+      - in: query
+        name: status
+        type: string
+        enum: [pending, in_progress, completed, cancelled]
+      - in: query
+        name: priority
+        type: string
+        enum: [low, medium, high, urgent]
+    responses:
+      200:
+        description: List of tasks
+    """
+    current_user_id = get_jwt_identity()
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 20, type=int) (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.task_comments.routes:[17:60]
+==app.tasks.routes:[20:71]
+    notification = Notification(
+        user_id=user_id,
+        type=type,
+        title=title,
+        message=message,
+        related_task_id=kwargs.get('task_id'),
+        related_project_id=kwargs.get('project_id'),
+        related_team_id=kwargs.get('team_id'),
+        meta_data=kwargs.get('metadata')
+    )
+    db.session.add(notification)
+    return notification
+
+@tasks_bp.route('', methods=['GET'])
+@jwt_required()
+def get_tasks():
+    """
+    Get all tasks
+    ---
+    tags:
+      - Tasks
+    security:
+      - Bearer: []
+    parameters:
+      - in: query
+        name: page
+        type: integer
+        default: 1
+      - in: query
+        name: per_page
+        type: integer
+        default: 20
+      - in: query
+        name: project_id
+        type: integer
+      - in: query
+        name: assigned_to_id
+        type: integer
+      - in: query
+        name: status
+        type: string
+        enum: [pending, in_progress, completed, cancelled]
+      - in: query
+        name: priority
+        type: string
+        enum: [low, medium, high, urgent]
+    responses:
+      200:
+        description: List of tasks
+    """
+    current_user_id = get_jwt_identity() (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.tasks.routes:[20:70]
+==app.tickets.routes:[33:48]
+    notification = Notification(
+        user_id=user_id,
+        type=type,
+        title=title,
+        message=message,
+        related_task_id=kwargs.get('task_id'),
+        related_project_id=kwargs.get('project_id'),
+        related_team_id=kwargs.get('team_id'),
+        meta_data=kwargs.get('metadata')
+    )
+    db.session.add(notification)
+    return notification
+
+@tasks_bp.route('', methods=['GET'])
+@jwt_required()
+def get_tasks():
+    """
+    Get all tasks
+    ---
+    tags:
+      - Tasks
+    security:
+      - Bearer: []
+    parameters:
+      - in: query
+        name: page
+        type: integer
+        default: 1
+      - in: query
+        name: per_page
+        type: integer
+        default: 20
+      - in: query
+        name: project_id
+        type: integer
+      - in: query
+        name: assigned_to_id
+        type: integer
+      - in: query
+        name: status
+        type: string
+        enum: [pending, in_progress, completed, cancelled]
+      - in: query
+        name: priority
+        type: string
+        enum: [low, medium, high, urgent]
+    responses:
+      200:
+        description: List of tasks
+    """ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.comments.routes:[139:153]
+==app.posts.routes:[597:610]
+    try:
+        post = Post.query.get_or_404(post_id)
+        include_replies = request.args.get('include_replies', 'true').lower() == 'true'
+
+        query = Comment.query.filter_by(
+            post_id=post_id,
+            is_approved=True
+        )
+
+        if not include_replies:
+            query = query.filter_by(parent_id=None)
+
+        comments = query.order_by(Comment.created_at.asc()).all()
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.ticket_comments.routes:[63:75]
+==app.tickets.attachments:[55:68]
+    current_user_id = get_jwt_identity()
+    current_user = User.query.get(current_user_id)
+    ticket = Ticket.query.get_or_404(ticket_id)
+
+    # Check access
+    if not check_ticket_access(ticket, current_user):
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.tickets.attachments:[166:178]
+==app.tickets.routes:[401:413]
+    current_user_id = get_jwt_identity()
+    current_user = User.query.get(current_user_id)
+    ticket = Ticket.query.get_or_404(ticket_id)
+
+    # Check access
+    if not check_ticket_access(ticket, current_user):
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.posts.routes:[98:108]
+==app:[260:270]
+        if tag:
+            query = query.filter(Post.tags.ilike(f'%{tag}%'))
+
+        posts = query.order_by(Post.created_at.desc()).paginate(
+            page=page,
+            per_page=per_page,
+            error_out=False
+        )
+
+        return jsonify({ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.admin.routes:[15:23]
+==app.tickets.routes:[508:519]
+    current_user_id = get_jwt_identity()
+    current_user = User.query.get(current_user_id)
+
+    # Only admins can delete tickets
+    if not current_user.is_admin_user():
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.projects.routes:[326:336]
+==app.teams.routes:[282:292]
+        members.append({
+            'id': member.id,
+            'username': member.username,
+            'email': member.email,
+            'first_name': member.first_name,
+            'last_name': member.last_name,
+            'role': role
+        })
+
+    # Add owner (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.models.project:[53:68]
+==app.models.team:[42:57]
+                )
+            ).values(role=role)
+            db.session.execute(stmt)
+            db.session.commit()
+
+    def remove_member(self, user):
+        """Remove a member from the project"""
+        if user in self.members:
+            self.members.remove(user)
+            db.session.commit()
+
+    def get_member_role(self, user):
+        """Get the role of a member in the project"""
+        from sqlalchemy import select
+        result = db.session.execute( (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.models.project:[72:83]
+==app.models.team:[61:72]
+                )
+            )
+        ).first()
+        return result[0] if result else None
+
+    def to_dict(self):
+        """Convert team to dictionary"""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description, (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.posts.routes:[89:98]
+==app:[245:254]
+        query = query.filter(
+            or_(
+                Post.title.ilike(search_pattern),
+                Post.content.ilike(search_pattern),
+                Post.excerpt.ilike(search_pattern)
+            )
+        )
+
+        # Filter by category (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.ticket_comments.routes:[127:136]
+==app.tickets.routes:[463:472]
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': 'Validation failed',
+            'code': 'VALIDATION_ERROR',
+            'errors': str(e)
+        }), 400
+
+    # Determine user_id and customer_email (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.agents.routes:[109:146]
+==app.tickets.routes:[220:267]
+        'pagination': {
+            'page': tickets.page,
+            'pages': tickets.pages,
+            'per_page': tickets.per_page,
+            'total': tickets.total
+        }
+    }), 200
+
+@tickets_bp.route('', methods=['POST'])
+def create_ticket():
+    # Rate limiting applied via Flask-Limiter default limits (100/min)
+    # Can be customized per endpoint if needed
+    """
+    Create a new support ticket
+    ---
+    tags:
+      - Tickets
+    parameters:
+      - in: body
+        name: body
+        schema:
+          type: object
+          required:
+            - subject
+            - description
+            - category
+            - customer_email
+          properties:
+            subject:
+              type: string
+            description:
+              type: string
+            priority:
+              type: string
+              enum: [low, medium, high, urgent]
+            category:
+              type: string
+              enum: [technical, billing, general, feature_request]
+            customer_email:
+              type: string
+              format: email
+    responses:
+      201:
+        description: Ticket created successfully
+      400:
+        description: Validation error
+    """ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.tickets.routes:[579:587]
+==app.users.routes:[149:158]
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': 'Validation failed',
+            'code': 'VALIDATION_ERROR',
+            'errors': str(e)
+        }), 400
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.ticket_comments.routes:[68:75]
+==app.tickets.attachments:[209:216]
+    if not check_ticket_access(ticket, current_user):
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.comments.routes:[154:199]
+==app.posts.routes:[613:660]
+    except Exception as e:
+        if '404' in str(e):
+            return jsonify({'error': 'Post not found'}), 404
+        return jsonify({'error': f'Failed to retrieve comments: {str(e)}'}), 500
+
+@comments_bp.route('', methods=['POST'])
+@jwt_required()
+def create_comment():
+    """
+    Create a new comment
+    ---
+    tags:
+      - Comments
+    security:
+      - Bearer: []
+    parameters:
+      - in: body
+        name: body
+        schema:
+          type: object
+          required:
+            - content
+            - post_id
+          properties:
+            content:
+              type: string
+              example: Great post! Thanks for sharing.
+            post_id:
+              type: integer
+              example: 1
+            parent_id:
+              type: integer
+              description: ID of parent comment for nested replies
+    responses:
+      201:
+        description: Comment created successfully
+      400:
+        description: Validation error
+      401:
+        description: Unauthorized
+      404:
+        description: Post not found
+    """
+    try:
+        current_user_id = get_jwt_identity() (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.comments.routes:[67:74]
+==app.task_comments.routes:[76:83]
+        page=page,
+        per_page=per_page,
+        error_out=False
+    )
+
+    return jsonify({
+        'comments': comments_schema.dump(comments.items), (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.agents.routes:[158:165]
+==app.tickets.routes:[771:779]
+    if not agent.is_agent():
+        return jsonify({
+            'status': 'error',
+            'message': 'User is not an agent',
+            'code': 'VALIDATION_ERROR'
+        }), 400
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.posts.routes:[108:113]
+==app:[271:277]
+            'posts': [post.to_dict() for post in posts.items],
+            'total': posts.total,
+            'pages': posts.pages,
+            'current_page': page
+        }), 200 (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.ticket_comments.routes:[22:30]
+==app.tickets.attachments:[23:55]
+    if current_user.is_admin_user():
+        return True
+    if current_user.is_agent():
+        return ticket.assigned_to_id == current_user.id or ticket.assigned_to_id is None
+    return ticket.customer_email == current_user.email
+
+@tickets_bp.route('/<int:ticket_id>/attachments', methods=['POST'])
+@jwt_required()
+def upload_ticket_attachment(ticket_id):
+    """
+    Upload attachment to a ticket
+    ---
+    tags:
+      - Tickets
+    security:
+      - Bearer: []
+    parameters:
+      - in: path
+        name: ticket_id
+        type: integer
+        required: true
+      - in: formData
+        name: file
+        type: file
+        required: true
+      - in: formData
+        name: comment_id
+        type: integer
+    responses:
+      201:
+        description: Attachment uploaded successfully
+    """ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.ticket_comments.routes:[69:75]
+==app.tickets.attachments:[258:265]
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+
+    # Delete file (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.ticket_comments.routes:[30:35]
+==app.tickets.routes:[33:38]
+    notification = Notification(
+        user_id=user_id,
+        type=type,
+        title=title,
+        message=message, (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.categories.routes:[305:311]
+==app.comments.routes:[336:342]
+        db.session.commit()
+
+        return '', 204
+    except Exception as e:
+        db.session.rollback()
+        if '404' in str(e): (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.tickets.attachments:[61:68]
+==app.tickets.routes:[455:461]
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.tickets.attachments:[172:178]
+==app.tickets.routes:[513:519]
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.tickets.attachments:[210:216]
+==app.tickets.routes:[571:577]
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.admin.routes:[15:20]
+==app.tickets.routes:[745:752]
+            current_user_id = get_jwt_identity()
+            current_user = User.query.get(current_user_id)
+            if not current_user.is_admin_user():
+                return jsonify({
+                    'status': 'error', (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.admin.routes:[18:23]
+==app.tickets.routes:[407:413]
+                return jsonify({
+                    'status': 'error',
+                    'message': 'Access denied',
+                    'code': 'FORBIDDEN'
+                }), 403 (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.admin.routes:[46:53]
+==app.tickets.routes:[563:570]
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+
+    # Only agents and admins can change status (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.admin.routes:[181:187]
+==app.tickets.routes:[679:685]
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.admin.routes:[295:301]
+==app.tickets.routes:[850:857]
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0801: Similar lines in 2 files
+==app.admin.routes:[403:410]
+==app.agents.routes:[30:36]
+        return jsonify({
+            'status': 'error',
+            'message': 'Access denied',
+            'code': 'FORBIDDEN'
+        }), 403
+ (duplicate-code)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.models.category) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.users -> app.users.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.categories -> app.categories.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.projects -> app.projects.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.tasks -> app.tasks.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.comments -> app.comments.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.posts -> app.posts.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.notifications -> app.notifications.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.orders -> app.orders.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.cart -> app.cart.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.checkout -> app.checkout.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.teams -> app.teams.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.products -> app.products.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.tickets -> app.tickets.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.admin -> app.admin.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.auth -> app.auth.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.agents -> app.agents.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.ticket_comments -> app.ticket_comments.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.task_comments -> app.task_comments.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cache -> app.models.task) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.tasks -> app.tasks.routes -> app.schemas.task -> app.models.task) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cache_utils -> app.cache -> app.models.task) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.users -> app.users.routes -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.ticket_comments -> app.ticket_comments.routes -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.comments -> app.comments.routes -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.tickets -> app.tickets.routes -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.tickets -> app.tickets.attachments -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app.tickets -> app.tickets.attachments) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.tasks -> app.tasks.routes -> app.tasks.background_tasks -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.projects -> app.projects.routes -> app.models.project) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.tasks -> app.tasks.routes -> app.models.project) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.models.post) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.posts -> app.posts.routes -> app.models.category) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.products -> app.products.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.task_comments -> app.task_comments.routes -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.auth -> app.auth.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.admin -> app.admin.routes -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.agents -> app.agents.routes -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.ticket_comment) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.cart) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.users -> app.users.routes -> app.models.user -> app.models.ticket) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.models.post -> app.models.comment) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.projects -> app.projects.routes -> app.models.notification) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.order) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.task_comment) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.project) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.projects -> app.projects.routes -> app.models.team) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.ticket_status_history) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.task_attachment) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.product) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.ticket_assignment) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.discount_code) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.cart -> app.cart.routes -> app.models -> app.models.ticket_attachment) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.users -> app.users.routes -> app.schemas.user -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.tickets -> app.tickets.routes -> app.schemas.ticket -> app.models.ticket) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.notifications -> app.notifications.routes -> app.schemas.notification -> app.models.notification) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.users -> app.users.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.teams -> app.teams.routes -> app.models.user) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.checkout -> app.checkout.routes -> app.models -> app.models.project) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.orders -> app.orders.routes) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.categories -> app.categories.routes -> app.models.category) (cyclic-import)
+app/services/email_service.py:1:0: R0401: Cyclic import (app -> app.checkout -> app.checkout.routes -> app.services.email_service) (cyclic-import)
+
+------------------------------------------------------------------
+Your code has been rated at 4.55/10 (previous run: 4.56/10, -0.01)
+

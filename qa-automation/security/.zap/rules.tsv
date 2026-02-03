@@ -1,0 +1,13 @@
+# OWASP ZAP Rules Configuration
+# Format: Rule ID, New Level, URL (optional)
+# Levels: IGNORE, DEFAULT, OFF, LOW, MEDIUM, HIGH, INFORMATIONAL
+
+10021	LOW	# X-Content-Type-Options header missing
+10020	LOW	# X-Frame-Options header missing
+10015	LOW	# Incomplete or no cache-control header
+10054	LOW	# Content Security Policy (CSP) header not set
+10096	LOW	# Timestamp Disclosure
+10098	LOW	# Cookie without SameSite Attribute
+10202	LOW	# Absence of Anti-CSRF Tokens
+90022	LOW	# Application Error Disclosure
+90033	LOW	# Loosely Scoped Cookie

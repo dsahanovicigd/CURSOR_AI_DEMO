@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="14" skipped="0" tests="287" time="45.733" timestamp="2026-02-03T17:26:55.085972" hostname="C18994"><testcase classname="qa-automation.tests.unit.backend.test_admin.TestAdminEndpoints" name="test_admin_dashboard" time="0.225"><failure message="AssertionError: assert ('statistics' in {'agent_performance': [], 'average_resolution_time': None, 'by_category': {'billing': 0, 'feature_request': 0, 'general': 0, 'technical': 0}, 'by_priority': {'high': 0, 'low': 0, 'medium': 0, 'urgent': 0}, ...} or 'metrics' in {'agent_performance': [], 'average_resolution_time': None, 'by_category': {'billing': 0, 'feature_request': 0, 'general': 0, 'technical': 0}, 'by_priority': {'high': 0, 'low': 0, 'medium': 0, 'urgent': 0}, ...})&#10; +  where {'agent_performance': [], 'average_resolution_time': None, 'by_category': {'billing': 0, 'feature_request': 0, 'general': 0, 'technical': 0}, 'by_priority': {'high': 0, 'low': 0, 'medium': 0, 'urgent': 0}, ...} = &lt;WrapperTestResponse 311 bytes [200 OK]&gt;.json&#10; +  and   {'agent_performance': [], 'average_resolution_time': None, 'by_category': {'billing': 0, 'feature_request': 0, 'general': 0, 'technical': 0}, 'by_priority': {'high': 0, 'low': 0, 'medium': 0, 'urgent': 0}, ...} = &lt;WrapperTestResponse 311 bytes [200 OK]&gt;.json">self = &lt;test_admin.TestAdminEndpoints object at 0x10be16d50&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+admin_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQxNSwianRpIjoiZDg...GI5YzZhNzctZmJiNi00OTk5LTgwYjctYmI0MTg4MDllOWI4IiwiZXhwIjoxNzcwMTMyNzE1fQ.HXnYvV46ZZOwKAYI1nt0Fm7_j_mmp1Mc7lHFyGcJViU'}
+
+    def test_admin_dashboard(self, client, admin_headers):
+        """Test admin dashboard endpoint"""
+        response = client.get('/api/admin/dashboard',
+            headers=admin_headers
+        )
+        assert response.status_code == 200
+&gt;       assert 'statistics' in response.json or 'metrics' in response.json
+E       AssertionError: assert ('statistics' in {'agent_performance': [], 'average_resolution_time': None, 'by_category': {'billing': 0, 'feature_request': 0, 'general': 0, 'technical': 0}, 'by_priority': {'high': 0, 'low': 0, 'medium': 0, 'urgent': 0}, ...} or 'metrics' in {'agent_performance': [], 'average_resolution_time': None, 'by_category': {'billing': 0, 'feature_request': 0, 'general': 0, 'technical': 0}, 'by_priority': {'high': 0, 'low': 0, 'medium': 0, 'urgent': 0}, ...})
+E        +  where {'agent_performance': [], 'average_resolution_time': None, 'by_category': {'billing': 0, 'feature_request': 0, 'general': 0, 'technical': 0}, 'by_priority': {'high': 0, 'low': 0, 'medium': 0, 'urgent': 0}, ...} = &lt;WrapperTestResponse 311 bytes [200 OK]&gt;.json
+E        +  and   {'agent_performance': [], 'average_resolution_time': None, 'by_category': {'billing': 0, 'feature_request': 0, 'general': 0, 'technical': 0}, 'by_priority': {'high': 0, 'low': 0, 'medium': 0, 'urgent': 0}, ...} = &lt;WrapperTestResponse 311 bytes [200 OK]&gt;.json
+
+../qa-automation/tests/unit/backend/test_admin.py:14: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_admin.TestAdminEndpoints" name="test_admin_dashboard_access_denied" time="0.126" /><testcase classname="qa-automation.tests.unit.backend.test_admin.TestAdminEndpoints" name="test_admin_reports_tickets" time="0.134" /><testcase classname="qa-automation.tests.unit.backend.test_admin.TestAdminEndpoints" name="test_admin_reports_agents" time="0.126" /><testcase classname="qa-automation.tests.unit.backend.test_admin.TestAdminEndpoints" name="test_admin_reports_sla" time="0.130" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_register_user" time="0.088" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_register_duplicate_username" time="0.077" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_register_duplicate_email" time="0.076" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_register_invalid_password" time="0.027" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_login_success" time="0.128" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_login_invalid_username" time="0.025" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_login_invalid_password" time="0.124" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_login_inactive_user" time="0.128" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_get_current_user" time="0.127" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_get_current_user_unauthorized" time="0.024" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_refresh_token" time="0.132" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthentication" name="test_logout" time="0.130" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthorization" name="test_access_protected_endpoint_without_token" time="0.025" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthorization" name="test_access_protected_endpoint_with_invalid_token" time="0.025" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthorization" name="test_access_protected_endpoint_with_valid_token" time="0.137" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthorization" name="test_admin_only_endpoint_customer" time="0.127" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthorization" name="test_admin_only_endpoint_admin" time="0.138" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthorization" name="test_agent_can_access_assigned_tasks" time="0.128" /><testcase classname="qa-automation.tests.unit.backend.test_auth.TestAuthorization" name="test_customer_cannot_access_other_user_tasks" time="0.180" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_1_get_all_posts" time="0.094" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_2_get_post_by_id" time="0.079" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_3_create_post" time="0.123" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_4_update_post" time="0.127" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_5_delete_post" time="0.123" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_6_search_posts" time="0.076" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_7_get_post_by_slug" time="0.073" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_8_create_comment" time="0.121"><failure message="assert 400 == 201&#10; +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code">self = &lt;test_blog_final.TestBlogFinal object at 0x10bf69c50&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQxOCwianRpIjoiNTJ...DkwZmI0ZWUtYjdiZi00MzlkLTliYTMtZWNlMmZhZjI0M2I1IiwiZXhwIjoxNzcwMTMyNzE4fQ.3nU386mNWISVuBbzumTVwtm_RuQ9Sew-N0EJMNFWJWc'}
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;User jenniferjones&gt;
+
+    def test_8_create_comment(self, client, auth_headers, db_session, test_user):
+        """Test creating a comment"""
+        slug = PostModel.generate_slug('Comment Post')
+        post = Post(title='Comment Post', content='Content', slug=slug, user_id=test_user.id, is_published=True)
+        db_session.add(post)
+        db_session.commit()
+    
+        response = client.post(f'/api/posts/{post.id}/comments',
+            headers=auth_headers,
+            json={'content': 'Great post!'}
+        )
+&gt;       assert response.status_code == 201
+E       assert 400 == 201
+E        +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code
+
+../qa-automation/tests/unit/backend/test_blog_final.py:106: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_9_get_post_comments" time="0.074" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_10_filter_by_user" time="0.072" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_11_pagination" time="0.073" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_12_post_with_tags" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_13_post_with_excerpt" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_14_unpublished_post" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_15_view_count" time="0.073" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_16_invalid_post_id" time="0.023" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_17_empty_search" time="0.025" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_18_post_validation_empty_title" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_19_post_validation_missing_content" time="0.116" /><testcase classname="qa-automation.tests.unit.backend.test_blog_final.TestBlogFinal" name="test_20_unauthorized_access" time="0.068" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_get_categories" time="0.044" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_get_category" time="0.024" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_get_category_by_slug" time="0.023" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_create_category_as_admin" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_create_category_auto_generates_slug" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_create_category_duplicate_name" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_create_category_unique_slug_generation" time="0.118"><failure message="assert 400 == 201&#10; +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code">self = &lt;test_categories.TestCategoryCRUD object at 0x10bfa8490&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+admin_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQyMCwianRpIjoiNGF...WU1OTg5NTYtYWJlMS00NmJhLWFjMzMtZTg0MWUzNGViMzA1IiwiZXhwIjoxNzcwMTMyNzIwfQ.-9r-sAFmCVN61Ryh0ZdTu9ygp1ix3Du99zB-DNyJb8g'}
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+
+    def test_create_category_unique_slug_generation(self, client, admin_headers, db_session):
+        """Test that duplicate slugs get unique suffixes"""
+        category1 = Category(
+            name='Test Category',
+            slug='test-category'
+        )
+        db_session.add(category1)
+        db_session.commit()
+    
+        response = client.post('/api/categories',
+            headers=admin_headers,
+            json={
+                'name': 'Test Category',
+                'description': 'Should get unique slug'
+            }
+        )
+&gt;       assert response.status_code == 201
+E       assert 400 == 201
+E        +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code
+
+../qa-automation/tests/unit/backend/test_categories.py:114: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_update_category_as_admin" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_update_category_slug_on_name_change" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryCRUD" name="test_delete_category_as_admin" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryPermissions" name="test_create_category_requires_admin" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryPermissions" name="test_update_category_requires_admin" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryPermissions" name="test_delete_category_requires_admin" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryPermissions" name="test_public_can_view_categories" time="0.024" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryFiltering" name="test_search_categories_by_name" time="0.024" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryFiltering" name="test_category_pagination" time="0.024" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryFiltering" name="test_category_max_per_page_limit" time="0.024" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryEdgeCases" name="test_get_nonexistent_category" time="0.023" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryEdgeCases" name="test_get_nonexistent_category_by_slug" time="0.022" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryEdgeCases" name="test_update_category_with_duplicate_name" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryEdgeCases" name="test_category_slug_special_characters" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_categories.TestCategoryEdgeCases" name="test_category_slug_length_limit" time="0.115"><failure message="assert 400 == 201&#10; +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code">self = &lt;test_categories.TestCategoryEdgeCases object at 0x10bf45250&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+admin_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQyMSwianRpIjoiMzA...jk4MjBkOTYtNDY4NC00ZmY0LWEyODgtMjQ0YjliNDY4MmMwIiwiZXhwIjoxNzcwMTMyNzIxfQ.jBR58UGlVSxkWv9V7fQ2GpkF8gqDNopCO4RGOR1-ARE'}
+
+    def test_category_slug_length_limit(self, client, admin_headers):
+        """Test that slug is truncated to 100 characters"""
+        long_name = 'A' * 150  # Very long name
+        response = client.post('/api/categories',
+            headers=admin_headers,
+            json={
+                'name': long_name,
+                'description': 'Long name test'
+            }
+        )
+&gt;       assert response.status_code == 201
+E       assert 400 == 201
+E        +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code
+
+../qa-automation/tests/unit/backend/test_categories.py:346: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentCRUD" name="test_create_comment" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentCRUD" name="test_get_comments" time="0.073" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentCRUD" name="test_get_comment" time="0.071" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentCRUD" name="test_get_post_comments" time="0.076" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentCRUD" name="test_update_comment" time="0.145" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentCRUD" name="test_delete_comment" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentNestedReplies" name="test_create_nested_comment" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentNestedReplies" name="test_get_comments_with_replies" time="0.074" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentFiltering" name="test_filter_comments_by_post" time="0.075" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentFiltering" name="test_filter_comments_by_user" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentFiltering" name="test_filter_approved_comments_only" time="0.074" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentFiltering" name="test_comment_pagination" time="0.073" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentPermissions" name="test_cannot_update_other_user_comment" time="0.166" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentPermissions" name="test_admin_can_approve_comment" time="0.164" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentPermissions" name="test_non_admin_cannot_approve_comment" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentPermissions" name="test_unapproved_comment_not_visible_to_public" time="0.071"><failure message="assert 500 == 404&#10; +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code">self = &lt;test_comments.TestCommentPermissions object at 0x10bfc8770&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;User vbrewer&gt;
+
+    def test_unapproved_comment_not_visible_to_public(self, client, db_session, test_user):
+        """Test unapproved comments are not visible to public"""
+        slug = PostModel.generate_slug('Test Post')
+        post = Post(
+            title='Test Post',
+            content='Post content',
+            slug=slug,
+            user_id=test_user.id,
+            is_published=True
+        )
+        db_session.add(post)
+        db_session.commit()
+    
+        comment = Comment(
+            content='Unapproved comment',
+            post_id=post.id,
+            user_id=test_user.id,
+            is_approved=False
+        )
+        db_session.add(comment)
+        db_session.commit()
+    
+        # Public access should return 404
+        response = client.get(f'/api/comments/{comment.id}')
+&gt;       assert response.status_code == 404
+E       assert 500 == 404
+E        +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code
+
+../qa-automation/tests/unit/backend/test_comments.py:526: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentPermissions" name="test_create_comment_with_invalid_parent" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_comments.TestCommentPermissions" name="test_create_comment_with_parent_from_different_post" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestUserModel" name="test_user_password_hashing" time="0.160" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestUserModel" name="test_user_role_methods" time="0.023" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestUserModel" name="test_user_full_name" time="0.022" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestTaskModel" name="test_task_mark_completed" time="0.071" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestProjectModel" name="test_project_add_member" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestProjectModel" name="test_project_remove_member" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestProjectModel" name="test_project_to_dict" time="0.073"><failure message="TypeError: list.count() takes exactly one argument (0 given)">self = &lt;test_models.TestProjectModel object at 0x10bfc89d0&gt;
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;User walkerholly&gt;
+
+    def test_project_to_dict(self, db_session, test_user):
+        """Test project to_dict method"""
+        project = Project(
+            name='Test Project',
+            description='Description',
+            owner_id=test_user.id
+        )
+        db_session.add(project)
+        db_session.commit()
+    
+&gt;       project_dict = project.to_dict()
+
+../qa-automation/tests/unit/backend/test_models.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Project Test Project&gt;
+
+    def to_dict(self):
+        """Convert project to dictionary"""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'status': self.status,
+            'owner_id': self.owner_id,
+            'owner_name': self.owner.username if self.owner else None,
+            'team_id': self.team_id,
+            'team_name': self.team.name if self.team else None,
+            'start_date': self.start_date.isoformat() if self.start_date else None,
+            'end_date': self.end_date.isoformat() if self.end_date else None,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            'member_count': self.members.count(),
+&gt;           'task_count': self.tasks.count() if hasattr(self, 'tasks') else 0
+        }
+E       TypeError: list.count() takes exactly one argument (0 given)
+
+app/models/project.py:94: TypeError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_models.TestTeamModel" name="test_team_add_member" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestTeamModel" name="test_team_remove_member" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestTeamModel" name="test_team_to_dict" time="0.073"><failure message="TypeError: list.count() takes exactly one argument (0 given)">self = &lt;test_models.TestTeamModel object at 0x10bfc8b00&gt;
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;User burtonjohn&gt;
+
+    def test_team_to_dict(self, db_session, test_user):
+        """Test team to_dict method"""
+        team = Team(
+            name='Test Team',
+            description='Description',
+            owner_id=test_user.id
+        )
+        db_session.add(team)
+        db_session.commit()
+    
+&gt;       team_dict = team.to_dict()
+
+../qa-automation/tests/unit/backend/test_models.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Team Test Team&gt;
+
+    def to_dict(self):
+        """Convert team to dictionary"""
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'owner_id': self.owner_id,
+            'owner_name': self.owner.username if self.owner else None,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            'member_count': self.members.count(),
+&gt;           'project_count': self.projects.count() if hasattr(self, 'projects') else 0
+        }
+E       TypeError: list.count() takes exactly one argument (0 given)
+
+app/models/team.py:78: TypeError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_models.TestTicketModel" name="test_ticket_generate_ticket_number" time="0.023" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestTicketModel" name="test_ticket_calculate_sla_deadlines" time="0.022" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestTicketModel" name="test_ticket_can_transition_to" time="0.056" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestTicketModel" name="test_ticket_can_reopen" time="0.022" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestTicketModel" name="test_ticket_is_sla_breached" time="0.022" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestNotificationModel" name="test_notification_mark_as_read" time="0.071" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestNotificationModel" name="test_notification_to_dict" time="0.071" /><testcase classname="qa-automation.tests.unit.backend.test_models.TestTicketAttachmentModel" name="test_ticket_attachment_to_dict" time="0.071"><failure message="sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: ticket_attachments.ticket_id&#10;[SQL: INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)]&#10;[parameters: (None, None, 'test.txt', '/tmp/test.txt', 100, None, 1, None, '2026-02-03 15:27:04.560937')]&#10;(Background on this error at: https://sqlalche.me/e/20/gkpj)">self = &lt;sqlalchemy.engine.base.Connection object at 0x10f9c55e0&gt;
+dialect = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x1120179d0&gt;
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x1125b2d50&gt;
+statement = &lt;sqlalchemy.dialects.sqlite.base.SQLiteCompiler object at 0x10d351b50&gt;
+parameters = [(None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -&gt; CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+&gt;                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x1120179d0&gt;
+cursor = &lt;sqlite3.Cursor object at 0x112645740&gt;
+statement = 'INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+parameters = (None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x1125b2d50&gt;
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+&gt;       cursor.execute(statement, parameters)
+E       sqlite3.IntegrityError: NOT NULL constraint failed: ticket_attachments.ticket_id
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py:941: IntegrityError
+
+The above exception was the direct cause of the following exception:
+
+self = &lt;test_models.TestTicketAttachmentModel object at 0x10c000a50&gt;
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;[PendingRollbackError("This Session's transaction has been rolled back due to a previous exception during flush. To b...560937')]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)") raised in repr()] User object at 0x1120fa340&gt;
+
+    def test_ticket_attachment_to_dict(self, db_session, test_user):
+        """Test attachment to_dict method"""
+        ticket = Ticket(
+            subject='Test Ticket',
+            description='Description',
+            customer_email='test@test.com',
+            category=Ticket.CATEGORY_GENERAL
+        )
+        db_session.add(ticket)
+    
+        attachment = TicketAttachment(
+            ticket_id=ticket.id,
+            filename='test.txt',
+            file_path='/tmp/test.txt',
+            file_size=100,
+            uploaded_by_id=test_user.id
+        )
+        db_session.add(attachment)
+&gt;       db_session.commit()
+
+../qa-automation/tests/unit/backend/test_models.py:356: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.14/site-packages/sqlalchemy/orm/scoping.py:597: in commit
+    return self._proxied.commit()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:2028: in commit
+    trans.commit(_to_root=True)
+&lt;string&gt;:2: in commit
+    ???
+venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py:139: in _go
+    ret_value = fn(self, *arg, **kw)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:1313: in commit
+    self._prepare_impl()
+&lt;string&gt;:2: in _prepare_impl
+    ???
+venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py:139: in _go
+    ret_value = fn(self, *arg, **kw)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:1288: in _prepare_impl
+    self.session.flush()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4352: in flush
+    self._flush(objects)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4487: in _flush
+    with util.safe_reraise():
+venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py:146: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4448: in _flush
+    flush_context.execute()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py:466: in execute
+    rec.execute(self)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py:642: in execute
+    util.preloaded.orm_persistence.save_obj(
+venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py:93: in save_obj
+    _emit_insert_statements(
+venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py:1233: in _emit_insert_statements
+    result = connection.execute(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1418: in execute
+    return meth(
+venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1846: in _execute_context
+    return self._exec_single_context(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x1120179d0&gt;
+cursor = &lt;sqlite3.Cursor object at 0x112645740&gt;
+statement = 'INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+parameters = (None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x1125b2d50&gt;
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+&gt;       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: ticket_attachments.ticket_id
+E       [SQL: INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)]
+E       [parameters: (None, None, 'test.txt', '/tmp/test.txt', 100, None, 1, None, '2026-02-03 15:27:04.560937')]
+E       (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py:941: IntegrityError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_notifications.TestNotifications" name="test_get_notifications" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_notifications.TestNotifications" name="test_get_notification" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_notifications.TestNotifications" name="test_mark_notification_read" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_notifications.TestNotifications" name="test_mark_all_notifications_read" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_notifications.TestNotifications" name="test_get_unread_count" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_notifications.TestNotifications" name="test_filter_notifications_by_type" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_notifications.TestNotifications" name="test_filter_notifications_by_read_status" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_notifications.TestNotifications" name="test_notification_pagination" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_get_posts" time="0.071" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_get_post" time="0.071" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_create_post" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_update_post" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_delete_post" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_filter_posts_by_user" time="0.072" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_post_pagination" time="0.072" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_unpublished_post_not_visible" time="0.116" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_publish_post" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_create_draft_post" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_update_post_content" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_posts.TestPosts" name="test_delete_other_user_post_as_admin" time="0.164" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_create_project" time="0.155" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_get_project" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_get_projects_list" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_update_project" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_delete_project" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_get_project_members" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_add_project_member" time="0.164" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_remove_project_member" time="0.163" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_access_denied_for_other_user_project" time="0.167" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_project_with_tasks" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_project_filter_by_status" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_project_pagination" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_create_project_with_team" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_update_project_status" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_projects.TestProjectCRUD" name="test_project_member_role" time="0.165" /><testcase classname="qa-automation.tests.unit.backend.test_task_comments.TestTaskComments" name="test_get_task_comments" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_task_comments.TestTaskComments" name="test_create_task_comment" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_task_comments.TestTaskComments" name="test_update_task_comment" time="0.120"><failure message="assert 404 == 200&#10; +  where 404 = &lt;WrapperTestResponse streamed [404 NOT FOUND]&gt;.status_code">self = &lt;test_task_comments.TestTaskComments object at 0x10bfc9e00&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQyOSwianRpIjoiN2R...2FmYzk4NTktZTZiNi00YWIwLWEwYTktZmQwOTA2NjY5YmQ3IiwiZXhwIjoxNzcwMTMyNzI5fQ.gcnTzDDg2WfDolAFiX8cFBu110hIQdL8K9qxR3M_Fdg'}
+test_task = &lt;Task Themselves laugh road nothing yet war family.&gt;
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;User elizabeth47&gt;
+
+    def test_update_task_comment(self, client, auth_headers, test_task, db_session, test_user):
+        """Test updating a task comment"""
+        comment = TaskComment(
+            task_id=test_task.id,
+            user_id=test_user.id,
+            content='Original comment'
+        )
+        db_session.add(comment)
+        db_session.commit()
+    
+        response = client.put(f'/api/comments/{comment.id}',
+            headers=auth_headers,
+            json={'content': 'Updated comment'}
+        )
+&gt;       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = &lt;WrapperTestResponse streamed [404 NOT FOUND]&gt;.status_code
+
+../qa-automation/tests/unit/backend/test_task_comments.py:40: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_task_comments.TestTaskComments" name="test_delete_task_comment" time="0.119"><failure message="assert 404 == 204&#10; +  where 404 = &lt;WrapperTestResponse streamed [404 NOT FOUND]&gt;.status_code">self = &lt;test_task_comments.TestTaskComments object at 0x10bfc9f30&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQyOSwianRpIjoiNTc...zk1OTY5NGMtYmEzNS00OTFkLWIyODYtODdhNWFkMTI0Y2Q2IiwiZXhwIjoxNzcwMTMyNzI5fQ.ttpnnx6Z4BBsrjkvaTtQDlKWWH_x5BcPxkkqMWLFM9k'}
+test_task = &lt;Task Apply interest as relationship.&gt;
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;User kimberly37&gt;
+
+    def test_delete_task_comment(self, client, auth_headers, test_task, db_session, test_user):
+        """Test deleting a task comment"""
+        comment = TaskComment(
+            task_id=test_task.id,
+            user_id=test_user.id,
+            content='Comment to delete'
+        )
+        db_session.add(comment)
+        db_session.commit()
+    
+        comment_id = comment.id
+        response = client.delete(f'/api/comments/{comment_id}',
+            headers=auth_headers
+        )
+&gt;       assert response.status_code == 204
+E       assert 404 == 204
+E        +  where 404 = &lt;WrapperTestResponse streamed [404 NOT FOUND]&gt;.status_code
+
+../qa-automation/tests/unit/backend/test_task_comments.py:57: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_task_comments.TestTaskComments" name="test_task_comment_pagination" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskCRUD" name="test_create_task" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskCRUD" name="test_create_task_without_project" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskCRUD" name="test_get_task" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskCRUD" name="test_get_tasks_list" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskCRUD" name="test_get_tasks_with_filters" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskCRUD" name="test_update_task" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskCRUD" name="test_delete_task" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskCRUD" name="test_complete_task" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskAccessControl" name="test_access_denied_for_other_user_task" time="0.162" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskAccessControl" name="test_project_member_can_access_task" time="0.215" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskPagination" name="test_pagination_defaults" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskPagination" name="test_pagination_custom_page" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskPagination" name="test_pagination_max_per_page" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskFilters" name="test_filter_by_status" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskFilters" name="test_filter_by_priority" time="0.123" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskFilters" name="test_filter_by_project" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskAssignment" name="test_assign_task_to_user" time="0.167" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskAssignment" name="test_unassign_task" time="0.167" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskAssignment" name="test_update_task_with_due_date" time="0.153" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskAssignment" name="test_filter_tasks_by_assigned_user" time="0.179" /><testcase classname="qa-automation.tests.unit.backend.test_tasks.TestTaskAssignment" name="test_task_with_comments" time="0.122" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_create_team" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_get_team" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_get_teams_list" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_update_team" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_delete_team" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_add_team_member" time="0.166" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_remove_team_member" time="0.165" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_get_team_members" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_team_pagination" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_team_member_role" time="0.164" /><testcase classname="qa-automation.tests.unit.backend.test_teams.TestTeamCRUD" name="test_update_team_description" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_ticket_attachments.TestTicketAttachments" name="test_upload_attachment" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_ticket_attachments.TestTicketAttachments" name="test_get_ticket_attachments" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_ticket_attachments.TestTicketAttachments" name="test_get_attachment" time="0.117"><failure message="sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: ticket_attachments.ticket_id&#10;[SQL: INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)]&#10;[parameters: (None, None, 'test.txt', '/tmp/test.txt', 100, None, 1, None, '2026-02-03 15:27:14.179326')]&#10;(Background on this error at: https://sqlalche.me/e/20/gkpj)">self = &lt;sqlalchemy.engine.base.Connection object at 0x11703de50&gt;
+dialect = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x116e2d090&gt;
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11707f890&gt;
+statement = &lt;sqlalchemy.dialects.sqlite.base.SQLiteCompiler object at 0x116d7bd50&gt;
+parameters = [(None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -&gt; CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+&gt;                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x116e2d090&gt;
+cursor = &lt;sqlite3.Cursor object at 0x11713b040&gt;
+statement = 'INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+parameters = (None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11707f890&gt;
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+&gt;       cursor.execute(statement, parameters)
+E       sqlite3.IntegrityError: NOT NULL constraint failed: ticket_attachments.ticket_id
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py:941: IntegrityError
+
+The above exception was the direct cause of the following exception:
+
+self = &lt;test_ticket_attachments.TestTicketAttachments object at 0x10bfcad70&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQzNCwianRpIjoiODB...DIxNWEyZDctMTQ2ZS00YzBkLTgwZmEtYmNkOGFhMzdiZGRhIiwiZXhwIjoxNzcwMTMyNzM0fQ.eb1Qwi3ZcHHgCKigj2wLHY0YBFKwA5UGvSX8I9cIwkU'}
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;[PendingRollbackError("This Session's transaction has been rolled back due to a previous exception during flush. To b...179326')]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)") raised in repr()] User object at 0x116f569c0&gt;
+
+    def test_get_attachment(self, client, auth_headers, db_session, test_user):
+        """Test downloading an attachment"""
+        ticket = Ticket(
+            subject='Test Ticket Subject',
+            description='This is a detailed ticket description that meets the minimum length requirement.',
+            customer_email=test_user.email,
+            category=Ticket.CATEGORY_GENERAL
+        )
+        db_session.add(ticket)
+    
+        attachment = TicketAttachment(
+            ticket_id=ticket.id,
+            filename='test.txt',
+            file_path='/tmp/test.txt',
+            file_size=100,
+            uploaded_by_id=test_user.id
+        )
+        db_session.add(attachment)
+&gt;       db_session.commit()
+
+../qa-automation/tests/unit/backend/test_ticket_attachments.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.14/site-packages/sqlalchemy/orm/scoping.py:597: in commit
+    return self._proxied.commit()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:2028: in commit
+    trans.commit(_to_root=True)
+&lt;string&gt;:2: in commit
+    ???
+venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py:139: in _go
+    ret_value = fn(self, *arg, **kw)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:1313: in commit
+    self._prepare_impl()
+&lt;string&gt;:2: in _prepare_impl
+    ???
+venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py:139: in _go
+    ret_value = fn(self, *arg, **kw)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:1288: in _prepare_impl
+    self.session.flush()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4352: in flush
+    self._flush(objects)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4487: in _flush
+    with util.safe_reraise():
+venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py:146: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4448: in _flush
+    flush_context.execute()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py:466: in execute
+    rec.execute(self)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py:642: in execute
+    util.preloaded.orm_persistence.save_obj(
+venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py:93: in save_obj
+    _emit_insert_statements(
+venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py:1233: in _emit_insert_statements
+    result = connection.execute(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1418: in execute
+    return meth(
+venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1846: in _execute_context
+    return self._exec_single_context(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x116e2d090&gt;
+cursor = &lt;sqlite3.Cursor object at 0x11713b040&gt;
+statement = 'INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+parameters = (None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11707f890&gt;
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+&gt;       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: ticket_attachments.ticket_id
+E       [SQL: INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)]
+E       [parameters: (None, None, 'test.txt', '/tmp/test.txt', 100, None, 1, None, '2026-02-03 15:27:14.179326')]
+E       (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py:941: IntegrityError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_ticket_attachments.TestTicketAttachments" name="test_delete_attachment" time="0.117"><failure message="sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: ticket_attachments.ticket_id&#10;[SQL: INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)]&#10;[parameters: (None, None, 'test.txt', '/tmp/test.txt', 100, None, 1, None, '2026-02-03 15:27:14.419363')]&#10;(Background on this error at: https://sqlalche.me/e/20/gkpj)">self = &lt;sqlalchemy.engine.base.Connection object at 0x11703ed50&gt;
+dialect = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x116e2e490&gt;
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11779a5d0&gt;
+statement = &lt;sqlalchemy.dialects.sqlite.base.SQLiteCompiler object at 0x117188b50&gt;
+parameters = [(None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -&gt; CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+&gt;                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1967: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x116e2e490&gt;
+cursor = &lt;sqlite3.Cursor object at 0x1172c6fc0&gt;
+statement = 'INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+parameters = (None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11779a5d0&gt;
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+&gt;       cursor.execute(statement, parameters)
+E       sqlite3.IntegrityError: NOT NULL constraint failed: ticket_attachments.ticket_id
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py:941: IntegrityError
+
+The above exception was the direct cause of the following exception:
+
+self = &lt;test_ticket_attachments.TestTicketAttachments object at 0x10bfcaea0&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQzNCwianRpIjoiMDB...mFmZWIyOTctNTNkNS00MmFlLWI4NWEtY2M1ZTFhNjQ0ZDY2IiwiZXhwIjoxNzcwMTMyNzM0fQ.LofZou2NEz00hBL31PeLGjI5wQkLJzZj4TTX170juMU'}
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_user = &lt;[PendingRollbackError("This Session's transaction has been rolled back due to a previous exception during flush. To b...419363')]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)") raised in repr()] User object at 0x117179570&gt;
+
+    def test_delete_attachment(self, client, auth_headers, db_session, test_user):
+        """Test deleting an attachment"""
+        ticket = Ticket(
+            subject='Test Ticket Subject',
+            description='This is a detailed ticket description that meets the minimum length requirement.',
+            customer_email=test_user.email,
+            category=Ticket.CATEGORY_GENERAL
+        )
+        db_session.add(ticket)
+    
+        attachment = TicketAttachment(
+            ticket_id=ticket.id,
+            filename='test.txt',
+            file_path='/tmp/test.txt',
+            file_size=100,
+            uploaded_by_id=test_user.id
+        )
+        db_session.add(attachment)
+&gt;       db_session.commit()
+
+../qa-automation/tests/unit/backend/test_ticket_attachments.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.14/site-packages/sqlalchemy/orm/scoping.py:597: in commit
+    return self._proxied.commit()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:2028: in commit
+    trans.commit(_to_root=True)
+&lt;string&gt;:2: in commit
+    ???
+venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py:139: in _go
+    ret_value = fn(self, *arg, **kw)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:1313: in commit
+    self._prepare_impl()
+&lt;string&gt;:2: in _prepare_impl
+    ???
+venv/lib/python3.14/site-packages/sqlalchemy/orm/state_changes.py:139: in _go
+    ret_value = fn(self, *arg, **kw)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:1288: in _prepare_impl
+    self.session.flush()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4352: in flush
+    self._flush(objects)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4487: in _flush
+    with util.safe_reraise():
+venv/lib/python3.14/site-packages/sqlalchemy/util/langhelpers.py:146: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/session.py:4448: in _flush
+    flush_context.execute()
+venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py:466: in execute
+    rec.execute(self)
+venv/lib/python3.14/site-packages/sqlalchemy/orm/unitofwork.py:642: in execute
+    util.preloaded.orm_persistence.save_obj(
+venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py:93: in save_obj
+    _emit_insert_statements(
+venv/lib/python3.14/site-packages/sqlalchemy/orm/persistence.py:1233: in _emit_insert_statements
+    result = connection.execute(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1418: in execute
+    return meth(
+venv/lib/python3.14/site-packages/sqlalchemy/sql/elements.py:515: in _execute_on_connection
+    return connection._execute_clauseelement(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1640: in _execute_clauseelement
+    ret = self._execute_context(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1846: in _execute_context
+    return self._exec_single_context(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1986: in _exec_single_context
+    self._handle_dbapi_exception(
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:2355: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+venv/lib/python3.14/site-packages/sqlalchemy/engine/base.py:1967: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x116e2e490&gt;
+cursor = &lt;sqlite3.Cursor object at 0x1172c6fc0&gt;
+statement = 'INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+parameters = (None, None, 'test.txt', '/tmp/test.txt', 100, None, ...)
+context = &lt;sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x11779a5d0&gt;
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+&gt;       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) NOT NULL constraint failed: ticket_attachments.ticket_id
+E       [SQL: INSERT INTO ticket_attachments (ticket_id, comment_id, filename, file_path, file_size, file_type, uploaded_by_id, customer_email, uploaded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)]
+E       [parameters: (None, None, 'test.txt', '/tmp/test.txt', 100, None, 1, None, '2026-02-03 15:27:14.419363')]
+E       (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+venv/lib/python3.14/site-packages/sqlalchemy/engine/default.py:941: IntegrityError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_ticket_comments.TestTicketComments" name="test_get_ticket_comments" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_ticket_comments.TestTicketComments" name="test_create_ticket_comment_public" time="0.030" /><testcase classname="qa-automation.tests.unit.backend.test_ticket_comments.TestTicketComments" name="test_create_ticket_comment_internal" time="0.212" /><testcase classname="qa-automation.tests.unit.backend.test_tickets.TestTicketCRUD" name="test_create_ticket_public" time="0.025" /><testcase classname="qa-automation.tests.unit.backend.test_tickets.TestTicketCRUD" name="test_get_ticket" time="0.117" /><testcase classname="qa-automation.tests.unit.backend.test_tickets.TestTicketCRUD" name="test_get_tickets_list" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_tickets.TestTicketCRUD" name="test_update_ticket_status" time="0.210"><failure message="assert 400 == 200&#10; +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code">self = &lt;test_tickets.TestTicketCRUD object at 0x10bfcb360&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQzNSwianRpIjoiNjA...DVlYjhiN2QtZmFkMy00MmIyLWEyNjItMDk0ZTA4MDRhZDliIiwiZXhwIjoxNzcwMTMyNzM1fQ.c9EeJk8k7TU2AT79IIPZWQXB9WLu0IhoA7zye89zMcY'}
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+test_agent = &lt;User testagent&gt;
+
+    def test_update_ticket_status(self, client, auth_headers, db_session, test_agent):
+        """Test updating ticket status"""
+        ticket = Ticket(
+            subject='Test Ticket Subject',
+            description='This is a detailed ticket description that meets the minimum length requirement.',
+            customer_email='test@test.com',
+            status=Ticket.STATUS_OPEN,
+            assigned_to_id=test_agent.id,
+            category=Ticket.CATEGORY_GENERAL
+        )
+        db_session.add(ticket)
+        db_session.commit()
+    
+        # Login as agent
+        login_response = client.post('/api/auth/login', json={
+            'username': test_agent.username,
+            'password': 'agentpassword123'
+        })
+        token = login_response.json['access_token']
+        headers = {'Authorization': f'Bearer {token}'}
+    
+        response = client.put(f'/api/tickets/{ticket.id}/status',
+            headers=headers,
+            json={'status': Ticket.STATUS_IN_PROGRESS}
+        )
+&gt;       assert response.status_code == 200
+E       assert 400 == 200
+E        +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code
+
+../qa-automation/tests/unit/backend/test_tickets.py:81: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_tickets.TestTicketCRUD" name="test_update_ticket_priority" time="0.209" /><testcase classname="qa-automation.tests.unit.backend.test_tickets.TestTicketCRUD" name="test_assign_ticket" time="0.165" /><testcase classname="qa-automation.tests.unit.backend.test_tickets.TestTicketCRUD" name="test_get_ticket_history" time="0.116"><failure message="assert 403 == 200&#10; +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code">self = &lt;test_tickets.TestTicketCRUD object at 0x10bfaae00&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjQzNSwianRpIjoiNjQ...2JmYWE3ZWYtMjBiYi00OGNjLTlmZTQtYzA1ZTg2ZTU0NzE3IiwiZXhwIjoxNzcwMTMyNzM1fQ.-QugjLDu2vyU3grv2qAISGqf51zkVuEiy5SrKlwZFeE'}
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x10bbde120&gt;
+
+    def test_get_ticket_history(self, client, auth_headers, db_session):
+        """Test getting ticket history"""
+        ticket = Ticket(
+            subject='Test Ticket Subject',
+            description='This is a detailed ticket description that meets the minimum length requirement.',
+            customer_email='test@test.com',
+            category=Ticket.CATEGORY_GENERAL
+        )
+        db_session.add(ticket)
+        db_session.commit()
+    
+        response = client.get(f'/api/tickets/{ticket.id}/history',
+            headers=auth_headers
+        )
+&gt;       assert response.status_code == 200
+E       assert 403 == 200
+E        +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code
+
+../qa-automation/tests/unit/backend/test_tickets.py:143: AssertionError</failure></testcase><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationPositive" name="test_register_user_as_agent" time="0.349" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationPositive" name="test_register_user_with_all_fields" time="0.350" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationPositive" name="test_register_user_with_maximum_length_username" time="0.348" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationPositive" name="test_register_user_with_minimal_fields" time="0.348" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationPositive" name="test_register_user_with_special_characters_in_name" time="0.350" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_duplicate_email" time="0.348" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_duplicate_username" time="0.352" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_invalid_email_format" time="0.343" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_invalid_role" time="0.341" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_missing_email" time="0.338" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_missing_password" time="0.342" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_missing_username" time="0.337" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_password_too_short" time="0.319" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_username_too_long" time="0.306" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationNegative" name="test_register_user_username_too_short" time="0.307" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationEdgeCases" name="test_register_user_with_large_expertise_array" time="0.352" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationEdgeCases" name="test_register_user_with_maximum_length_password" time="0.351" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationEdgeCases" name="test_register_user_with_unicode_characters" time="0.349" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationSecurity" name="test_register_user_password_is_hashed" time="0.507" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationSecurity" name="test_register_user_password_not_in_response" time="0.386" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserRegistrationSecurity" name="test_register_user_sql_injection_in_username" time="0.471" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesPositive" name="test_admin_update_other_user_profile" time="0.344" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesPositive" name="test_admin_update_user_role" time="0.365" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesPositive" name="test_update_agent_availability_status" time="0.337" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesPositive" name="test_update_own_profile_email" time="0.333" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesPositive" name="test_update_own_profile_first_name" time="0.337" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesPositive" name="test_update_own_profile_last_name" time="0.332" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesPositive" name="test_update_own_profile_multiple_fields" time="0.334" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesNegative" name="test_non_admin_update_role" time="0.331" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesNegative" name="test_update_other_user_profile_as_non_admin" time="0.392" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesNegative" name="test_update_profile_with_duplicate_email" time="0.395" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesNegative" name="test_update_profile_with_invalid_email" time="0.337" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesNegative" name="test_update_profile_without_authentication" time="0.335" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesEdgeCases" name="test_update_profile_partial_update" time="0.333" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesEdgeCases" name="test_update_profile_with_special_characters" time="0.316" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesSecurity" name="test_admin_cannot_deactivate_own_account" time="0.309" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesSecurity" name="test_admin_cannot_remove_own_admin_role" time="0.305" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestProfileUpdatesSecurity" name="test_update_profile_authorization_check" time="0.363" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestPasswordChangesPositive" name="test_admin_change_user_password" time="0.416" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestPasswordChangesPositive" name="test_change_password_success" time="0.484" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestPasswordChangesPositive" name="test_change_password_with_special_characters" time="0.417" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestPasswordChangesNegative" name="test_change_other_user_password_as_non_admin" time="0.360" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestPasswordChangesNegative" name="test_change_password_too_short" time="0.313" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestPasswordChangesNegative" name="test_change_password_without_authentication" time="0.314" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestPasswordChangesSecurity" name="test_password_is_hashed" time="0.409" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestPasswordChangesSecurity" name="test_password_not_returned_in_response" time="0.360" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestAccountDeletionPositive" name="test_admin_delete_user_account" time="0.374" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestAccountDeletionPositive" name="test_delete_own_account" time="0.416" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestAccountDeletionNegative" name="test_delete_account_without_authentication" time="0.320" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestAccountDeletionNegative" name="test_delete_nonexistent_account" time="0.313" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestAccountDeletionNegative" name="test_delete_other_user_account_as_non_admin" time="0.359" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestAccountDeletionSecurity" name="test_delete_account_authorization_check" time="0.364" /><testcase classname="qa-automation.tests.unit.backend.test_user_profile_unittest.TestUserProfileIntegration" name="test_complete_user_lifecycle" time="0.520" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_get_users_list" time="0.132" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_get_user" time="0.210" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_update_own_profile" time="0.122" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_update_other_user_as_admin" time="0.170" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_update_other_user_as_non_admin" time="0.171" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_admin_update_role" time="0.166" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_non_admin_cannot_update_role" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_delete_user" time="0.180" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_user_pagination" time="0.123" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_update_user_password" time="0.163" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_update_user_availability" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_update_user_expertise_areas" time="0.122" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_admin_cannot_remove_own_admin_role" time="0.122" /><testcase classname="qa-automation.tests.unit.backend.test_users.TestUserManagement" name="test_admin_cannot_deactivate_own_account" time="0.123" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestTaskValidation" name="test_create_task_without_title" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestTaskValidation" name="test_create_task_with_empty_title" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestTaskValidation" name="test_create_task_with_invalid_status" time="0.123" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestTaskValidation" name="test_create_task_with_invalid_priority" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestTaskValidation" name="test_create_task_with_valid_status" time="0.123" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestTaskValidation" name="test_create_task_with_valid_priority" time="0.124" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestTaskValidation" name="test_update_task_with_invalid_data" time="0.127" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestTaskValidation" name="test_update_task_with_valid_data" time="0.124" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestUserValidation" name="test_register_with_invalid_email" time="0.024" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestUserValidation" name="test_register_with_short_password" time="0.024" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestUserValidation" name="test_register_with_valid_data" time="0.073" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestUserValidation" name="test_update_user_with_invalid_email" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestUserValidation" name="test_update_user_with_valid_data" time="0.124" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestProjectValidation" name="test_create_project_without_name" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestProjectValidation" name="test_create_project_with_empty_name" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestProjectValidation" name="test_create_project_with_valid_data" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestPaginationValidation" name="test_pagination_with_negative_page" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestPaginationValidation" name="test_pagination_with_zero_page" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestPaginationValidation" name="test_pagination_with_large_per_page" time="0.122" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestPaginationValidation" name="test_pagination_with_valid_params" time="0.121" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestFilterValidation" name="test_filter_with_invalid_status" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestFilterValidation" name="test_filter_with_valid_status" time="0.123" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestFilterValidation" name="test_filter_with_invalid_priority" time="0.125" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestFilterValidation" name="test_filter_with_valid_priority" time="0.211" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestFilterValidation" name="test_filter_with_nonexistent_project" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestDateValidation" name="test_create_task_with_invalid_due_date" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestDateValidation" name="test_create_task_with_valid_due_date" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestDateValidation" name="test_create_task_with_past_due_date" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestAccessValidation" name="test_access_nonexistent_task" time="0.119" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestAccessValidation" name="test_update_nonexistent_task" time="0.118" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestAccessValidation" name="test_delete_nonexistent_task" time="0.120" /><testcase classname="qa-automation.tests.unit.backend.test_validation.TestAccessValidation" name="test_access_task_without_permission" time="0.168" /></testsuite></testsuites>

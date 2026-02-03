@@ -1,0 +1,35 @@
+# Quick Commit and Push Commands
+# ===============================
+
+# Option 1: Interactive script (recommended)
+./commit_and_push.sh
+
+# Option 2: One-liner commit and push
+git add .github/workflows/ci-cd-unified.yml && \
+git commit -m "fix: resolve CI/CD pipeline errors
+
+- Fix Flask app import error by adding explicit PYTHONPATH export
+- Make Docker login conditional to avoid errors when secrets are missing
+- Add permissions and conditional upload for Trivy security scan
+- Fix security-events permission for SARIF uploads
+- Handle fork PRs gracefully for security uploads" && \
+git push origin $(git branch --show-current)
+
+# Option 3: Step by step
+git add .github/workflows/ci-cd-unified.yml
+git commit -m "fix: resolve CI/CD pipeline errors
+
+- Fix Flask app import error
+- Make Docker login conditional
+- Add permissions for security scan uploads"
+git push origin $(git branch --show-current)
+
+# Option 4: Commit only (push later)
+git add .github/workflows/ci-cd-unified.yml
+git commit -m "fix: resolve CI/CD pipeline errors"
+# Push later with: git push
+
+# Option 5: Short commit message
+git add .github/workflows/ci-cd-unified.yml && \
+git commit -m "fix: resolve CI/CD pipeline errors (Flask import, Docker login, security upload)" && \
+git push

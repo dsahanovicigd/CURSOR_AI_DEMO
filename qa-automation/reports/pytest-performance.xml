@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="49" time="5.750" timestamp="2026-02-03T17:28:29.383615" hostname="C18994"><testcase classname="qa-automation.tests.performance.backend.test_background_tasks.TestBackgroundTasks" name="test_send_task_notification" time="0.155" /><testcase classname="qa-automation.tests.performance.backend.test_background_tasks.TestBackgroundTasks" name="test_send_task_assignment_email" time="0.023" /><testcase classname="qa-automation.tests.performance.backend.test_background_tasks.TestBackgroundTasks" name="test_update_task_statistics" time="0.078" /><testcase classname="qa-automation.tests.performance.backend.test_background_tasks.TestBackgroundTasks" name="test_cleanup_old_notifications" time="0.073" /><testcase classname="qa-automation.tests.performance.backend.test_background_tasks.TestBackgroundTasks" name="test_process_due_date_reminders" time="0.112" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestResponseTimeBenchmarks" name="test_task_list_response_time" time="0.148" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestResponseTimeBenchmarks" name="test_task_detail_response_time" time="0.128" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestResponseTimeBenchmarks" name="test_user_list_response_time" time="0.138" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestDatabaseQueryCount" name="test_task_list_query_count" time="0.155" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestDatabaseQueryCount" name="test_task_detail_query_count" time="0.132" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestThroughputBenchmarks" name="test_concurrent_requests_throughput" time="0.146" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestThroughputBenchmarks" name="test_sustained_load" time="0.170"><failure message="AssertionError: Some requests failed during sustained load&#10;assert False&#10; +  where False = all([True, True, True, True, True, True, ...])">self = &lt;test_benchmarks.TestThroughputBenchmarks object at 0x10a34bc50&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjUxMCwianRpIjoiZTN...GM5OWMxMjMtYTkzZi00YzIyLTlhZmMtOWQyZTBjNWI2NmIzIiwiZXhwIjoxNzcwMTMyODEwfQ.KEUyvnD8x7V5a2d4NNYPQRMkbVIoMoXpWNC8sIiZ_C0'}
+multiple_tasks = [&lt;Task Test Task 1&gt;, &lt;Task Test Task 2&gt;, &lt;Task Test Task 3&gt;, &lt;Task Test Task 4&gt;, &lt;Task Test Task 5&gt;]
+app = &lt;Flask 'app'&gt;
+
+    def test_sustained_load(self, client, auth_headers, multiple_tasks, app):
+        """Test system can sustain load over time"""
+        with app.app_context():
+            from app.cache import cache
+            cache.clear()
+    
+            # Warm up
+            client.get('/api/tasks', headers=auth_headers)
+    
+            def make_request():
+                response = client.get('/api/tasks', headers=auth_headers)
+                return response.status_code == 200
+    
+            # Run 100 requests over 1 second (100 req/s sustained)
+            num_requests = 100
+            start_time = time.time()
+    
+            with ThreadPoolExecutor(max_workers=25) as executor:
+                futures = [executor.submit(make_request) for _ in range(num_requests)]
+                results = [f.result() for f in as_completed(futures)]
+    
+            total_time = time.time() - start_time
+            requests_per_second = num_requests / total_time
+    
+            # All should succeed
+&gt;           assert all(results), "Some requests failed during sustained load"
+E           AssertionError: Some requests failed during sustained load
+E           assert False
+E            +  where False = all([True, True, True, True, True, True, ...])
+
+../qa-automation/tests/performance/backend/test_benchmarks.py:205: AssertionError</failure></testcase><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestPerformanceImprovements" name="test_cache_reduces_database_queries" time="0.139" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestPerformanceImprovements" name="test_indexed_queries_are_fast" time="0.135" /><testcase classname="qa-automation.tests.performance.backend.test_benchmarks.TestPerformanceImprovements" name="test_response_time_improvement" time="0.135" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_post_list_caching" time="0.085" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_post_detail_caching" time="0.080" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_search_caching" time="0.080" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_cache_invalidation_on_create" time="0.133" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_cache_invalidation_on_update" time="0.150" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_cache_invalidation_on_delete" time="0.134" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_cache_invalidation_on_comment_create" time="0.136"><failure message="assert 400 == 201&#10; +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code">self = &lt;test_blog_caching.TestBlogCaching object at 0x10a41d150&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+auth_headers = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3MDEzMjUxMiwianRpIjoiZGM...DljZWIwYTItMzA3Mi00Y2I1LWJmZjgtMWUxOWY1M2Y0ZjQzIiwiZXhwIjoxNzcwMTMyODEyfQ.vYYNhWu-f1NffceYD-AkPeWXFdjAyKW84W8R2LAhBxI'}
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x109fb6120&gt;
+test_user = &lt;User handerson&gt;
+
+    def test_cache_invalidation_on_comment_create(self, client, auth_headers, db_session, test_user):
+        """Test cache invalidation when creating a comment"""
+        slug = PostModel.generate_slug('Comment Post')
+        post = Post(
+            title='Comment Post',
+            content='Content',
+            slug=slug,
+            user_id=test_user.id,
+            is_published=True
+        )
+        db_session.add(post)
+        db_session.commit()
+    
+        # Cache post with comments
+        response1 = client.get(f'/api/posts/{post.id}?include_comments=true')
+        assert response1.status_code == 200
+        initial_comment_count = response1.json.get('comment_count', 0)
+    
+        # Create comment
+        response2 = client.post(f'/api/posts/{post.id}/comments',
+            headers=auth_headers,
+            json={'content': 'New comment'}
+        )
+&gt;       assert response2.status_code == 201
+E       assert 400 == 201
+E        +  where 400 = &lt;WrapperTestResponse streamed [400 BAD REQUEST]&gt;.status_code
+
+../qa-automation/tests/performance/backend/test_blog_caching.py:190: AssertionError</failure></testcase><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_different_query_params_create_different_cache_keys" time="0.080" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_cache_timeout" time="0.081" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_slug_based_caching" time="0.080" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_search_with_filters_caching" time="0.080" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_post_list_pagination_caching" time="0.085" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_cache_clearing_on_bulk_operations" time="0.135" /><testcase classname="qa-automation.tests.performance.backend.test_blog_caching.TestBlogCaching" name="test_concurrent_cache_access" time="0.078" /><testcase classname="qa-automation.tests.performance.backend.test_blog_performance.TestBlogPerformance" name="test_post_list_performance" time="0.093" /><testcase classname="qa-automation.tests.performance.backend.test_blog_performance.TestBlogPerformance" name="test_search_performance" time="0.085" /><testcase classname="qa-automation.tests.performance.backend.test_blog_performance.TestBlogPerformance" name="test_concurrent_requests" time="0.091"><failure message="assert False&#10; +  where False = all(&lt;generator object TestBlogPerformance.test_concurrent_requests.&lt;locals&gt;.&lt;genexpr&gt; at 0x10cf7f850&gt;)">self = &lt;test_blog_performance.TestBlogPerformance object at 0x10a45c3e0&gt;
+client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+db_session = &lt;sqlalchemy.orm.scoping.scoped_session object at 0x109fb6120&gt;
+test_user = &lt;User hmorrison&gt;, app = &lt;Flask 'app'&gt;
+
+    def test_concurrent_requests(self, client, db_session, test_user, app):
+        """Test handling concurrent requests"""
+        slug = PostModel.generate_slug('Concurrent Test')
+        post = Post(
+            title='Concurrent Test',
+            content='Content',
+            slug=slug,
+            user_id=test_user.id,
+            is_published=True
+        )
+        db_session.add(post)
+        db_session.commit()
+    
+        def make_request():
+            with app.app_context():
+                return client.get(f'/api/posts/{post.id}')
+    
+        # Make 10 concurrent requests
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = [executor.submit(make_request) for _ in range(10)]
+            results = [f.result() for f in futures]
+    
+        # All should succeed
+&gt;       assert all(r.status_code == 200 for r in results)
+E       assert False
+E        +  where False = all(&lt;generator object TestBlogPerformance.test_concurrent_requests.&lt;locals&gt;.&lt;genexpr&gt; at 0x10cf7f850&gt;)
+
+../qa-automation/tests/performance/backend/test_blog_performance.py:83: AssertionError</failure></testcase><testcase classname="qa-automation.tests.performance.backend.test_blog_performance.TestBlogPerformance" name="test_pagination_performance" time="0.105" /><testcase classname="qa-automation.tests.performance.backend.test_blog_performance.TestBlogPerformance" name="test_index_usage" time="0.080" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestCachingPerformance" name="test_task_list_caching" time="0.129" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestCachingPerformance" name="test_task_detail_caching" time="0.128" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestCachingPerformance" name="test_cache_invalidation_on_create" time="0.131" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestCachingPerformance" name="test_cache_invalidation_on_update" time="0.150" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestCachingPerformance" name="test_cache_invalidation_on_delete" time="0.130" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestDatabasePerformance" name="test_indexed_query_performance" time="0.130" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestDatabasePerformance" name="test_indexed_query_with_priority" time="0.128" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestDatabasePerformance" name="test_composite_index_performance" time="0.127" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestPaginationPerformance" name="test_large_dataset_pagination" time="0.129" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestPaginationPerformance" name="test_pagination_with_filters" time="0.128" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestConcurrentRequests" name="test_multiple_concurrent_requests" time="0.142" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestCacheHitRate" name="test_cache_hit_rate" time="0.128" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestBackgroundTaskPerformance" name="test_background_task_non_blocking" time="0.178" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestBackgroundTaskPerformance" name="test_background_task_execution" time="0.074" /><testcase classname="qa-automation.tests.performance.backend.test_performance.TestMemoryUsage" name="test_cache_memory_usage" time="0.080" /></testsuite></testsuites>

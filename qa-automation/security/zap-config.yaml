@@ -1,0 +1,48 @@
+# OWASP ZAP Configuration
+# Configuration for security scanning
+
+contexts:
+  - name: "Application Context"
+    urls:
+      - "http://localhost:4173"
+      - "http://localhost:5173"
+      - "http://localhost:5000"
+
+scanners:
+  activeScan:
+    enabled: true
+    policy: "Default Policy"
+  
+  spider:
+    enabled: true
+    maxDepth: 5
+    maxDuration: 60
+
+authentication:
+  method: "formBased"
+  loginUrl: "http://localhost:4173/login"
+  usernameField: "email"
+  passwordField: "password"
+  loggedInIndicator: "Dashboard"
+
+rules:
+  - id: "10021"  # X-Content-Type-Options header missing
+    enabled: true
+  - id: "10020"  # X-Frame-Options header missing
+    enabled: true
+  - id: "10015"  # Content Security Policy (CSP) header not set
+    enabled: true
+  - id: "10054"  # Cache-control header missing
+    enabled: true
+  - id: "10010"  # Cookie without Secure flag
+    enabled: true
+  - id: "10011"  # Cookie without HttpOnly flag
+    enabled: true
+  - id: "10202"  # Absence of Anti-CSRF Tokens
+    enabled: true
+  - id: "10025"  # Information Disclosure - Debug Error Messages
+    enabled: true
+
+reporting:
+  format: ["html", "json"]
+  outputDir: "../reports/zap-reports"

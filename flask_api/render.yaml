@@ -1,0 +1,58 @@
+# Render.com configuration for Flask API only
+# Use this if deploying API separately from frontend
+
+services:
+  - type: web
+    name: flask-api
+    env: python
+    region: oregon
+    plan: starter
+    buildCommand: |
+      pip install --upgrade pip &&
+      pip install -r requirements.txt &&
+      python -m flask db upgrade || true
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 4 --threads 2 --timeout 120 --access-logfile - --error-logfile - run:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: app:create_app
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: postgres-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: redis-cache
+          type: redis
+          property: connectionString
+      - key: CELERY_BROKER_URL
+        fromService:
+          name: redis-cache
+          type: redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          name: redis-cache
+          type: redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false
+
+databases:
+  - name: postgres-db
+    plan: starter
+    databaseName: flask_api_prod
+    databaseUser: flask_user
+    postgresMajorVersion: 15
+
+redis:
+  - name: redis-cache
+    plan: starter
+    maxmemoryPolicy: allkeys-lru
