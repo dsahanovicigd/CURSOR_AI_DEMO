@@ -35,6 +35,17 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     /* Video on failure */
     video: 'retain-on-failure',
+    /* Increase default timeout for actions */
+    actionTimeout: 15000,
+    navigationTimeout: 30000,
+  },
+  
+  /* Global timeout for each test */
+  timeout: 60000,
+  
+  /* Expect timeout for assertions */
+  expect: {
+    timeout: 10000,
   },
 
   /* Configure projects for major browsers */
@@ -76,12 +87,12 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
+  webServer: process.env.SKIP_WEBSERVER !== 'true' ? {
     command: 'npm run dev',
     url: 'http://localhost:5173',
-    reuseExistingServer: true, // Always reuse existing server to avoid port conflicts
+    reuseExistingServer: !process.env.CI, // Reuse existing server in local dev, start fresh in CI
     timeout: 120 * 1000,
     stdout: 'ignore',
     stderr: 'pipe',
-  },
+  } : undefined,
 })

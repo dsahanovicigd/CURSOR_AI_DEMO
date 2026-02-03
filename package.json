@@ -16,14 +16,16 @@
     "test:jest": "jest",
     "test:jest:watch": "jest --watch",
     "test:jest:coverage": "jest --coverage",
-    "qa": "npm run qa:all",
+    "qa": "SKIP_E2E=false bash qa-automation/scripts/run-qa-suite.sh",
     "qa:all": "npm run qa:lint && npm run qa:test && npm run qa:security",
     "qa:lint": "npm run lint",
     "qa:test": "npm run test:jest:coverage && npm run test",
     "qa:security": "npm audit --audit-level=moderate",
     "qa:performance": "lighthouse http://localhost:4173 --output html --output-path ./qa-automation/reports/lighthouse.html",
-    "qa:dashboard": "python qa-automation/reports/generate-report.py",
-    "qa:analyze": "python qa-automation/scripts/analyze-results.py"
+    "qa:install-deps": "python3 -m pip install --user -r qa-automation/requirements.txt",
+    "qa:dashboard": "python3 qa-automation/reports/generate-report.py",
+    "qa:analyze": "python3 qa-automation/scripts/analyze-results.py",
+    "qa:suite": "SKIP_E2E=false bash qa-automation/scripts/run-qa-suite.sh"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
