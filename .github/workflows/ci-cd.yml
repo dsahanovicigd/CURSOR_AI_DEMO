@@ -1,468 +1,468 @@
-name: CI/CD Pipeline
+# name: CI/CD Pipeline
 
-on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Deployment environment'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-          - staging
-          - production
+# on:
+#   push:
+#     branches:
+#       - main
+#       - develop
+#   pull_request:
+#     branches:
+#       - main
+#       - develop
+#   workflow_dispatch:
+#     inputs:
+#       environment:
+#         description: 'Deployment environment'
+#         required: true
+#         default: 'staging'
+#         type: choice
+#         options:
+#           - staging
+#           - production
 
-env:
-  NODE_VERSION: '20.x'
-  PYTHON_VERSION: '3.11'
-  FLASK_APP: 'app:create_app'
+# env:
+#   NODE_VERSION: '20.x'
+#   PYTHON_VERSION: '3.11'
+#   FLASK_APP: 'app:create_app'
 
-jobs:
-  # ============================================================================
-  # FRONTEND: Build and Test
-  # ============================================================================
-  frontend-build:
-    name: Frontend Build & Test
-    runs-on: ubuntu-latest
+# jobs:
+#   # ============================================================================
+#   # FRONTEND: Build and Test
+#   # ============================================================================
+#   frontend-build:
+#     name: Frontend Build & Test
+#     runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
       
-      - name: Run linter
-        run: npm run lint
-        continue-on-error: true
+#       - name: Run linter
+#         run: npm run lint
+#         continue-on-error: true
       
-      - name: Build frontend
-        run: npm run build
-        env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:5001' }}
+#       - name: Build frontend
+#         run: npm run build
+#         env:
+#           VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:5001' }}
       
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: frontend-build
-          path: dist/
-          retention-days: 7
+#       - name: Upload build artifacts
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: frontend-build
+#           path: dist/
+#           retention-days: 7
 
-  frontend-test:
-    name: Frontend Tests
-    runs-on: ubuntu-latest
-    needs: frontend-build
+#   frontend-test:
+#     name: Frontend Tests
+#     runs-on: ubuntu-latest
+#     needs: frontend-build
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
       
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+#       - name: Install Playwright browsers
+#         run: npx playwright install --with-deps
       
-      - name: Run Playwright tests
-        run: npm run test
-        continue-on-error: true
+#       - name: Run Playwright tests
+#         run: npm run test
+#         continue-on-error: true
       
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 7
+#       - name: Upload test results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: playwright-report
+#           path: playwright-report/
+#           retention-days: 7
       
-      - name: Upload test videos
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: test-videos
-          path: test-results/
-          retention-days: 7
+#       - name: Upload test videos
+#         uses: actions/upload-artifact@v4
+#         if: failure()
+#         with:
+#           name: test-videos
+#           path: test-results/
+#           retention-days: 7
 
-  # ============================================================================
-  # BACKEND: Build and Test
-  # ============================================================================
-  backend-lint:
-    name: Backend Lint
-    runs-on: ubuntu-latest
+#   # ============================================================================
+#   # BACKEND: Build and Test
+#   # ============================================================================
+#   backend-lint:
+#     name: Backend Lint
+#     runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
       
-      - name: Install linting dependencies
-        working-directory: ./flask_api
-        run: |
-          pip install flake8 black isort
+#       - name: Install linting dependencies
+#         working-directory: ./flask_api
+#         run: |
+#           pip install flake8 black isort
       
-      - name: Run flake8
-        working-directory: ./flask_api
-        run: |
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics || true
-        continue-on-error: true
+#       - name: Run flake8
+#         working-directory: ./flask_api
+#         run: |
+#           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
+#           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics || true
+#         continue-on-error: true
       
-      - name: Check code formatting with black
-        working-directory: ./flask_api
-        run: |
-          black --check . || true
-        continue-on-error: true
+#       - name: Check code formatting with black
+#         working-directory: ./flask_api
+#         run: |
+#           black --check . || true
+#         continue-on-error: true
 
-  backend-test:
-    name: Backend Tests
-    runs-on: ubuntu-latest
+#   backend-test:
+#     name: Backend Tests
+#     runs-on: ubuntu-latest
     
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_DB: testdb
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
+#     services:
+#       postgres:
+#         image: postgres:15
+#         env:
+#           POSTGRES_USER: testuser
+#           POSTGRES_PASSWORD: testpass
+#           POSTGRES_DB: testdb
+#         options: >-
+#           --health-cmd pg_isready
+#           --health-interval 10s
+#           --health-timeout 5s
+#           --health-retries 5
+#         ports:
+#           - 5432:5432
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
       
-      - name: Install dependencies
-        working-directory: ./flask_api
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest pytest-cov pytest-xdist
+#       - name: Install dependencies
+#         working-directory: ./flask_api
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+#           pip install pytest pytest-cov pytest-xdist
       
-      - name: Run tests with coverage
-        working-directory: ./flask_api
-        env:
-          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
-          FLASK_ENV: testing
-          SECRET_KEY: test-secret-key
-          JWT_SECRET_KEY: test-jwt-secret-key
-        run: |
-          pytest ../qa-automation/tests/unit/backend/ ../qa-automation/tests/integration/backend/ -v --cov=app --cov-report=xml --cov-report=html --cov-report=term || echo "No tests found or tests failed"
-        continue-on-error: true
+#       - name: Run tests with coverage
+#         working-directory: ./flask_api
+#         env:
+#           DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
+#           FLASK_ENV: testing
+#           SECRET_KEY: test-secret-key
+#           JWT_SECRET_KEY: test-jwt-secret-key
+#         run: |
+#           pytest ../qa-automation/tests/unit/backend/ ../qa-automation/tests/integration/backend/ -v --cov=app --cov-report=xml --cov-report=html --cov-report=term || echo "No tests found or tests failed"
+#         continue-on-error: true
       
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v4
-        if: always()
-        with:
-          file: ./flask_api/coverage.xml
-          flags: backend
-          name: backend-coverage
-          fail_ci_if_error: false
+#       - name: Upload coverage reports
+#         uses: codecov/codecov-action@v4
+#         if: always()
+#         with:
+#           file: ./flask_api/coverage.xml
+#           flags: backend
+#           name: backend-coverage
+#           fail_ci_if_error: false
       
-      - name: Upload coverage HTML
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: backend-coverage-html
-          path: flask_api/htmlcov/
-          retention-days: 7
+#       - name: Upload coverage HTML
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: backend-coverage-html
+#           path: flask_api/htmlcov/
+#           retention-days: 7
 
-  backend-integration-test:
-    name: Backend Integration Tests
-    runs-on: ubuntu-latest
-    needs: backend-test
+#   backend-integration-test:
+#     name: Backend Integration Tests
+#     runs-on: ubuntu-latest
+#     needs: backend-test
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
       
-      - name: Install dependencies
-        working-directory: ./flask_api
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest pytest-cov
+#       - name: Install dependencies
+#         working-directory: ./flask_api
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+#           pip install pytest pytest-cov
       
-      - name: Run comprehensive API tests
-        working-directory: ./flask_api
-        env:
-          FLASK_ENV: testing
-          SECRET_KEY: test-secret-key
-          JWT_SECRET_KEY: test-jwt-secret-key
-        run: |
-          pytest ../qa-automation/tests/integration/backend/test_comprehensive_api_suite.py -v --tb=short || echo "Comprehensive tests not found or failed"
-        continue-on-error: true
+#       - name: Run comprehensive API tests
+#         working-directory: ./flask_api
+#         env:
+#           FLASK_ENV: testing
+#           SECRET_KEY: test-secret-key
+#           JWT_SECRET_KEY: test-jwt-secret-key
+#         run: |
+#           pytest ../qa-automation/tests/integration/backend/test_comprehensive_api_suite.py -v --tb=short || echo "Comprehensive tests not found or failed"
+#         continue-on-error: true
 
-  # ============================================================================
-  # SECURITY: Security Scanning
-  # ============================================================================
-  security-scan:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
+#   # ============================================================================
+#   # SECURITY: Security Scanning
+#   # ============================================================================
+#   security-scan:
+#     name: Security Scan
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read
+#       security-events: write
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL,HIGH'
+#       - name: Run Trivy vulnerability scanner
+#         uses: aquasecurity/trivy-action@master
+#         with:
+#           scan-type: 'fs'
+#           scan-ref: '.'
+#           format: 'sarif'
+#           output: 'trivy-results.sarif'
+#           severity: 'CRITICAL,HIGH'
       
-      - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v4
-        if: always()
-        with:
-          sarif_file: 'trivy-results.sarif'
+#       - name: Upload Trivy results to GitHub Security
+#         uses: github/codeql-action/upload-sarif@v4
+#         if: always()
+#         with:
+#           sarif_file: 'trivy-results.sarif'
 
-  # ============================================================================
-  # DEPLOYMENT: Staging
-  # ============================================================================
-  deploy-staging:
-    name: Deploy to Staging
-    runs-on: ubuntu-latest
-    needs: [frontend-build, frontend-test, backend-test, backend-integration-test]
-    if: github.ref == 'refs/heads/develop' || github.event_name == 'workflow_dispatch'
-    environment:
-      name: staging
-      url: https://staging.example.com
+#   # ============================================================================
+#   # DEPLOYMENT: Staging
+#   # ============================================================================
+#   deploy-staging:
+#     name: Deploy to Staging
+#     runs-on: ubuntu-latest
+#     needs: [frontend-build, frontend-test, backend-test, backend-integration-test]
+#     if: github.ref == 'refs/heads/develop' || github.event_name == 'workflow_dispatch'
+#     environment:
+#       name: staging
+#       url: https://staging.example.com
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Download frontend artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-build
-          path: dist/
+#       - name: Download frontend artifacts
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: frontend-build
+#           path: dist/
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
       
-      - name: Install backend dependencies
-        working-directory: ./flask_api
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+#       - name: Install backend dependencies
+#         working-directory: ./flask_api
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
       
-      - name: Deploy to staging server
-        run: |
-          echo "Deploying to staging environment..."
-          # Add your deployment commands here
-          # Examples:
-          # - rsync to server
-          # - Docker build and push
-          # - Cloud platform deployment (AWS, GCP, Azure, etc.)
-          # - SSH deployment script
-          echo "Staging deployment completed"
-        env:
-          STAGING_HOST: ${{ secrets.STAGING_HOST }}
-          STAGING_USER: ${{ secrets.STAGING_USER }}
-          STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+#       - name: Deploy to staging server
+#         run: |
+#           echo "Deploying to staging environment..."
+#           # Add your deployment commands here
+#           # Examples:
+#           # - rsync to server
+#           # - Docker build and push
+#           # - Cloud platform deployment (AWS, GCP, Azure, etc.)
+#           # - SSH deployment script
+#           echo "Staging deployment completed"
+#         env:
+#           STAGING_HOST: ${{ secrets.STAGING_HOST }}
+#           STAGING_USER: ${{ secrets.STAGING_USER }}
+#           STAGING_SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
       
-      - name: Run smoke tests
-        run: |
-          echo "Running smoke tests on staging..."
-          # Add smoke test commands here
-          # curl -f https://staging.example.com/api/health || exit 1
+#       - name: Run smoke tests
+#         run: |
+#           echo "Running smoke tests on staging..."
+#           # Add smoke test commands here
+#           # curl -f https://staging.example.com/api/health || exit 1
 
-  # ============================================================================
-  # DEPLOYMENT: Production
-  # ============================================================================
-  deploy-production:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: [frontend-build, frontend-test, backend-test, backend-integration-test, security-scan]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment:
-      name: production
-      url: https://example.com
+#   # ============================================================================
+#   # DEPLOYMENT: Production
+#   # ============================================================================
+#   deploy-production:
+#     name: Deploy to Production
+#     runs-on: ubuntu-latest
+#     needs: [frontend-build, frontend-test, backend-test, backend-integration-test, security-scan]
+#     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#     environment:
+#       name: production
+#       url: https://example.com
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Download frontend artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-build
-          path: dist/
+#       - name: Download frontend artifacts
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: frontend-build
+#           path: dist/
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
       
-      - name: Install backend dependencies
-        working-directory: ./flask_api
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+#       - name: Install backend dependencies
+#         working-directory: ./flask_api
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
       
-      - name: Build Docker images
-        if: contains(github.event.head_commit.message, '[docker]')
-        run: |
-          echo "Building Docker images..."
-          # docker build -t frontend:latest -f Dockerfile.frontend .
-          # docker build -t backend:latest -f Dockerfile.backend ./flask_api
-          # docker push frontend:latest
-          # docker push backend:latest
+#       - name: Build Docker images
+#         if: contains(github.event.head_commit.message, '[docker]')
+#         run: |
+#           echo "Building Docker images..."
+#           # docker build -t frontend:latest -f Dockerfile.frontend .
+#           # docker build -t backend:latest -f Dockerfile.backend ./flask_api
+#           # docker push frontend:latest
+#           # docker push backend:latest
       
-      - name: Deploy to production server
-        run: |
-          echo "Deploying to production environment..."
-          # Add your production deployment commands here
-          # Examples:
-          # - AWS Elastic Beanstalk deployment
-          # - Google Cloud Run deployment
-          # - Azure App Service deployment
-          # - Kubernetes deployment
-          # - Docker Compose deployment
-          echo "Production deployment completed"
-        env:
-          PRODUCTION_HOST: ${{ secrets.PRODUCTION_HOST }}
-          PRODUCTION_USER: ${{ secrets.PRODUCTION_USER }}
-          PRODUCTION_SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       - name: Deploy to production server
+#         run: |
+#           echo "Deploying to production environment..."
+#           # Add your production deployment commands here
+#           # Examples:
+#           # - AWS Elastic Beanstalk deployment
+#           # - Google Cloud Run deployment
+#           # - Azure App Service deployment
+#           # - Kubernetes deployment
+#           # - Docker Compose deployment
+#           echo "Production deployment completed"
+#         env:
+#           PRODUCTION_HOST: ${{ secrets.PRODUCTION_HOST }}
+#           PRODUCTION_USER: ${{ secrets.PRODUCTION_USER }}
+#           PRODUCTION_SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
-      - name: Run production smoke tests
-        run: |
-          echo "Running smoke tests on production..."
-          # curl -f https://example.com/api/health || exit 1
-          # Add more comprehensive smoke tests
+#       - name: Run production smoke tests
+#         run: |
+#           echo "Running smoke tests on production..."
+#           # curl -f https://example.com/api/health || exit 1
+#           # Add more comprehensive smoke tests
       
-      - name: Notify deployment
-        if: success()
-        run: |
-          echo "Production deployment successful!"
-          # Add notification logic (Slack, Discord, email, etc.)
-          # curl -X POST https://hooks.slack.com/services/YOUR/WEBHOOK/URL \
-          #   -d '{"text":"Production deployment successful!"}'
+#       - name: Notify deployment
+#         if: success()
+#         run: |
+#           echo "Production deployment successful!"
+#           # Add notification logic (Slack, Discord, email, etc.)
+#           # curl -X POST https://hooks.slack.com/services/YOUR/WEBHOOK/URL \
+#           #   -d '{"text":"Production deployment successful!"}'
 
-  # ============================================================================
-  # NOTIFICATION: Status Report
-  # ============================================================================
-  notify:
-    name: Notify Status
-    runs-on: ubuntu-latest
-    needs: [frontend-build, frontend-test, backend-test, deploy-staging, deploy-production]
-    if: always()
+#   # ============================================================================
+#   # NOTIFICATION: Status Report
+#   # ============================================================================
+#   notify:
+#     name: Notify Status
+#     runs-on: ubuntu-latest
+#     needs: [frontend-build, frontend-test, backend-test, deploy-staging, deploy-production]
+#     if: always()
     
-    steps:
-      - name: Check workflow status
-        run: |
-          echo "Workflow completed with status: ${{ job.status }}"
-          # Add notification logic here
-          # - Slack notification
-          # - Email notification
-          # - Discord webhook
-          # - Microsoft Teams notification
+#     steps:
+#       - name: Check workflow status
+#         run: |
+#           echo "Workflow completed with status: ${{ job.status }}"
+#           # Add notification logic here
+#           # - Slack notification
+#           # - Email notification
+#           # - Discord webhook
+#           # - Microsoft Teams notification
