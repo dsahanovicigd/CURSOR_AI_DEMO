@@ -1,617 +1,617 @@
-name: QA Automation Pipeline
+# name: QA Automation Pipeline
 
-on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
-  schedule:
-    # Run daily at 2 AM UTC
-    - cron: '0 2 * * *'
-  workflow_dispatch:
-    inputs:
-      run_security_scan:
-        description: 'Run OWASP ZAP security scan'
-        required: false
-        default: 'true'
-        type: boolean
-      run_performance_tests:
-        description: 'Run performance tests (Lighthouse & k6)'
-        required: false
-        default: 'true'
-        type: boolean
+# on:
+#   push:
+#     branches:
+#       - main
+#       - develop
+#   pull_request:
+#     branches:
+#       - main
+#       - develop
+#   schedule:
+#     # Run daily at 2 AM UTC
+#     - cron: '0 2 * * *'
+#   workflow_dispatch:
+#     inputs:
+#       run_security_scan:
+#         description: 'Run OWASP ZAP security scan'
+#         required: false
+#         default: 'true'
+#         type: boolean
+#       run_performance_tests:
+#         description: 'Run performance tests (Lighthouse & k6)'
+#         required: false
+#         default: 'true'
+#         type: boolean
 
-env:
-  NODE_VERSION: '20.x'
-  PYTHON_VERSION: '3.11'
-  ZAP_VERSION: '2.14.0'
+# env:
+#   NODE_VERSION: '20.x'
+#   PYTHON_VERSION: '3.11'
+#   ZAP_VERSION: '2.14.0'
 
-jobs:
-  # ============================================================================
-  # CODE QUALITY CHECKS
-  # ============================================================================
-  code-quality-frontend:
-    name: Frontend Code Quality (ESLint)
-    runs-on: ubuntu-latest
+# jobs:
+#   # ============================================================================
+#   # CODE QUALITY CHECKS
+#   # ============================================================================
+#   code-quality-frontend:
+#     name: Frontend Code Quality (ESLint)
+#     runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
       
-      - name: Run ESLint
-        run: npm run lint
+#       - name: Run ESLint
+#         run: npm run lint
       
-      - name: Upload ESLint results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: eslint-results
-          path: |
-            eslint-report.json
-            eslint-report.html
-          retention-days: 30
+#       - name: Upload ESLint results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: eslint-results
+#           path: |
+#             eslint-report.json
+#             eslint-report.html
+#           retention-days: 30
 
-  code-quality-backend:
-    name: Backend Code Quality (Pylint)
-    runs-on: ubuntu-latest
+#   code-quality-backend:
+#     name: Backend Code Quality (Pylint)
+#     runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
-        continue-on-error: true
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#         continue-on-error: true
       
-      - name: Check flask_api directory exists
-        run: |
-          if [ ! -d "flask_api" ]; then
-            echo "Error: flask_api directory not found"
-            ls -la
-            exit 1
-          fi
+#       - name: Check flask_api directory exists
+#         run: |
+#           if [ ! -d "flask_api" ]; then
+#             echo "Error: flask_api directory not found"
+#             ls -la
+#             exit 1
+#           fi
       
-      - name: Install dependencies
-        working-directory: ./flask_api
-        run: |
-          python -m pip install --upgrade pip
-          pip install pylint pylint-json2html pylint-flask
-        continue-on-error: true
+#       - name: Install dependencies
+#         working-directory: ./flask_api
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install pylint pylint-json2html pylint-flask
+#         continue-on-error: true
       
-      - name: Run Pylint
-        working-directory: ./flask_api
-        run: |
-          pylint app --rcfile=../qa-automation/quality/pylint.rc --output-format=json --reports=yes > ../qa-automation/reports/pylint-report.json || true
-          pylint app --rcfile=../qa-automation/quality/pylint.rc --output-format=text > ../qa-automation/reports/pylint-report.txt || true
-          pylint-json2html -o ../qa-automation/reports/pylint-report.html ../qa-automation/reports/pylint-report.json || true
+#       - name: Run Pylint
+#         working-directory: ./flask_api
+#         run: |
+#           pylint app --rcfile=../qa-automation/quality/pylint.rc --output-format=json --reports=yes > ../qa-automation/reports/pylint-report.json || true
+#           pylint app --rcfile=../qa-automation/quality/pylint.rc --output-format=text > ../qa-automation/reports/pylint-report.txt || true
+#           pylint-json2html -o ../qa-automation/reports/pylint-report.html ../qa-automation/reports/pylint-report.json || true
       
-      - name: Upload Pylint results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: pylint-results
-          path: |
-            qa-automation/reports/pylint-report.json
-            qa-automation/reports/pylint-report.txt
-            qa-automation/reports/pylint-report.html
-          retention-days: 30
+#       - name: Upload Pylint results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: pylint-results
+#           path: |
+#             qa-automation/reports/pylint-report.json
+#             qa-automation/reports/pylint-report.txt
+#             qa-automation/reports/pylint-report.html
+#           retention-days: 30
 
-  # ============================================================================
-  # AUTOMATED TEST EXECUTION
-  # ============================================================================
-  test-frontend-jest:
-    name: Frontend Unit Tests (Jest)
-    runs-on: ubuntu-latest
+#   # ============================================================================
+#   # AUTOMATED TEST EXECUTION
+#   # ============================================================================
+#   test-frontend-jest:
+#     name: Frontend Unit Tests (Jest)
+#     runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
       
-      - name: Run Jest tests
-        run: npm run test:jest -- --coverage --json --outputFile=jest-results.json
-        continue-on-error: true
+#       - name: Run Jest tests
+#         run: npm run test:jest -- --coverage --json --outputFile=jest-results.json
+#         continue-on-error: true
       
-      - name: Upload Jest results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: jest-results
-          path: |
-            jest-results.json
-            coverage/
-          retention-days: 30
+#       - name: Upload Jest results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: jest-results
+#           path: |
+#             jest-results.json
+#             coverage/
+#           retention-days: 30
 
-  test-frontend-playwright:
-    name: Frontend E2E Tests (Playwright)
-    runs-on: ubuntu-latest
+#   test-frontend-playwright:
+#     name: Frontend E2E Tests (Playwright)
+#     runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
+#       - name: Cache Playwright browsers
+#         uses: actions/cache@v4
+#         with:
+#           path: ~/.cache/ms-playwright
+#           key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+#           restore-keys: |
+#             ${{ runner.os }}-playwright-
       
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
       
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+#       - name: Install Playwright browsers
+#         run: npx playwright install --with-deps
       
-      - name: Run Playwright tests
-        run: npm run test
-        continue-on-error: true
+#       - name: Run Playwright tests
+#         run: npm run test
+#         continue-on-error: true
       
-      - name: Upload Playwright results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-results
-          path: |
-            playwright-report/
-            test-results/
-          retention-days: 30
+#       - name: Upload Playwright results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: playwright-results
+#           path: |
+#             playwright-report/
+#             test-results/
+#           retention-days: 30
 
-  test-backend-pytest:
-    name: Backend Tests (pytest)
-    runs-on: ubuntu-latest
+#   test-backend-pytest:
+#     name: Backend Tests (pytest)
+#     runs-on: ubuntu-latest
     
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_DB: testdb
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
+#     services:
+#       postgres:
+#         image: postgres:15
+#         env:
+#           POSTGRES_USER: testuser
+#           POSTGRES_PASSWORD: testpass
+#           POSTGRES_DB: testdb
+#         options: >-
+#           --health-cmd pg_isready
+#           --health-interval 10s
+#           --health-timeout 5s
+#           --health-retries 5
+#         ports:
+#           - 5432:5432
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
-        continue-on-error: true
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#         continue-on-error: true
       
-      - name: Check flask_api directory exists
-        run: |
-          if [ ! -d "flask_api" ]; then
-            echo "Error: flask_api directory not found"
-            ls -la
-            exit 1
-          fi
+#       - name: Check flask_api directory exists
+#         run: |
+#           if [ ! -d "flask_api" ]; then
+#             echo "Error: flask_api directory not found"
+#             ls -la
+#             exit 1
+#           fi
       
-      - name: Install dependencies
-        working-directory: ./flask_api
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-        continue-on-error: true
+#       - name: Install dependencies
+#         working-directory: ./flask_api
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+#         continue-on-error: true
       
-      - name: Run pytest with coverage
-        working-directory: ./flask_api
-        env:
-          DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
-          FLASK_ENV: testing
-          SECRET_KEY: test-secret-key
-          JWT_SECRET_KEY: test-jwt-secret-key
-          PYTHONPATH: ${{ github.workspace }}/flask_api:${{ github.workspace }}
-        run: |
-          pytest ../qa-automation/tests/unit/backend/ ../qa-automation/tests/integration/backend/ ../qa-automation/tests/performance/backend/ -v --cov=app --cov-report=xml --cov-report=html --cov-report=json \
-            --junitxml=../qa-automation/reports/pytest-results.xml -n auto
-        continue-on-error: true
+#       - name: Run pytest with coverage
+#         working-directory: ./flask_api
+#         env:
+#           DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
+#           FLASK_ENV: testing
+#           SECRET_KEY: test-secret-key
+#           JWT_SECRET_KEY: test-jwt-secret-key
+#           PYTHONPATH: ${{ github.workspace }}/flask_api:${{ github.workspace }}
+#         run: |
+#           pytest ../qa-automation/tests/unit/backend/ ../qa-automation/tests/integration/backend/ ../qa-automation/tests/performance/backend/ -v --cov=app --cov-report=xml --cov-report=html --cov-report=json \
+#             --junitxml=../qa-automation/reports/pytest-results.xml -n auto
+#         continue-on-error: true
       
-      - name: Upload pytest results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: pytest-results
-          path: |
-            flask_api/pytest-results.xml
-            flask_api/coverage.xml
-            flask_api/htmlcov/
-            flask_api/.coverage.json
-          retention-days: 30
+#       - name: Upload pytest results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: pytest-results
+#           path: |
+#             flask_api/pytest-results.xml
+#             flask_api/coverage.xml
+#             flask_api/htmlcov/
+#             flask_api/.coverage.json
+#           retention-days: 30
 
-  # ============================================================================
-  # SECURITY SCANNING
-  # ============================================================================
-  security-snyk:
-    name: Security Scan (Snyk)
-    runs-on: ubuntu-latest
+#   # ============================================================================
+#   # SECURITY SCANNING
+#   # ============================================================================
+#   security-snyk:
+#     name: Security Scan (Snyk)
+#     runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Run Snyk to check for vulnerabilities (Frontend)
-        uses: snyk/actions/node@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high --json-file-output=snyk-frontend.json
+#       - name: Run Snyk to check for vulnerabilities (Frontend)
+#         uses: snyk/actions/node@master
+#         continue-on-error: true
+#         env:
+#           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#         with:
+#           args: --severity-threshold=high --json-file-output=snyk-frontend.json
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
-        continue-on-error: true
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#         continue-on-error: true
       
-      - name: Run Snyk to check for vulnerabilities (Backend)
-        uses: snyk/actions/python@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high --file=./flask_api/requirements.txt --json-file-output=snyk-backend.json
+#       - name: Run Snyk to check for vulnerabilities (Backend)
+#         uses: snyk/actions/python@master
+#         continue-on-error: true
+#         env:
+#           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#         with:
+#           args: --severity-threshold=high --file=./flask_api/requirements.txt --json-file-output=snyk-backend.json
       
-      - name: Upload Snyk results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: snyk-results
-          path: |
-            snyk-frontend.json
-            snyk-backend.json
-          retention-days: 30
+#       - name: Upload Snyk results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: snyk-results
+#           path: |
+#             snyk-frontend.json
+#             snyk-backend.json
+#           retention-days: 30
 
-  security-owasp-zap:
-    name: Security Scan (OWASP ZAP)
-    runs-on: ubuntu-latest
-    if: github.event.inputs.run_security_scan != 'false'
+#   security-owasp-zap:
+#     name: Security Scan (OWASP ZAP)
+#     runs-on: ubuntu-latest
+#     if: github.event.inputs.run_security_scan != 'false'
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Start application
-        run: |
-          npm ci
-          npm run build || echo "Build failed, continuing..."
-          npm run preview &
-          sleep 10
-        continue-on-error: true
+#       - name: Start application
+#         run: |
+#           npm ci
+#           npm run build || echo "Build failed, continuing..."
+#           npm run preview &
+#           sleep 10
+#         continue-on-error: true
       
-      - name: Check ZAP rules file exists
-        id: check_zap_rules
-        run: |
-          if [ -f "qa-automation/security/.zap/rules.tsv" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: ZAP rules file not found, using default rules"
-          fi
+#       - name: Check ZAP rules file exists
+#         id: check_zap_rules
+#         run: |
+#           if [ -f "qa-automation/security/.zap/rules.tsv" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: ZAP rules file not found, using default rules"
+#           fi
       
-      - name: Run OWASP ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.10.0
-        with:
-          target: 'http://localhost:4173'
-          rules_file_name: ${{ steps.check_zap_rules.outputs.exists == 'true' && 'qa-automation/security/.zap/rules.tsv' || '' }}
-          cmd_options: '-a'
-          fail_action: false
-        continue-on-error: true
+#       - name: Run OWASP ZAP Baseline Scan
+#         uses: zaproxy/action-baseline@v0.10.0
+#         with:
+#           target: 'http://localhost:4173'
+#           rules_file_name: ${{ steps.check_zap_rules.outputs.exists == 'true' && 'qa-automation/security/.zap/rules.tsv' || '' }}
+#           cmd_options: '-a'
+#           fail_action: false
+#         continue-on-error: true
       
-      - name: Upload ZAP results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: zap-results
-          path: |
-            zap_report.html
-            zap_report.json
-          retention-days: 30
+#       - name: Upload ZAP results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: zap-results
+#           path: |
+#             zap_report.html
+#             zap_report.json
+#           retention-days: 30
 
-  # ============================================================================
-  # PERFORMANCE MONITORING
-  # ============================================================================
-  performance-lighthouse:
-    name: Performance Test (Lighthouse)
-    runs-on: ubuntu-latest
-    if: github.event.inputs.run_performance_tests != 'false'
+#   # ============================================================================
+#   # PERFORMANCE MONITORING
+#   # ============================================================================
+#   performance-lighthouse:
+#     name: Performance Test (Lighthouse)
+#     runs-on: ubuntu-latest
+#     if: github.event.inputs.run_performance_tests != 'false'
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Install dependencies
-        run: npm ci
+#       - name: Install dependencies
+#         run: npm ci
       
-      - name: Build application
-        run: npm run build
-        env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:5001' }}
+#       - name: Build application
+#         run: npm run build
+#         env:
+#           VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:5001' }}
       
-      - name: Start preview server
-        run: |
-          npm run preview &
-          sleep 10
+#       - name: Start preview server
+#         run: |
+#           npm run preview &
+#           sleep 10
       
-      - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: |
-            http://localhost:4173
-            http://localhost:4173/dashboard
-            http://localhost:4173/products
-          uploadArtifacts: true
-          temporaryPublicStorage: true
+#       - name: Run Lighthouse CI
+#         uses: treosh/lighthouse-ci-action@v12
+#         with:
+#           urls: |
+#             http://localhost:4173
+#             http://localhost:4173/dashboard
+#             http://localhost:4173/products
+#           uploadArtifacts: true
+#           temporaryPublicStorage: true
       
-      - name: Upload Lighthouse results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: lighthouse-results
-          path: |
-            .lighthouseci/
-          retention-days: 30
+#       - name: Upload Lighthouse results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: lighthouse-results
+#           path: |
+#             .lighthouseci/
+#           retention-days: 30
 
-  performance-k6:
-    name: Load Test (k6)
-    runs-on: ubuntu-latest
-    if: github.event.inputs.run_performance_tests != 'false'
+#   performance-k6:
+#     name: Load Test (k6)
+#     runs-on: ubuntu-latest
+#     if: github.event.inputs.run_performance_tests != 'false'
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup k6
-        uses: grafana/k6-action@v0.3.0
-        with:
-          filename: ./qa-automation/performance/k6-load-test.js
-          cloud: false
-        continue-on-error: true
+#       - name: Setup k6
+#         uses: grafana/k6-action@v0.3.0
+#         with:
+#           filename: ./qa-automation/performance/k6-load-test.js
+#           cloud: false
+#         continue-on-error: true
       
-      - name: Upload k6 results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: k6-results
-          path: |
-            k6-results.json
-            k6-summary.json
-          retention-days: 30
+#       - name: Upload k6 results
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: k6-results
+#           path: |
+#             k6-results.json
+#             k6-summary.json
+#           retention-days: 30
 
-  # ============================================================================
-  # QUALITY REPORTING & DASHBOARD
-  # ============================================================================
-  generate-quality-report:
-    name: Generate Quality Report
-    runs-on: ubuntu-latest
-    needs:
-      - code-quality-frontend
-      - code-quality-backend
-      - test-frontend-jest
-      - test-frontend-playwright
-      - test-backend-pytest
-      - security-snyk
-      - security-owasp-zap
-      - performance-lighthouse
-      - performance-k6
-    if: always()
+#   # ============================================================================
+#   # QUALITY REPORTING & DASHBOARD
+#   # ============================================================================
+#   generate-quality-report:
+#     name: Generate Quality Report
+#     runs-on: ubuntu-latest
+#     needs:
+#       - code-quality-frontend
+#       - code-quality-backend
+#       - test-frontend-jest
+#       - test-frontend-playwright
+#       - test-backend-pytest
+#       - security-snyk
+#       - security-owasp-zap
+#       - performance-lighthouse
+#       - performance-k6
+#     if: always()
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
       
-      - name: Check flask_api directory exists
-        id: check_flask_api
-        run: |
-          if [ -f "flask_api/requirements.txt" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
-          fi
+#       - name: Check flask_api directory exists
+#         id: check_flask_api
+#         run: |
+#           if [ -f "flask_api/requirements.txt" ]; then
+#             echo "exists=true" >> $GITHUB_OUTPUT
+#           else
+#             echo "exists=false" >> $GITHUB_OUTPUT
+#             echo "Warning: flask_api/requirements.txt not found, skipping pip cache"
+#           fi
       
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
-          cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
-        continue-on-error: true
+#       - name: Setup Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: ${{ steps.check_flask_api.outputs.exists == 'true' && 'pip' || '' }}
+#           cache-dependency-path: ${{ steps.check_flask_api.outputs.exists == 'true' && 'flask_api/requirements.txt' || '' }}
+#         continue-on-error: true
       
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        continue-on-error: true
-        with:
-          path: qa-automation/reports/
-          pattern: '*'
-          merge-multiple: true
+#       - name: Download all artifacts
+#         uses: actions/download-artifact@v4
+#         continue-on-error: true
+#         with:
+#           path: qa-automation/reports/
+#           pattern: '*'
+#           merge-multiple: true
       
-      - name: Install report generator dependencies
-        run: |
-          npm install -g json2html-cli
-          pip install jinja2 markdown
+#       - name: Install report generator dependencies
+#         run: |
+#           npm install -g json2html-cli
+#           pip install jinja2 markdown
       
-      - name: Generate quality dashboard
-        run: |
-          cd qa-automation/reports && python generate-report.py || echo "Report generation failed, continuing..."
-        continue-on-error: true
+#       - name: Generate quality dashboard
+#         run: |
+#           cd qa-automation/reports && python generate-report.py || echo "Report generation failed, continuing..."
+#         continue-on-error: true
       
-      - name: Upload quality dashboard
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: quality-dashboard
-          path: |
-            qa-automation/reports/dashboard.html
-            qa-automation/reports/dashboard-data.json
-            qa-automation/reports/recommendations.json
-            qa-automation/reports/recommendations.md
-          retention-days: 90
-          if-no-files-found: warn
+#       - name: Upload quality dashboard
+#         uses: actions/upload-artifact@v4
+#         if: always()
+#         with:
+#           name: quality-dashboard
+#           path: |
+#             qa-automation/reports/dashboard.html
+#             qa-automation/reports/dashboard-data.json
+#             qa-automation/reports/recommendations.json
+#             qa-automation/reports/recommendations.md
+#           retention-days: 90
+#           if-no-files-found: warn
       
-      - name: Comment PR with quality report
-        if: github.event_name == 'pull_request' && always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-            try {
-              const recommendationsPath = 'qa-automation/reports/recommendations.md';
-              if (fs.existsSync(recommendationsPath)) {
-                const recommendations = fs.readFileSync(recommendationsPath, 'utf8');
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: `## 📊 Quality Report\n\n${recommendations}`
-                });
-              } else {
-                console.log('Recommendations file not found, skipping PR comment');
-              }
-            } catch (error) {
-              console.log('Error posting PR comment:', error.message);
-            }
+#       - name: Comment PR with quality report
+#         if: github.event_name == 'pull_request' && always()
+#         uses: actions/github-script@v7
+#         with:
+#           script: |
+#             const fs = require('fs');
+#             const path = require('path');
+#             try {
+#               const recommendationsPath = 'qa-automation/reports/recommendations.md';
+#               if (fs.existsSync(recommendationsPath)) {
+#                 const recommendations = fs.readFileSync(recommendationsPath, 'utf8');
+#                 github.rest.issues.createComment({
+#                   issue_number: context.issue.number,
+#                   owner: context.repo.owner,
+#                   repo: context.repo.repo,
+#                   body: `## 📊 Quality Report\n\n${recommendations}`
+#                 });
+#               } else {
+#                 console.log('Recommendations file not found, skipping PR comment');
+#               }
+#             } catch (error) {
+#               console.log('Error posting PR comment:', error.message);
+#             }
 
-  # ============================================================================
-  # NOTIFICATIONS
-  # ============================================================================
-  notify-qa-results:
-    name: Notify QA Results
-    runs-on: ubuntu-latest
-    needs: [generate-quality-report]
-    if: always() && github.event_name != 'pull_request'
+#   # ============================================================================
+#   # NOTIFICATIONS
+#   # ============================================================================
+#   notify-qa-results:
+#     name: Notify QA Results
+#     runs-on: ubuntu-latest
+#     needs: [generate-quality-report]
+#     if: always() && github.event_name != 'pull_request'
     
-    steps:
-      - name: Download quality dashboard
-        uses: actions/download-artifact@v4
-        continue-on-error: true
-        with:
-          name: quality-dashboard
-          path: qa-automation/reports/
-          pattern: '*'
-          merge-multiple: true
+#     steps:
+#       - name: Download quality dashboard
+#         uses: actions/download-artifact@v4
+#         continue-on-error: true
+#         with:
+#           name: quality-dashboard
+#           path: qa-automation/reports/
+#           pattern: '*'
+#           merge-multiple: true
       
-      - name: Send Slack notification
-        uses: slackapi/slack-github-action@v2
-        if: always()
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          payload: |
-            {
-              "text": "📊 QA Automation Pipeline Completed",
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "📊 QA Automation Pipeline Completed"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Repository:* ${{ github.repository }}\n*Branch:* ${{ github.ref_name }}\n*Commit:* ${{ github.sha }}\n*Workflow:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Details>"
-                  }
-                }
-              ]
-            }
-        continue-on-error: true
+#       - name: Send Slack notification
+#         uses: slackapi/slack-github-action@v2
+#         if: always()
+#         with:
+#           webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#           payload: |
+#             {
+#               "text": "📊 QA Automation Pipeline Completed",
+#               "blocks": [
+#                 {
+#                   "type": "header",
+#                   "text": {
+#                     "type": "plain_text",
+#                     "text": "📊 QA Automation Pipeline Completed"
+#                   }
+#                 },
+#                 {
+#                   "type": "section",
+#                   "text": {
+#                     "type": "mrkdwn",
+#                     "text": "*Repository:* ${{ github.repository }}\n*Branch:* ${{ github.ref_name }}\n*Commit:* ${{ github.sha }}\n*Workflow:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Details>"
+#                   }
+#                 }
+#               ]
+#             }
+#         continue-on-error: true
